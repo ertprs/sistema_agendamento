@@ -12,6 +12,7 @@ const routes = express.Router();
 routes.post('/createUser', UserController.create);
 
 routes.post('/createCompanies', CompaniesController.create);
+routes.get('/companies/list/:id', CompaniesController.index);
 
 routes.post('/createServices', ServicesController.create);
 
