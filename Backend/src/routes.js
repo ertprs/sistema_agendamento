@@ -10,9 +10,12 @@ const ScheduleController = require('./controller/scheduleController');
 const routes = express.Router();
 
 routes.post('/createUser', UserController.create);
+routes.get('/user/listMissedAppointments/:id', UserController.index);
+routes.get('/user/listAll/:id', UserController.indexAll);
 
 routes.post('/createCompanies', CompaniesController.create);
 routes.get('/companies/list/:id', CompaniesController.index);
+routes.get('/companies/listAll/:id', CompaniesController.indexAll);
 
 routes.post('/createServices', ServicesController.create);
 

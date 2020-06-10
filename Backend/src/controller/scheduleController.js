@@ -3,17 +3,16 @@ const database = require('../database/index');
 module.exports = {
     async index(request, response, next){
         try {
-
             const params = request.params;
             const data = await database('schedule')
                 .select(
-                    'schedule.status',
-                    'companies.company_name',
+                    'users.user_name',
                     'services.service_name',
                     'services.value',
+                    'schedule.status',
                     'attendance.attendace_date',
                     'attendance.opening_hours',
-                    'users.user_name'
+                    'companies.company_name'
                 )
                 .innerJoin('companies', 'company_id_schedule', 'company_id')
                 .innerJoin('services', 'service_id_schedule', 'service_id')
