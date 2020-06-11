@@ -1,4 +1,6 @@
 const database = require('../database/index');
+const bcrypt = require('bcrypt');
+const jwt = require('jsonwebtoken');
 
 module.exports = {
     async index(request, response, next){
@@ -52,32 +54,82 @@ module.exports = {
         return response.json(data);
     },
 
-    async create(request, response, next){
-        try {
-            const {
-                user_name,
-                user_password,
-                user_email,
-                user_tel
-            } = request.body;
+    create(request, response, next){
+        
+            const user =request.body;
 
-            const [user_id] = await database('users').returning('user_id').insert({
-                user_name,
-                user_password,
-                user_email,
-                user_tel,
-                create_data: new Date()
-            });
+            hashPassword(user.password)
+                .then((hashedPassword)=>{
+                    delete user.password
+                    user.user_password = hashedPassword
+                }).then(()=> createUser(user))
+                .then(user => {
+                    delete user.user_password
+                    response.status(201).json({user, token: createtokenUser(user.user_id)});
+                }).catch((err)=>{
+                    next(err);
+                    response.status(404).json({err: 'Email já cadastrado'})
+                })      
+    }, 
 
-            return response.json({
-                user_id,
-                user_name,
-                user_email,
-                user_tel
-            });
-        } catch (error) {
-            console.log('Error: '+error);
-            next(error);
-        }
+    login(request, response, next){
+        const userReq = request.body;
+        let user;
+
+        findUser(userReq)
+            .then(foundUser => {
+                user = foundUser
+                return checkPassword(userReq.password, foundUser)
+            })
+            .then(() => {
+                delete user.user_password
+                response.status(200).json({user, token: createtokenUser(user.user_id)})
+            })
+            .catch((err) => console.error(err));
+            
     }
+}
+
+const createUser = async (user) =>{
+    
+    const createdata = database.raw(
+        "INSERT INTO users (user_name, user_password, user_email, user_tel, create_data) VALUES (?, ?, ?, ?, ?) RETURNING user_name, user_email, user_tel, create_data",
+        [user.user_name, user.user_password, user.user_email, user.user_tel, new Date()],
+        
+    ).then((data) => data.rows[0])
+
+return createdata; 
+}
+
+const hashPassword = (password) => {
+    return new Promise((resolve, reject)=> 
+        bcrypt.hash(password, 10, (err, hash)=>{
+            err ? reject(err) : resolve(hash);
+        })       
+    )
+}
+
+const createtokenUser = (userID) => {
+    return jwt.sign({id:userID}, 'agendamento', {expiresIn: '20s'});
+}
+
+const findUser = (userReq) => {
+    const selectUser = database.raw("SELECT * FROM users Where user_email = ?", [userReq.user_email])
+    .then((data)=> data.rows[0]);
+
+    return selectUser;
+}
+
+const checkPassword = (reqPassword, foundUser) =>{
+    return new Promise((resolve, reject) => 
+        bcrypt.compare(reqPassword, foundUser.user_password, (err, response)=>{
+            if(err){
+                reject(err)
+            }else if(response){
+                resolve(response)
+            }else {
+                reject(new Error('Passwords do not match.'))
+            }
+        })
+    )
 }

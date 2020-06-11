@@ -1,5 +1,7 @@
 const express = require('express');
 
+const auth = require('./middleware/auth');
+
 const UserController = require('./controller/UserController');
 const CompaniesController = require('./controller/CompaniesController');
 const ServicesController = require('./controller/ServiceController');
@@ -12,6 +14,11 @@ const routes = express.Router();
 routes.post('/createUser', UserController.create);
 routes.get('/user/listMissedAppointments/:id', UserController.index);
 routes.get('/user/listAll/:id', UserController.indexAll);
+routes.post('/user/login', UserController.login);
+
+routes.get('/testando', auth, (req, res)=>{
+    res.send('Entrou')
+})
 
 routes.post('/createCompanies', CompaniesController.create);
 routes.get('/companies/list/:id', CompaniesController.index);
