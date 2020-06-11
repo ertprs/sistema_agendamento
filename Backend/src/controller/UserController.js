@@ -65,7 +65,7 @@ module.exports = {
                 }).then(()=> createUser(user))
                 .then(user => {
                     delete user.user_password
-                    response.status(201).json({user, token: createtokenUser(user.user_id)});
+                    response.status(201).json({user: user[0], token: createtokenUser(user.user_id)});
                 }).catch((err)=>{
                     next(err);
                     response.status(404).json({err: 'Email já cadastrado'})
@@ -85,12 +85,15 @@ module.exports = {
                 delete user.user_password
                 response.status(200).json({user, token: createtokenUser(user.user_id)})
             })
-            .catch((err) => console.error(err));
+            .catch((err) => {
+                console.error(err)
+                response.json({error: 'Email ou senha incorreto'})
+            });
             
     }
 }
 
-const createUser = async (user) =>{
+/*const createUser = async (user) =>{
     
     const createdata = database.raw(
         "INSERT INTO users (user_name, user_password, user_email, user_tel, create_data) VALUES (?, ?, ?, ?, ?) RETURNING user_name, user_email, user_tel, create_data",
@@ -99,6 +102,22 @@ const createUser = async (user) =>{
     ).then((data) => data.rows[0])
 
 return createdata; 
+}*/
+
+async function createUser (user){
+    try {
+        const createdata = await database('users').returning(['user_id','user_name', 'user_email', 'user_tel' ]).insert({
+            user_name: user.user_name,
+            user_password: user.user_password,
+            user_email: user.user_email,
+            user_tel: user.user_tel,
+            create_data: new Date()
+        })
+
+        return createdata;
+    } catch (error) {
+        console.error('Email já cadastrado')
+    }
 }
 
 const hashPassword = (password) => {

@@ -1,4 +1,6 @@
 const database = require('../database/index');
+const bcrypt = require('bcrypt');
+const jwt = require('jsonwebtoken');
 
 module.exports = {
     async index(request, response, next){
@@ -54,35 +56,103 @@ module.exports = {
         return response.json(data);
     }, 
 
-    async create(request, response, next){
-        try {
-            const {
-                company_name,
-                company_password,
-                company_email,
-                company_tel,
-                company_cnpj
-            } = request.body;
+    create(request, response, next){
 
-            const [company_id] = await database('companies').returning('company_id').insert({
-                company_name,
-                company_password,
-                company_email,
-                company_tel,
-                company_cnpj,
-                create_date_company: new Date()
-            });
+            const company = request.body;
 
-            return response.json({
-                company_id,
-                company_name,
-                company_email,
-                company_tel,
-                company_cnpj
+            hashPassword(company.password)
+            .then((hashedPassword)=>{
+                delete company.password
+                company.company_password =hashedPassword
             })
-        } catch (error) {
-            console.log('Error: '+error);
-            next(error);
-        }
+            .then(()=> createCompany(company))
+            .then(company =>{
+                delete company.company_password
+                response.status(201).json({company: company[0], token: createTokenCompany(company.company_id)})
+            }).catch((err)=>{
+                next(err);
+                response.status(404).json({err: 'Email ou cnpj já cadastrado'})
+            })
+
+            
+    },
+
+    login(request, response, next){
+        const companyReq = request.body;
+        let company;
+
+        findCompany(companyReq)
+            .then(foundCompany =>{
+                company = foundCompany
+                return checkPassword(companyReq.password, foundCompany)
+            })
+            .then(()=>{
+                delete company.company_password
+                response.status(200).json({company, token: createTokenCompany(company.company_id)});
+            })
+            .catch((err)=>{
+                console.error('Error: '+err);
+                response.json({error:'Email ou senha incorreto'})
+            })
+    }
+
+}
+
+const hashPassword = (password) =>{
+    return new Promise((resolve, reject)=>{
+        bcrypt.hash(password, 10, (err, hash)=>{
+            err ? reject(err) : resolve(hash)
+        })
+    })
+}
+
+const createTokenCompany = (companyId) => {
+    return jwt.sign({id: companyId}, 'agendamento', {expiresIn: '20s'});
+}
+
+const findCompany = (companyReq) =>{
+    const selectCompany = database.raw("SELECT * FROM companies WHERE company_email = ?", [companyReq.company_email])
+    .then((data)=>data.rows[0]);
+
+    return selectCompany;
+}
+
+const checkPassword = (reqPassword, foundCompany) =>{
+    return new Promise((resolve, reject)=>{
+        bcrypt.compare(reqPassword, foundCompany.company_password, (err, response)=>{
+            if(err){
+                reject(err)
+            }else if(response){
+                resolve(response)
+            }else{
+                reject(new Error('Passwords do not match.'));
+            }
+        })
+    })
+}
+
+/*const createCompany = (company) =>{
+    const createdata = database.raw(
+        "INSERT INTO companies (company_name, company_password, company_email, company_tel, company_cnpj, create_date_company) VALUES (?, ?, ?, ?, ?, ?) RETURNING company_name, company_email, company_tel, company_cnpj",
+        [company.company_name, company.company_password, company.company_email, company.company_tel, company.company_cnpj, new Date()]
+    ).then((data)=> data.rows[0])
+
+    return createdata;
+}*/
+
+async function createCompany (company){
+    try {
+        const createdata = await database('companies').returning(['company_email', 'company_name', 'company_tel', 'company_cnpj', 'company_id']).insert({
+            company_name: company.company_name,
+            company_password: company.company_password,
+            company_email: company.company_email,
+            company_tel: company.company_tel,
+            company_cnpj: company.company_cnpj,
+            create_date_company: new Date()
+        })
+
+        return createdata
+    } catch (error) {
+        console.error('Email ou cnpj já cadastrado')
     }
 }

@@ -17,12 +17,14 @@ routes.get('/user/listAll/:id', UserController.indexAll);
 routes.post('/user/login', UserController.login);
 
 routes.get('/testando', auth, (req, res)=>{
+    console.log(res.locals.auth_data);
     res.send('Entrou')
 })
 
 routes.post('/createCompanies', CompaniesController.create);
 routes.get('/companies/list/:id', CompaniesController.index);
 routes.get('/companies/listAll/:id', CompaniesController.indexAll);
+routes.post('/company/login', CompaniesController.login);
 
 routes.post('/createServices', ServicesController.create);
 
