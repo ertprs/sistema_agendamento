@@ -129,7 +129,7 @@ const hashPassword = (password) => {
 }
 
 const createtokenUser = (userID) => {
-    return jwt.sign({id:userID}, 'agendamento', {expiresIn: '20s'});
+    return jwt.sign({id:userID}, 'agendamento', {expiresIn: '120s'});
 }
 
 const findUser = (userReq) => {

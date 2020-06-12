@@ -12,25 +12,27 @@ const ScheduleController = require('./controller/scheduleController');
 const routes = express.Router();
 
 routes.post('/createUser', UserController.create);
-routes.get('/user/listMissedAppointments/:id', UserController.index);
-routes.get('/user/listAll/:id', UserController.indexAll);
 routes.post('/user/login', UserController.login);
+routes.get('/user/listMissedAppointments/:id', auth , UserController.index);
+routes.get('/user/listAll/:id', auth ,UserController.indexAll);
 
 routes.get('/testando', auth, (req, res)=>{
+    const params = req.query;
     console.log(res.locals.auth_data);
-    res.send('Entrou')
+    params.token = req.headers.auther;
+    res.send(`O usuário ${params.name} Acabou de efetuar login. lembrar de pegar o token e enviar como parâmetro do front.O Token ${params.token}`)
 })
 
 routes.post('/createCompanies', CompaniesController.create);
-routes.get('/companies/list/:id', CompaniesController.index);
-routes.get('/companies/listAll/:id', CompaniesController.indexAll);
 routes.post('/company/login', CompaniesController.login);
+routes.get('/companies/list/:id', auth ,CompaniesController.index);
+routes.get('/companies/listAll/:id', auth ,CompaniesController.indexAll);
 
-routes.post('/createServices', ServicesController.create);
+routes.post('/createServices', auth ,ServicesController.create);
 
-routes.post('/createAttendance', AttendanceController.create);
+routes.post('/createAttendance', auth ,AttendanceController.create);
 
-routes.post('/creatSchedule', ScheduleController.create);
+routes.post('/creatSchedule', auth ,ScheduleController.create);
 routes.get('/listar/:id', ScheduleController.index);
 
 module.exports = routes;
