@@ -27,6 +27,7 @@ routes.post('/createCompanies', CompaniesController.create);
 routes.post('/company/login', CompaniesController.login);
 routes.get('/companies/list/:id', auth ,CompaniesController.index);
 routes.get('/companies/listAll/:id', auth ,CompaniesController.indexAll);
+routes.get('/companies', CompaniesController.ListCompanies);
 
 routes.post('/createServices', auth ,ServicesController.create);
 

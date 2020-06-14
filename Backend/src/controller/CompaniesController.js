@@ -56,6 +56,17 @@ module.exports = {
         return response.json(data);
     }, 
 
+    async ListCompanies(request, response, next){
+        try {
+            const companies = await database('companies').select('*')
+
+            return response.json(companies);
+        } catch (error) {
+            console.log(error);
+            next(error);
+        }
+    },
+
     create(request, response, next){
 
             const company = request.body;
