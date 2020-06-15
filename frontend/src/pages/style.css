@@ -451,6 +451,17 @@ SECTION
     min-height: 500px;
 }
 
+.transheaderServices{
+    padding-top: 50px;
+    min-height: 100px;
+}
+
+.transheaderServices h2{
+    color: #ffffff;
+    font-size: 52px;
+    font-weight: bold;
+}
+
 .homepage.transheader {
     padding-top: 150px;
     padding-bottom: 150px;
@@ -1365,8 +1376,9 @@ BOOKS
 }
 
 .ebook-details small {
-    font-weight: 400;
+    font-weight: 500;
     font-style: italic;
+    font-size: 18px;
 }
 
 .ebook-details .btn {

@@ -2,7 +2,6 @@ import React, {useEffect, useState} from 'react';
 
 import api from '../../services/api';
 
-import logo from '../../images/logo.png';
 
 import anuncioImg from '../../images/banner.gif'
 
@@ -23,7 +22,7 @@ export default function ListCompanies(){
 
 
     useEffect(()=>{
-        const fetchCompanies = () =>{
+        const fetchCompanies = async () =>{
             setLoading(true)
             api.get('companies').then(res =>{
                 setCompanies(res.data);
@@ -42,15 +41,15 @@ export default function ListCompanies(){
     const paginate = (pageNumber) => setCurrentPage(pageNumber);
 
     return(
-    <div style={{backgroundColor:'white'}}>
-        <Menu/>
     <div>
-        <h1 style={{marginLeft:'145px'}}>Empresas</h1>
+        <Menu/>
+    <div style={{marginTop:'-30px'}}>
         <section className="section">
 			<div className="container">
 				<div className="row">
                    <ul>
                     <div className="content col-md-8">
+                    <h3>Resultado({companies.length})</h3>
                        <Companies companies={currentPosts} loading={loading}/>
                        <PaginationNumber postsPerPage={postPerPage} totalPosts={companies.length} paginate={paginate}/>
                    </div>

@@ -49,12 +49,12 @@ export default function Initial(){
         </section>{/*<!-- end section -->*/}
 
         <section>
-        <div class="container">
-                <div class="section-title text-center">
+        <div className="container">
+                <div className="section-title text-center">
                     <small>Bem vindo ao agendamento fácil</small>
                     <h3>Top Lorem ipsum pharetra</h3>
                     <hr/>
-                    <p class="lead"> Lorem ipsum pharetra facilisis lobortis erat tempor fermentum quam habitant, <br/>Lorem ipsum pharetra facilisis lobortis erat tempor </p>
+                    <p className="lead"> Lorem ipsum pharetra facilisis lobortis erat tempor fermentum quam habitant, <br/>Lorem ipsum pharetra facilisis lobortis erat tempor </p>
                 </div>
         </div>
         </section>

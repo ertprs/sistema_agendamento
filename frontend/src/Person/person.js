@@ -90,7 +90,7 @@ const Menu = () =>{
 const Companies = (props) =>{
 
     if(props.loading){
-        return <h3 style={{color:'#808080'}}><img src={loadingGif} style={{width:'40px', marginRight: '10px'}} />Carregando informações, por favor aguarde</h3>
+        return <h3 style={{color:'#808080'}}><img src={loadingGif} style={{width:'40px', marginRight: '10px'}} alt='texto'/>Carregando informações, por favor aguarde</h3>
     }
 
 
@@ -109,7 +109,11 @@ const Companies = (props) =>{
                             <p>Telefone: {company.company_tel}</p>
                             <p style={{marginTop:'-10px'}}>Email: {company.company_email}</p>
                             <p style={{marginTop:'-10px'}}>Endereço: </p>
-                            <button className='btn btn-primary'>Selecionar</button>
+                            <button  className='btn btn-primary'>
+                                <Link to={'/servicesCompany/'+ company.company_id} style={{color:'white'}}>
+                                    Selecionar
+                                </Link>
+                            </button>
                         </div>
                     </div>
                 
