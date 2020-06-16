@@ -7,6 +7,7 @@ const CompaniesController = require('./controller/CompaniesController');
 const ServicesController = require('./controller/ServiceController');
 const AttendanceController = require('./controller/AttendanceController');
 const ScheduleController = require('./controller/scheduleController');
+const { compare } = require('bcrypt');
 
 
 const routes = express.Router();
@@ -28,6 +29,7 @@ routes.post('/company/login', CompaniesController.login);
 routes.get('/companies/list/:id', auth ,CompaniesController.index);
 routes.get('/companies/listAll/:id', auth ,CompaniesController.indexAll);
 routes.get('/companies', CompaniesController.ListCompanies);
+routes.get('/servicesCompany/:id', CompaniesController.ServicesList);
 
 routes.post('/createServices', auth ,ServicesController.create);
 

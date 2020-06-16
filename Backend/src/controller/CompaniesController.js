@@ -56,6 +56,23 @@ module.exports = {
         return response.json(data);
     }, 
 
+    async ServicesList(request, response, next){
+        try {
+            const id = request.params.id;
+
+            const services = await database('services').select('*').where('company_id_service', id);
+
+            if(services.length == 0){
+                return response.json({mensager: 'A empresa não tem serviços registrados'})
+            }
+
+            return response.json(services);
+        } catch (error) {
+            console.log(error);
+            next(error);
+        }
+    },
+
     async ListCompanies(request, response, next){
         try {
             const companies = await database('companies').select('*')

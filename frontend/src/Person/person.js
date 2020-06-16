@@ -1,5 +1,6 @@
 import React from 'react';
 import {Link} from 'react-router-dom';
+import Popup from 'reactjs-popup';
 
 import imagemBlog from '../upload/blog_01.jpg';
 import loadingGif from '../images/loading.gif';
@@ -8,8 +9,14 @@ import logo from '../images/seu-logo.png';
 import '../css/font-awesome.min.css';
 import '../css/bootstrap.min.css';
 import '../css/animate.css';
+import './style.css';
 import '../pages/style.css';
 
+
+
+function saveId(id){
+    localStorage.setItem('Id', id);
+}
 
 
 const Menu = () =>{
@@ -109,7 +116,7 @@ const Companies = (props) =>{
                             <p>Telefone: {company.company_tel}</p>
                             <p style={{marginTop:'-10px'}}>Email: {company.company_email}</p>
                             <p style={{marginTop:'-10px'}}>Endereço: </p>
-                            <button  className='btn btn-primary'>
+                            <button  className='btn btn-primary' onClick={()=> saveId(company.company_id)}>
                                 <Link to={'/servicesCompany/'+ company.company_id} style={{color:'white'}}>
                                     Selecionar
                                 </Link>
@@ -190,10 +197,71 @@ const Footer = ()=>{
     )
 }
 
+const PopupService = ()=>{
+    return(
+        <Popup trigger={<button className="btn btn-transparent"> Agendar </button>} modal>
+    {close => (
+      <div className="model">
+        <a className="close " onClick={close}>
+          &times;
+        </a>
+        <div className="header"> Informações para Agendamento </div>
+        <div className="content">
+          {" "}
+          <label>Serviço: Corte</label>
+          <label style={{marginLeft:'10px'}}>Valor: R$ 00,00</label>
+          <br/>
+          <label>Data de Agendamento</label>
+          <input type='date'/>
+          <label style={{marginLeft:'10px'}}>Data de Agendamento</label>
+          <input type='date'/>
+          <br />
+          <label>Data de Agendamento</label>
+          <input type='date'/>
+          <label style={{marginLeft:'10px'}}>Data de Agendamento</label>
+          <input type='date'/>
+          <br/>
+          <label>Data de Agendamento</label>
+          <input type='date'/>
+          <label style={{marginLeft:'10px'}}>Data de Agendamento</label>
+          <input type='date'/>
+          <br />
+          <label>Data de Agendamento</label>
+          <input type='date'/>
+          <label style={{marginLeft:'10px'}}>Data de Agendamento</label>
+          <input type='date'/>
+        </div>
+        <div className="actions">
+          <Popup
+            trigger={<button className="button"> Agendar </button>}
+            position="top center"
+            closeOnDocumentClick
+          >
+            <span>
+              Vou ver o que faço aqui
+            </span>
+          </Popup>
+          <button
+            className="button"
+            onClick={() => {
+              console.log("modal closed ");
+              close();
+            }}
+          >
+            close modal
+          </button>
+        </div>
+      </div>
+    )}
+  </Popup>
+    )
+}
+
 
 export {
     Companies, 
     PaginationNumber,
     Menu,
-    Footer
+    Footer,
+    PopupService
 };

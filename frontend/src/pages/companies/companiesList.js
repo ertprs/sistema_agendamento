@@ -22,7 +22,7 @@ export default function ListCompanies(){
 
 
     useEffect(()=>{
-        const fetchCompanies = async () =>{
+        const fetchCompanies = () =>{
             setLoading(true)
             api.get('companies').then(res =>{
                 setCompanies(res.data);
@@ -49,7 +49,7 @@ export default function ListCompanies(){
 				<div className="row">
                    <ul>
                     <div className="content col-md-8">
-                    <h3>Resultado({companies.length})</h3>
+                    <h3>Resultados({companies.length})</h3>
                        <Companies companies={currentPosts} loading={loading}/>
                        <PaginationNumber postsPerPage={postPerPage} totalPosts={companies.length} paginate={paginate}/>
                    </div>
