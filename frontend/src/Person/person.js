@@ -4,6 +4,7 @@ import Popup from 'reactjs-popup';
 
 import imagemBlog from '../upload/blog_01.jpg';
 import loadingGif from '../images/loading.gif';
+import imgService from '../upload/book_01.png';
 import logo from '../images/seu-logo.png';
 
 import '../css/font-awesome.min.css';
@@ -18,6 +19,9 @@ function saveId(id){
     localStorage.setItem('Id', id);
 }
 
+function loadingInfo(){
+   return <h3 style={{color:'#808080'}}><img src={loadingGif} style={{width:'40px', marginRight: '10px'}} alt='texto'/>Carregando informações, por favor aguarde</h3>
+}
 
 const Menu = () =>{
     return(
@@ -97,7 +101,7 @@ const Menu = () =>{
 const Companies = (props) =>{
 
     if(props.loading){
-        return <h3 style={{color:'#808080'}}><img src={loadingGif} style={{width:'40px', marginRight: '10px'}} alt='texto'/>Carregando informações, por favor aguarde</h3>
+       return loadingInfo();
     }
 
 
@@ -130,11 +134,12 @@ const Companies = (props) =>{
     )
 }
 
+
 const PaginationNumber = ({postsPerPage, totalPosts, paginate}) =>{
     const pageNumbers = [];
 
     var totalPages = Math.ceil(totalPosts / postsPerPage);
-
+    
     for(let i = 1; i <= totalPages; i++){
         pageNumbers.push(i);
     }
@@ -197,7 +202,45 @@ const Footer = ()=>{
     )
 }
 
-const PopupService = ()=>{
+const Services = (props) =>{
+    function posts(){
+        if(props.services == ''){
+        return(<h1>Estabelecimento sem serviços registrados, por favor escolha outro estabelecimento</h1>)
+        }
+
+    }
+    if(props.loading){
+        return loadingInfo();
+    }
+
+    return(
+        <>
+         <h1>Preciso pegar as informações via props para o agendamento </h1>
+        {props.services.map(service => (	
+            <li key={service.service_id} style={{listStyleType:'none'}}>
+            <div className="col-md-6">
+                <div className="ebook-details row">
+                    <div className="col-md-3">
+                        <img src={imgService} alt="" className="img-responsive"/>
+                    </div>
+                    <div className="col-md-9">
+                        <div className="book-details">
+                            <h3>{service.service_name}</h3>
+                            <p>Descrição do serviço</p>
+                            <small>{Intl.NumberFormat('pt-BR', {style: 'currency', currency: 'BRL'}).format(service.value)}</small><br/>
+                            <PopupService value={service.value} nameService={service.service_name}/>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            </li>
+        ))}
+        {posts()}
+        </>
+    )
+}
+
+const PopupService = (props)=>{
     return(
         <Popup trigger={<button className="btn btn-transparent"> Agendar </button>} modal>
     {close => (
@@ -208,28 +251,18 @@ const PopupService = ()=>{
         <div className="header"> Informações para Agendamento </div>
         <div className="content">
           {" "}
-          <label>Serviço: Corte</label>
-          <label style={{marginLeft:'10px'}}>Valor: R$ 00,00</label>
+          <label>Serviço: {props.nameService}</label>
+          <label style={{marginLeft:'10px'}}>Valor: {props.value}</label>
           <br/>
           <label>Data de Agendamento</label>
           <input type='date'/>
-          <label style={{marginLeft:'10px'}}>Data de Agendamento</label>
-          <input type='date'/>
+          <label style={{marginLeft:'10px'}}>Horário</label>
+          <select >
+              <option></option>
+              <option>7:00</option>
+          </select>
           <br />
-          <label>Data de Agendamento</label>
-          <input type='date'/>
-          <label style={{marginLeft:'10px'}}>Data de Agendamento</label>
-          <input type='date'/>
-          <br/>
-          <label>Data de Agendamento</label>
-          <input type='date'/>
-          <label style={{marginLeft:'10px'}}>Data de Agendamento</label>
-          <input type='date'/>
-          <br />
-          <label>Data de Agendamento</label>
-          <input type='date'/>
-          <label style={{marginLeft:'10px'}}>Data de Agendamento</label>
-          <input type='date'/>
+          
         </div>
         <div className="actions">
           <Popup
@@ -241,7 +274,7 @@ const PopupService = ()=>{
               Vou ver o que faço aqui
             </span>
           </Popup>
-          <button
+          {/*<button
             className="button"
             onClick={() => {
               console.log("modal closed ");
@@ -249,7 +282,7 @@ const PopupService = ()=>{
             }}
           >
             close modal
-          </button>
+        </button>*/}
         </div>
       </div>
     )}
@@ -263,5 +296,6 @@ export {
     PaginationNumber,
     Menu,
     Footer,
-    PopupService
+    PopupService, 
+    Services
 };

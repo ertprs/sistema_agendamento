@@ -1,8 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useParams, Link } from "react-router-dom"
-import {Menu, Footer, PopupService} from '../../Person/person';
+import {Menu, Footer, PopupService, Services} from '../../Person/person';
 
-import imgService from '../../upload/book_01.png';
 
 import '../../css/font-awesome.min.css';
 import '../../css/bootstrap.min.css';
@@ -20,8 +19,6 @@ export default function CompaniesServices(){
 	const [loading, setLoading] = useState(false);
 	
     const id = useParams();
-
-	console.log('Params: '+id.id)
 	
 	useEffect(()=>{
 		const fetchServices = ()=>{
@@ -53,26 +50,7 @@ export default function CompaniesServices(){
 			<div className="container">
 				<div className="row">
 					<ul>
-					{services.map(service => (	
-						<li key={services.service_id} style={{listStyleType:'none'}}>
-						<div className="col-md-6">
-							<div className="ebook-details row">
-								<div className="col-md-3">
-									<img src={imgService} alt="" className="img-responsive"/>
-								</div>
-								<div className="col-md-9">
-									<div className="book-details">
-										<h3>{service.service_name}</h3>
-										<p>Descrição do serviço</p>
-										<small>{Intl.NumberFormat('pt-BR', {style: 'currency', currency: 'BRL'}).format(service.value)}</small><br/>
-										<PopupService/>
-										
-									</div>
-								</div>
-							</div>
-						</div>
-						</li>
-					))}
+					<Services loading={loading} services={services}/>
 					</ul>
 				</div>
 			</div>

@@ -62,10 +62,6 @@ module.exports = {
 
             const services = await database('services').select('*').where('company_id_service', id);
 
-            if(services.length == 0){
-                return response.json({mensager: 'A empresa não tem serviços registrados'})
-            }
-
             return response.json(services);
         } catch (error) {
             console.log(error);
