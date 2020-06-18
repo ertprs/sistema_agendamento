@@ -1,6 +1,7 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import {Link} from 'react-router-dom';
 import Popup from 'reactjs-popup';
+import api from '../services/api';
 
 import imagemBlog from '../upload/blog_01.jpg';
 import loadingGif from '../images/loading.gif';
@@ -12,6 +13,7 @@ import '../css/bootstrap.min.css';
 import '../css/animate.css';
 import './style.css';
 import '../pages/style.css';
+
 
 
 
@@ -215,7 +217,6 @@ const Services = (props) =>{
 
     return(
         <>
-         <h1>Preciso pegar as informações via props para o agendamento </h1>
         {props.services.map(service => (	
             <li key={service.service_id} style={{listStyleType:'none'}}>
             <div className="col-md-6">
@@ -228,7 +229,7 @@ const Services = (props) =>{
                             <h3>{service.service_name}</h3>
                             <p>Descrição do serviço</p>
                             <small>{Intl.NumberFormat('pt-BR', {style: 'currency', currency: 'BRL'}).format(service.value)}</small><br/>
-                            <PopupService value={service.value} nameService={service.service_name}/>
+                            <PopupService value={service.value} nameService={service.service_name} id={props.id}/>
                         </div>
                     </div>
                 </div>
@@ -241,6 +242,49 @@ const Services = (props) =>{
 }
 
 const PopupService = (props)=>{
+
+    const [date, setDate] = useState('');
+    const [info, setInfo] = useState([]);
+    const [hoursId, setHoursId] = useState(0);
+    const [free, setFree] = useState([]);
+
+    useEffect(()=>{
+        if(date != ''){
+            api.get(`dateAtendance/${date}?id=${props.id}`).then(res=>{
+                console.log(`api: ${res.data.map(dat => (dat.attendace_id))}`)
+                setInfo(res.data);
+            })
+            
+            //setFree([hoursId])
+            console.log("aqui: "+ [info])
+            console.log("hora id: "+ hoursId)
+
+        }
+    },[date])
+    //Esse é responsável por pegar o Id da hora e ir no banco de dados verificar se tem algum agendamento com esse id de atendimento
+    useEffect(()=>{
+        console.log("hora id2: "+ hoursId)
+      
+        api.get(`hours?id=${hoursId}`).then(res=>{
+            console.log('Primeira promise: '+res.data)
+            setFree(res.data);
+        })
+        
+    }, [hoursId])
+    //Esse é responsável por pegar o resultado do anterior e verificar se está livre ou não o horario(se o array retornar vázio está livre)
+    useEffect(()=>{
+        console.log('valor: '+free)
+        console.log('Tamanho: '+free.length)
+        info.map(infos => {
+            if(free.length != 0){
+                console.log('horário ocupado: '+ infos.opening_hours + ' id: '+infos.attendace_id)
+            }else{
+                console.log('horário livre '+ infos.opening_hours)
+            }
+        })
+
+    }, [free])
+
     return(
         <Popup trigger={<button className="btn btn-transparent"> Agendar </button>} modal>
     {close => (
@@ -252,14 +296,20 @@ const PopupService = (props)=>{
         <div className="content">
           {" "}
           <label>Serviço: {props.nameService}</label>
-          <label style={{marginLeft:'10px'}}>Valor: {props.value}</label>
+          <label style={{marginLeft:'10px'}}>Valor: R$ {props.value}</label>
           <br/>
           <label>Data de Agendamento</label>
-          <input type='date'/>
-          <label style={{marginLeft:'10px'}}>Horário</label>
-          <select >
+          <input type='date' value={date} onChange={e=>setDate(e.target.value)} />
+          <label style={{marginLeft:'10px'}}>Horários Disponíveis</label>
+          {/*Peguei o ID do horario de atendimento no option
+            Vou pegar esse Id pra poder fazer uma buscar no banco e ver se já tem algum agendamento no schedule com esse id
+            Se tiver não é pra esse horario ser retornado, se não tiver é pra esse horário ser retornado para nossos option
+          */}
+          <select value={hoursId} onChange={e=>setHoursId(e.target.value)}>
               <option></option>
-              <option>7:00</option>
+              {info.map(infos => (
+                <option key={infos.attendace_id} value={infos.attendace_id} >{infos.opening_hours}</option> 
+                ))}
           </select>
           <br />
           

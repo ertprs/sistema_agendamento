@@ -28,6 +28,24 @@ module.exports = {
         }
     },
 
+    async freeHours(request, response, next){
+        try {
+            const id = request.query.id;
+            const date = request.query.date;
+
+            const info = await database('schedule')
+                .select('*')
+                .innerJoin('attendance', 'attendace_id_schedule', 'attendace_id')
+                .where('attendace_id_schedule', id)
+                .andWhere('status', 'true');
+            
+            return response.json(info);
+        } catch (error) {
+            console.log(error);
+            next(error);
+        }
+    },
+
     async create(request, response, next){
         try {
             const {

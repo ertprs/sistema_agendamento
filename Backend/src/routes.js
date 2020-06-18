@@ -26,7 +26,7 @@ routes.get('/testando', auth, (req, res)=>{
 
 routes.post('/createCompanies', CompaniesController.create);
 routes.post('/company/login', CompaniesController.login);
-routes.get('/companies/list/:id', auth ,CompaniesController.index);
+routes.get('/companies/list/:id',CompaniesController.index);
 routes.get('/companies/listAll/:id', auth ,CompaniesController.indexAll);
 routes.get('/companies', CompaniesController.ListCompanies);
 routes.get('/servicesCompany/:id', CompaniesController.ServicesList);
@@ -34,8 +34,11 @@ routes.get('/servicesCompany/:id', CompaniesController.ServicesList);
 routes.post('/createServices', auth ,ServicesController.create);
 
 routes.post('/createAttendance', auth ,AttendanceController.create);
+routes.get('/attendance/:id', AttendanceController.index);
+routes.get('/dateAtendance/:date', AttendanceController.indexDate);
 
 routes.post('/creatSchedule', auth ,ScheduleController.create);
 routes.get('/listar/:id', ScheduleController.index);
+routes.get('/hours', ScheduleController.freeHours);
 
 module.exports = routes;

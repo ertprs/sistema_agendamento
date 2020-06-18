@@ -17,8 +17,9 @@ export default function CompaniesServices(){
 	
 	const [services, setServices] = useState([]);
 	const [loading, setLoading] = useState(false);
+	//const [date, setDate] = useState([]);
 	
-    const id = useParams();
+	const id = useParams();
 	
 	useEffect(()=>{
 		const fetchServices = ()=>{
@@ -31,6 +32,16 @@ export default function CompaniesServices(){
 
 		fetchServices();
 	}, [])
+
+	/*useEffect(()=>{
+		const fetchHours = ()=>{
+			api.get(`attendance/${id.id}`).then(res=>{
+				setDate(res.data);
+			})
+		}
+
+		fetchHours();
+	}, [])*/
 
 
     return(
@@ -50,7 +61,7 @@ export default function CompaniesServices(){
 			<div className="container">
 				<div className="row">
 					<ul>
-					<Services loading={loading} services={services}/>
+					<Services loading={loading} services={services} id={id.id}/>
 					</ul>
 				</div>
 			</div>
