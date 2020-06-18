@@ -11,6 +11,7 @@ import '../css/bootstrap.min.css';
 import '../css/animate.css';
 import '../css/carousel.css';
 import './style.css';
+import { Link } from 'react-router-dom';
 
 //import '../js/vendor/html5shiv.min.js';
 //import '../js/vendor/respond.min.js';
@@ -39,7 +40,7 @@ export default function Initial(){
                                         </select>
                                     </div>
                                 </div>
-                                <input type="submit" name="send" value="Buscar" className="btn btn-default" style={{marginLeft:'10px'}} />
+                                <Link to='/companiesList'><input type="submit" name="send" value="Buscar" className="btn btn-default" style={{marginLeft:'10px'}} /></Link>
                             </div>
                         </div>
                     </form>
