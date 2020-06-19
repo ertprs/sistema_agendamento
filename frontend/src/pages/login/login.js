@@ -1,37 +1,70 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import {Menu} from '../../Person/person';
+import {useHistory} from 'react-router-dom';
 
 import './style.css';
 import '../style.css';
 import './main.css';
 import './util.css';
+import api from '../../services/api';
 
 export default function Login(){
+
+    const [user_email, setEmail] = useState('');
+    const [password, setPassword] = useState('');
+
+    const history = useHistory();
+
+    async function handleLogin(e){
+        e.preventDefault();
+
+        const data = {
+            user_email,
+            password
+        };
+
+        alert(`email: ${data.user_email} e senha: ${data.password}`)
+
+        try {
+            const response = await api.post('user/login', data);
+            console.log(response)
+            if(response.data.error){
+                alert('Email ou senha incorreto')
+            }else{
+                alert('Login realizado: ');
+                localStorage.setItem('Token', response.data.token)
+                history.push('/companiesList')
+            }
+        } catch (error) {
+            alert('email ou senha incorreto');
+        }
+    }
+
     return (
         <div>
             <Menu/>
             <div className="limiter">
                 <div className="container-login100">
                     <div className="wrap-login100 p-l-55 p-r-55 p-t-65 p-b-50">
-                        <form className="login100-form validate-form">
+                        <form className="login100-form validate-form" onSubmit={handleLogin}>
                             <span className="login100-form-title p-b-33">
                                 Faça seu Login
                             </span>
 
                             <div className="wrap-input100 validate-input" data-validate = "Valid email is required: ex@abc.xyz">
-                                <input className="input100" type="text" name="email" placeholder="Email"/>
+                                <input className="input100" type="email" placeholder="Email" value={user_email} onChange={e=>setEmail(e.target.value)}/>
                                 <span className="focus-input100-1"></span>
                                 <span className="focus-input100-2"></span>
                             </div>
 
                             <div className="wrap-input100 rs1 validate-input" data-validate="Password is required">
-                                <input className="input100" type="password" name="pass" placeholder="Senha"/>
+                                <input className="input100" type="password" placeholder="Senha" value={password} onChange={e=>setPassword(e.target.value)} />
                                 <span className="focus-input100-1"></span>
                                 <span className="focus-input100-2"></span>
                             </div>
 
                             <div className="container-login100-form-btn m-t-20">
-                                <button className="login100-form-btn">
+                                <button className="login100-form-btn" type='submit'>
                                     Login
                                 </button>
                             </div>
@@ -46,12 +79,12 @@ export default function Login(){
                                 </a>
                             </div>
 
-                            <div class="text-center">
-                                <span class="txt1">
+                            <div className="text-center">
+                                <span className="txt1">
                                     Não possui uma conta?
                                 </span>
 
-                                <a href="/#" class="txt2 hov1" style={{marginLeft:'5px'}}>
+                                <a href="/#" className="txt2 hov1" style={{marginLeft:'5px'}}>
                                     Cadastre-se
                                 </a>
                             </div>

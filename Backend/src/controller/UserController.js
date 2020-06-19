@@ -27,8 +27,11 @@ module.exports = {
         if(data.length == 0){
             return response.json({mensager: 'Você não possui agendamentos em aberto'})
         }
+
+        console.log(response.locals.auth_data);
+        const id_user_login = response.locals.auth_data;
         
-        return response.json(data);
+        return response.json({data: data, id_user_login: id_user_login});
     },
 
     async indexAll(request, response, next){

@@ -1,5 +1,4 @@
 import React, {useEffect, useState} from 'react';
-
 import api from '../../services/api';
 
 
@@ -42,6 +41,7 @@ export default function ListCompanies(){
 
     return(
     <div>
+    
         <Menu/>
     <div style={{marginTop:'-30px'}}>
         <section className="section">
