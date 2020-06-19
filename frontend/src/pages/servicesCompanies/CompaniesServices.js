@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
-import { useParams, Link } from "react-router-dom"
-import {Menu, Footer, PopupService, Services} from '../../Person/person';
+import { useParams} from "react-router-dom"
+import {Menu, Footer, Services} from '../../Person/person';
 
 
 import '../../css/font-awesome.min.css';

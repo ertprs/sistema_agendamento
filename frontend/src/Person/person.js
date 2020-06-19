@@ -38,7 +38,7 @@ const Menu = () =>{
                             <span className="icon-bar"></span>
                             <span className="icon-bar"></span>
                         </button>
-                        <a className="navbar-brand" href="index.html"><img src={logo} alt="Logo" style={{width:'200px'}}/></a>
+                        <Link className="navbar-brand" to='/'><img src={logo} alt="Logo" style={{width:'200px'}}/></Link>
                     </div>
                     <div id="navbar" className="navbar-collapse collapse">
                         <ul className="nav navbar-nav navbar-right">
@@ -89,7 +89,7 @@ const Menu = () =>{
                             </li>
                             <li><a href="/page-about.html">Sobre</a></li>
                             <li><a href="/page-contact.html">Contato</a></li>
-                            <li className="lastlink hidden-xs hidden-sm"><a className="btn btn-primary" href="page-seo-analysis.html"><i className="glyphicon glyphicon-log-in"></i> Login </a></li>
+                            <li className="lastlink hidden-xs hidden-sm"><Link className="btn btn-primary" to="/login"><i className="glyphicon glyphicon-log-in"></i> Login </Link></li>
                         </ul>
                     </div> {/*<!--/.nav-collapse -->*/}
                 </div> {/*<!--/.container-fluid -->*/}
@@ -229,7 +229,7 @@ const Services = (props) =>{
                             <h3>{service.service_name}</h3>
                             <p>Descrição do serviço</p>
                             <small>{Intl.NumberFormat('pt-BR', {style: 'currency', currency: 'BRL'}).format(service.value)}</small><br/>
-                            <PopupService value={service.value} nameService={service.service_name} id={props.id}/>
+                            <PopupService value={service.value} nameService={service.service_name} id={props.id} id_servico={service.service_id}/>
                         </div>
                     </div>
                 </div>
@@ -263,7 +263,7 @@ const PopupService = (props)=>{
     },[date])
     //Esse é responsável por pegar o Id da hora e ir no banco de dados verificar se tem algum agendamento com esse id de atendimento
     useEffect(()=>{
-        console.log("hora id2: "+ hoursId)
+        console.log("hora id2: "+ hoursId) //ID DO ATENDIMENTO (attendance_id)
       
         api.get(`hours?id=${hoursId}`).then(res=>{
             console.log('Primeira promise: '+res.data)
@@ -279,7 +279,7 @@ const PopupService = (props)=>{
             if(free.length != 0){
                 console.log('horário ocupado: '+ infos.opening_hours + ' id: '+infos.attendace_id)
             }else{
-                console.log('horário livre '+ infos.opening_hours)
+                console.log('horário livre '+ infos.opening_hours + 'id: '+ infos.attendace_id)
             }
         })
 
@@ -289,7 +289,7 @@ const PopupService = (props)=>{
         <Popup trigger={<button className="btn btn-transparent"> Agendar </button>} modal>
     {close => (
       <div className="model">
-        <a className="close " onClick={close}>
+        <a className="close " href='/#' onClick={close}>
           &times;
         </a>
         <div className="header"> Informações para Agendamento </div>
@@ -298,13 +298,9 @@ const PopupService = (props)=>{
           <label>Serviço: {props.nameService}</label>
           <label style={{marginLeft:'10px'}}>Valor: R$ {props.value}</label>
           <br/>
-          <label>Data de Agendamento</label>
-          <input type='date' value={date} onChange={e=>setDate(e.target.value)} />
-          <label style={{marginLeft:'10px'}}>Horários Disponíveis</label>
-          {/*Peguei o ID do horario de atendimento no option
-            Vou pegar esse Id pra poder fazer uma buscar no banco e ver se já tem algum agendamento no schedule com esse id
-            Se tiver não é pra esse horario ser retornado, se não tiver é pra esse horário ser retornado para nossos option
-          */}
+          <label>Data de Agendamento:</label>
+          <input type='date' value={date} onChange={e=>setDate(e.target.value)} style={{marginLeft:'5px'}}/>
+          <label style={{marginLeft:'10px', marginRight: '5px'}}>Horários Disponíveis:</label>
           <select value={hoursId} onChange={e=>setHoursId(e.target.value)}>
               <option></option>
               {info.map(infos => (
@@ -316,12 +312,12 @@ const PopupService = (props)=>{
         </div>
         <div className="actions">
           <Popup
-            trigger={<button className="button"> Agendar </button>}
+            trigger={<button className="button" style={{border:'1px solid gray', padding:'5px'}}> Agendar </button>}
             position="top center"
             closeOnDocumentClick
           >
             <span>
-              Vou ver o que faço aqui
+              Falta pegar o Id do cliente só 
             </span>
           </Popup>
           {/*<button

@@ -1,0 +1,32 @@
+.logon-container{
+    width: 100%;
+    max-width: 1120px;
+    height: 100vh;
+    margin: 0 auto;
+
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  
+}
+
+.logon-container section.form{
+    width: 100%;
+    max-width: 350px;
+    padding: 0px 15px 15px 15px;
+    background-color: white;
+    border:  1px solid #A9A9A9;
+}
+
+.logon-container section.form > form{
+    display: block;
+}
+
+.logon-container .form > input{
+    display: block;
+}
+
+.logon-container section.form form h1{
+    font-size: 32px;
+    margin-bottom: 32px;
+}

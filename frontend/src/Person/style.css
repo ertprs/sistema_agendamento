@@ -13,11 +13,17 @@
     padding: 10px 5px;
     font-size: 15px;
   }
+
+  .model > .content > input{
+    border: 1px solid gray;
+  }
+
   .model > .actions  {
     width: 100%;
     padding: 10px 5px;
     margin: auto;
     text-align: center;
+
   }
   .model > .close  {
     cursor: pointer;
