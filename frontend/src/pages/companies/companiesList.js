@@ -19,6 +19,7 @@ export default function ListCompanies(){
     const [currentPage, setCurrentPage] = useState(1);
     const [postPerPage] = useState(4);
 
+    const token = localStorage.getItem('Token')
 
     useEffect(()=>{
         const fetchCompanies = () =>{
@@ -32,10 +33,13 @@ export default function ListCompanies(){
         fetchCompanies();
     }, [])
 
-
+    function currentPost(){
+    }
     const indexOfLastPost = currentPage * postPerPage;
     const indexOfFirstPost = indexOfLastPost - postPerPage;
     const currentPosts = companies.slice(indexOfFirstPost, indexOfLastPost);
+    console.log('currentPosts:' +currentPosts)
+
 
     const paginate = (pageNumber) => setCurrentPage(pageNumber);
 

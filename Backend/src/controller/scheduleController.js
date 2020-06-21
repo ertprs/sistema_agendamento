@@ -70,7 +70,7 @@ module.exports = {
                 return response.status(401).json({error: 'Esse horário de funcionamento não pertence a essa empresa'});
             }
 
-            const hours = await database('schedule').select('*').where('attendace_id_schedule', attendace_id_schedule).first();
+            const hours = await database('schedule').select('*').where('attendace_id_schedule', attendace_id_schedule).andWhere('status', 'true').first();
 
             //Verifico se o horário já foi agendado ou não
             if(hours != undefined){
@@ -93,7 +93,7 @@ module.exports = {
                 company_id_schedule,
                 user_id_schedule,
                 service_id_schedule,
-                attendace_id_schedule
+                attendace_id_schedule,
             });
         } catch (error) {
             console.log('Error: '+error);

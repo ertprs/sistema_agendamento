@@ -61,8 +61,10 @@ module.exports = {
             const id = request.params.id;
 
             const services = await database('services').select('*').where('company_id_service', id);
-
-            return response.json(services);
+            //pegando o id do usuário logado
+            console.log('listagem de serviços/ ID-USER: '+response.locals.auth_data.id);
+            const id_user = response.locals.auth_data;
+            return response.json({services:services, user: id_user});
         } catch (error) {
             console.log(error);
             next(error);
@@ -71,8 +73,7 @@ module.exports = {
 
     async ListCompanies(request, response, next){
         try {
-            const companies = await database('companies').select('*')
-
+            const companies = await database('companies').select('*');
             return response.json(companies);
         } catch (error) {
             console.log(error);

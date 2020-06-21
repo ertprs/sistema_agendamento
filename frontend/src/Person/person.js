@@ -248,6 +248,8 @@ const PopupService = (props)=>{
     const [hoursId, setHoursId] = useState(0);
     const [free, setFree] = useState([]);
 
+    
+
     useEffect(()=>{
         if(date != ''){
             api.get(`dateAtendance/${date}?id=${props.id}`).then(res=>{
@@ -285,21 +287,65 @@ const PopupService = (props)=>{
 
     }, [free])
 
+    const user = localStorage.getItem('id_user');
+    const token = localStorage.getItem('Token');
+
+    //função responsável por agendar o horário do cliente
+    async function schedule(){
+        
+
+        //Dados para o agendamento
+        const infos = {
+            status: 'true',
+            company_id_schedule: props.id,
+            user_id_schedule: user,
+            service_id_schedule: props.id_servico,
+            attendace_id_schedule: hoursId,
+            
+        }
+
+        //console.log(infos);
+
+        /* AS INFORMAÇÕES NECESSÁRIAS PARA REALIZAR O AGENDAMENTO (estão na const infos)
+            O id do serviço e o id da empresa estão no componentes Services (service.service_id) e da empresa(props.id) TODOS PASSADOS COMO PROPS PARA O COMPONENTE PopupService.
+            O id do Atendimento está no componente PopupService dentro da constante hoursId no momento que o cliente escolhe a data de atendimento.
+            O id do usuário é pgo na autenticação da rota e salvo no localStorage
+         */
+
+        try {
+            const response = await api.post('creatSchedule' , infos, {
+                headers: {
+                    auther: token,
+                }
+            });
+            //console.log(response);
+            if(response.data.error){
+                alert(response.data.error)
+            }else{
+                alert('Agendamento Realizado!!!');
+                //Aqui é bom direcionar para pagina com os agedamentos do usuário
+            }
+        } catch (error) {
+            alert(`Erro no agendamento, tente novamento mais tarde.`)
+        }
+    }
+
     return(
         <Popup trigger={<button className="btn btn-transparent"> Agendar </button>} modal>
     {close => (
       <div className="model">
-        <a className="close " href='/#' onClick={close}>
+        <Link className="close "  onClick={close}>
           &times;
-        </a>
+        </Link>
         <div className="header"> Informações para Agendamento </div>
         <div className="content">
           {" "}
+          <form onSubmit={schedule}>
           <label>Serviço: {props.nameService}</label>
           <label style={{marginLeft:'10px'}}>Valor: R$ {props.value}</label>
           <br/>
           <label>Data de Agendamento:</label>
-          <input type='date' value={date} onChange={e=>setDate(e.target.value)} style={{marginLeft:'5px'}}/>
+          <input type='date' value={date} onChange={e=>setDate(e.target.value)} style={{marginLeft:'5px', border:'1px solid gray'}}/>
           <label style={{marginLeft:'10px', marginRight: '5px'}}>Horários Disponíveis:</label>
           <select value={hoursId} onChange={e=>setHoursId(e.target.value)}>
               <option></option>
@@ -308,19 +354,28 @@ const PopupService = (props)=>{
                 ))}
           </select>
           <br />
-          
+          <button  type='submit' style={{
+                display:'flex',
+                margin:'0 auto',
+                border: '1px solid gray',
+                marginBottom: '-20px',
+                marginTop:'15px',
+                padding: '5px'
+           }} position='top center'> Agendar </button>
+          </form>
         </div>
         <div className="actions">
-          <Popup
-            trigger={<button className="button" style={{border:'1px solid gray', padding:'5px'}}> Agendar </button>}
+         {/* <Popup
+            
             position="top center"
             closeOnDocumentClick
           >
+           
             <span>
               Falta pegar o Id do cliente só 
             </span>
           </Popup>
-          {/*<button
+          <button
             className="button"
             onClick={() => {
               console.log("modal closed ");

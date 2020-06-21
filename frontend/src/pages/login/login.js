@@ -23,7 +23,7 @@ export default function Login(){
             password
         };
 
-        alert(`email: ${data.user_email} e senha: ${data.password}`)
+        //alert(`email: ${data.user_email} e senha: ${data.password}`)
 
         try {
             const response = await api.post('user/login', data);
@@ -31,7 +31,6 @@ export default function Login(){
             if(response.data.error){
                 alert('Email ou senha incorreto')
             }else{
-                alert('Login realizado: ');
                 localStorage.setItem('Token', response.data.token)
                 history.push('/companiesList')
             }

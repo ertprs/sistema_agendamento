@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { useParams} from "react-router-dom"
+import { useParams, useHistory} from "react-router-dom"
 import {Menu, Footer, Services} from '../../Person/person';
 
 
@@ -20,30 +20,39 @@ export default function CompaniesServices(){
 	const [services, setServices] = useState([]);
 	const [loading, setLoading] = useState(false);
 	//const [date, setDate] = useState([]);
+
+	const token = localStorage.getItem('Token');
+
+	const logon = useHistory();
 	
 	const id = useParams();
 	
 	useEffect(()=>{
 		const fetchServices = ()=>{
 			setLoading(true);
-			api.get(`servicesCompany/${id.id}`).then(res=>{
-				setServices(res.data);
-				setLoading(false);
+			api.get(`servicesCompany/${id.id}`, {
+				headers:{
+					auther: token,
+				}
+			}).then(res=>{
+				console.log(res)
+				//VERIFICO SE O USUÁRIO ESTÁ LOGADO, SE NÃO ESTIVER VAI SER PRECISO FAZER O LOGIN
+				if(res.data.error){
+					alert('Realize o login para verificar os serviços da empresa')
+					logon.push('/login')
+				}else{
+					console.log(res.data.user.id);
+					//salvo o id do usuário 
+					localStorage.setItem('id_user', res.data.user.id);
+					setServices(res.data.services);
+					setLoading(false);
+				}
 			})
 		}
 
 		fetchServices();
 	}, [])
 
-	/*useEffect(()=>{
-		const fetchHours = ()=>{
-			api.get(`attendance/${id.id}`).then(res=>{
-				setDate(res.data);
-			})
-		}
-
-		fetchHours();
-	}, [])*/
 
 
     return(
