@@ -86,6 +86,7 @@ module.exports = {
             })
             .then(() => {
                 delete user.user_password
+                delete user.password
                 response.status(200).json({user, token: createtokenUser(user.user_id)})
             })
             .catch((err) => {

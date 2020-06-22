@@ -247,6 +247,7 @@ const PopupService = (props)=>{
     const [info, setInfo] = useState([]);
     const [hoursId, setHoursId] = useState(0);
     const [free, setFree] = useState([]);
+    const [mensager, setMensager] = useState('');
 
     
 
@@ -255,11 +256,17 @@ const PopupService = (props)=>{
             api.get(`dateAtendance/${date}?id=${props.id}`).then(res=>{
                 console.log(`api: ${res.data.map(dat => (dat.attendace_id))}`)
                 setInfo(res.data);
+                if(res.data.length == 0){
+                    setMensager('Sem horários disponíveis para a data selecionada')
+                }else{
+                    setMensager('')
+                }
             })
             
             //setFree([hoursId])
             console.log("aqui: "+ [info])
             console.log("hora id: "+ hoursId)
+            
 
         }
     },[date])
@@ -270,6 +277,7 @@ const PopupService = (props)=>{
         api.get(`hours?id=${hoursId}`).then(res=>{
             console.log('Primeira promise: '+res.data)
             setFree(res.data);
+
         })
         
     }, [hoursId])
@@ -350,16 +358,16 @@ const PopupService = (props)=>{
           <select value={hoursId} onChange={e=>setHoursId(e.target.value)}>
               <option></option>
               {info.map(infos => (
-                <option key={infos.attendace_id} value={infos.attendace_id} >{infos.opening_hours}</option> 
+                <option key={infos.attendace_id} value={infos.attendace_id} >{infos.opening_hours}h</option> 
                 ))}
           </select>
+            <strong style={{color:'red', display:'block'}}>{mensager}</strong>
           <br />
           <button  type='submit' style={{
                 display:'flex',
                 margin:'0 auto',
                 border: '1px solid gray',
                 marginBottom: '-20px',
-                marginTop:'15px',
                 padding: '5px'
            }} position='top center'> Agendar </button>
           </form>

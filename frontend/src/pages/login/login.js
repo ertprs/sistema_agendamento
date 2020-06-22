@@ -12,6 +12,7 @@ export default function Login(){
 
     const [user_email, setEmail] = useState('');
     const [password, setPassword] = useState('');
+    const [mensager, setMesager] = useState('');
 
     const history = useHistory();
 
@@ -29,7 +30,8 @@ export default function Login(){
             const response = await api.post('user/login', data);
             console.log(response)
             if(response.data.error){
-                alert('Email ou senha incorreto')
+                //alert('Email ou senha incorreto')
+                setMesager('Email ou senha incorreto');
             }else{
                 localStorage.setItem('Token', response.data.token)
                 history.push('/companiesList')
@@ -61,6 +63,7 @@ export default function Login(){
                                 <span className="focus-input100-1"></span>
                                 <span className="focus-input100-2"></span>
                             </div>
+                            <p style={{marginTop:'5px', color:'red'}}>{mensager}</p>
 
                             <div className="container-login100-form-btn m-t-20">
                                 <button className="login100-form-btn" type='submit'>
