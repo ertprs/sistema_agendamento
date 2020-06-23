@@ -13,7 +13,8 @@ module.exports = {
                 'schedule.status',
                 'attendance.attendace_date',
                 'attendance.opening_hours',
-                'companies.company_name'
+                'companies.company_name',
+                'schedule_id'
             )
             .innerJoin('companies', 'company_id_schedule', 'company_id')
             .innerJoin('services', 'service_id_schedule', 'service_id')

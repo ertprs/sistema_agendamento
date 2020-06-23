@@ -399,6 +399,65 @@ const PopupService = (props)=>{
     )
 }
 
+function formatarData(data){
+    //O valor de data retornado do bd é 2020-06-05T03:00:00.000Z
+    var valor =  data.substring(0, 10); //substring é responsável por pegar o caracter da posição 0 até a 10 que é 2020-06-05
+    var split = valor.split('-');//utiliza um caractere para separa a string no caso é o "-" da data
+    var data_formatada = split[2] + "/" + split[1] + "/" + split[0];/*aqui reformulamos no padrão brasileiro
+    a posição 0 é 2020, a posição  1 é 06 e a 2 é 05, ai só colocamos na ordem e concatenamos com a barra(/)*/
+    console.log('data '+data_formatada)
+    return data_formatada;
+}
+
+const UserSchedules = (props)=>{
+    if(props.loading){
+        return loadingInfo();
+        
+    }
+    return(
+        <section className="section">
+                <div className="container">
+                    <div className="row clientv2">
+                        <ul>
+                        {props.incidents.map(incident=>(
+                        <li key={incident.schedule_id}>
+                        <div className="col-md-6 col-sm-12 col-xs-12">
+                            <div className="client-box">
+                            <div style={{
+                                float:'left', 
+                                display:'flex',
+                                padding:'10px', 
+                                width:'100px', 
+                                height:'257px',
+                                backgroundColor:'#D3D3D3',
+                                margin:'-30px',
+                                textAlign:'center',
+                                justifyContent:'center',
+                                
+                                }}>
+                                <strong style={{marginTop:'97px', color:'#363636'}}>Horário<br/>{incident.opening_hours} h</strong>
+                            </div>
+                            <div style={{marginLeft:'100px'}}>
+                                <strong>Estabelecimento:</strong>
+                                <p>{incident.company_name}</p>
+                                <strong>Serviço:</strong>
+                                <p>{incident.service_name}</p>
+                                <strong>Valor:</strong>
+                                <p>R$ {incident.value}</p>
+                                <strong>Data do atendimento:</strong>
+                                <p>{formatarData(incident.attendace_date)}</p>
+                            </div>
+                            </div>
+                        </div>
+                        </li>
+                        ))}
+                        </ul>
+                    </div>
+                </div>
+            </section>
+    )
+}
+
 
 export {
     Companies, 
@@ -406,5 +465,6 @@ export {
     Menu,
     Footer,
     PopupService, 
-    Services
+    Services,
+    UserSchedules
 };

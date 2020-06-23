@@ -14,7 +14,7 @@ const routes = express.Router();
 
 routes.post('/createUser', UserController.create);
 routes.post('/user/login', UserController.login);
-routes.get('/user/listMissedAppointments/:id', auth , UserController.index);
+routes.get('/user/listMissedAppointments/:id', auth, UserController.index);
 routes.get('/user/listAll/:id', auth ,UserController.indexAll);
 
 routes.get('/testando', auth, (req, res)=>{
