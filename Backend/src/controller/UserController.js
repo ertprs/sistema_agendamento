@@ -58,6 +58,16 @@ module.exports = {
         return response.json(data);
     },
 
+    async userId(request, response, next){
+        try {
+            const user_id = response.locals.auth_data;
+            response.json(user_id)
+        } catch (error) {
+            console.log(error);
+            next(error);
+        }
+    },
+
     create(request, response, next){
         
             const user =request.body;

@@ -18,8 +18,13 @@ export default function ListCompanies(){
     const [loading, setLoading] = useState(false);
     const [currentPage, setCurrentPage] = useState(1);
     const [postPerPage] = useState(4);
+    
 
     const token = localStorage.getItem('Token')
+
+    const [schedules, setSchedules] = useState('');
+    const [account, setAccount] = useState('');
+    const [login, setLogin] =useState(false)
 
     useEffect(()=>{
         const fetchCompanies = () =>{
@@ -28,13 +33,42 @@ export default function ListCompanies(){
                 setCompanies(res.data);
                 setLoading(false)
             })
+
+            api.get('userId',{
+                headers:{
+                    auther: token
+                }
+            }).then(res=>{
+                //console.log(res);
+                if(!res.data.error){
+                    localStorage.setItem('id_user', res.data.id);
+                    setSchedules('Seus Agendamentos');
+                    setAccount('Minha Conta');  
+                    setLogin(true)
+                }
+            })
         }
 
         fetchCompanies();
     }, [])
 
-    function currentPost(){
-    }
+    /*const [menu, setMenu] = useState('Menu');
+
+    useEffect(()=>{
+        api.get('testando', {
+            headers:{
+                auther: token
+            }
+        }).then(res=>{
+            if(res.data.error){
+                
+            }else{
+
+            }
+        })
+    },[])
+*/
+
     const indexOfLastPost = currentPage * postPerPage;
     const indexOfFirstPost = indexOfLastPost - postPerPage;
     const currentPosts = companies.slice(indexOfFirstPost, indexOfLastPost);
@@ -46,7 +80,7 @@ export default function ListCompanies(){
     return(
     <div>
     
-        <Menu/>
+    <Menu schedules={schedules} account={account} login={login}/>
     <div style={{marginTop:'-30px'}}>
         <section className="section">
 			<div className="container">

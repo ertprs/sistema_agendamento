@@ -13,6 +13,10 @@ export default function UserSchedule(){
     const id_user = localStorage.getItem('id_user')
     const token = localStorage.getItem('Token');
 
+    const [schedules, setSchedules] = useState('');
+    const [account, setAccount] = useState('');
+    const [login, setLogin] =useState(false)
+
     useEffect(()=>{
         setLoading(true)
         const fetchSchedule = ()=>{
@@ -29,14 +33,33 @@ export default function UserSchedule(){
                     setLoading(false);
                 }
             })
+
+            api.get('userId',{
+                headers:{
+                    auther: token
+                }
+            }).then(res=>{
+                //console.log(res);
+                if(!res.data.error){
+                    localStorage.setItem('id_user', res.data.id);
+                    setSchedules('Seus Agendamentos');
+                    setAccount('Minha Conta');  
+                    setLogin(true)
+                }
+            })
+
         }
 
         fetchSchedule();
     },[])
 
+
+  
+    
+
     return(
         <div>
-            <Menu />
+            <Menu schedules={schedules} account={account} login={login}/>
             <section className="section normalhead">
 			<div className="container">
 				<div className="row">	

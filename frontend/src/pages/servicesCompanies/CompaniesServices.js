@@ -26,6 +26,10 @@ export default function CompaniesServices(){
 	const logon = useHistory();
 	
 	const id = useParams();
+
+	const [schedules, setSchedules] = useState('');
+    const [account, setAccount] = useState('');
+    const [login, setLogin] =useState(false)
 	
 	useEffect(()=>{
 		const fetchServices = ()=>{
@@ -39,6 +43,7 @@ export default function CompaniesServices(){
 				//VERIFICO SE O USUÁRIO ESTÁ LOGADO, SE NÃO ESTIVER VAI SER PRECISO FAZER O LOGIN
 				if(res.data.error){
 					alert('Realize o login para verificar os serviços da empresa')
+					localStorage.clear();
 					logon.push('/login')
 				}else{
 					console.log(res.data.user.id);
@@ -48,6 +53,22 @@ export default function CompaniesServices(){
 					setLoading(false);
 				}
 			})
+
+			//responsável por pegar o id do usuário e mudar o Menu se alguém estiver logado
+			api.get('userId',{
+                headers:{
+                    auther: token
+                }
+            }).then(res=>{
+                //console.log(res);
+                if(!res.data.error){
+                    localStorage.setItem('id_user', res.data.id);
+                    setSchedules('Seus Agendamentos');
+                    setAccount('Minha Conta');  
+                    setLogin(true)
+                }
+            })
+
 		}
 
 		fetchServices();
@@ -58,7 +79,7 @@ export default function CompaniesServices(){
     return(
         <div>
 		
-            <Menu/>
+			<Menu schedules={schedules} account={account} login={login}/>
             <section className="section transheaderServices bgcolor">
 			<div className="container">
 				<div className="row">	

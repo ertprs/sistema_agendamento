@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import {Link} from 'react-router-dom';
+import {Link, useHistory} from 'react-router-dom';
 import Popup from 'reactjs-popup';
 import api from '../services/api';
 
@@ -16,7 +16,6 @@ import '../pages/style.css';
 
 
 
-
 function saveId(id){
     localStorage.setItem('Id', id);
 }
@@ -25,71 +24,80 @@ function loadingInfo(){
    return <h3 style={{color:'#808080'}}><img src={loadingGif} style={{width:'40px', marginRight: '10px'}} alt='texto'/>Carregando informações, por favor aguarde</h3>
 }
 
-const Menu = () =>{
+const Menu = (props) =>{
+    var initial = useHistory();
+
+    function logOut(){
+        if(!props.login){
+
+        }else{
+            localStorage.clear();
+        
+            initial.push('/');
+        }
+    }
+
+    var logName;
+    var icon;
+
+    if(!props.login){
+        logName = 'Login';
+        icon ='in';
+    }else{
+        logName = 'Sair';
+        icon='out';
+    }
+
     return(
         <header className="header site-header" >
         <div className="container">
             <nav className="navbar navbar-default yamm">
                 <div className="container-fluid">
                     <div className="navbar-header">
-                        <button type="button" className="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
-                            <span className="sr-only">Toggle navigation</span>
-                            <span className="icon-bar"></span>
-                            <span className="icon-bar"></span>
-                            <span className="icon-bar"></span>
-                        </button>
                         <Link className="navbar-brand" to='/'><img src={logo} alt="Logo" style={{width:'200px'}}/></Link>
                     </div>
                     <div id="navbar" className="navbar-collapse collapse">
                         <ul className="nav navbar-nav navbar-right">
                             <li className="active"><a href="index.html">Home</a></li>
-                            <li className="dropdown yamm-fw hasmenu">
-                                <a href="/#" className="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Serviços <span className="fa fa-angle-down"></span></a>
-                                <ul className="dropdown-menu">
-                                    <li>
-                                        <div className="yamm-content">
-                                            <div className="row"> 
-                                                <div className="col-md-4">
-                                                    <ul>
-                                                        <li><a href="/">SEO Consultants</a></li>
-                                                        <li><a href="/">SEO Audits</a></li>
-                                                        <li><a href="/">SEO Packages e Plans</a></li>
-                                                        <li><a href="/">Web Copywriting</a></li>
-                                                        <li><a href="/">SEO Copywriting</a></li>
-                                                        <li><a href="/">Keyword Research</a></li>
-                                                        <li><a href="/">SEO Strategy</a></li>
-                                                        <li><a href="/">Website Design</a></li>
-                                                        <li><a href="/">Link Building Services</a></li>
-                                                    </ul>
-                                                </div>
-                                                <div className="col-md-4">
-                                                    <ul>
-                                                        <li><a href="/#">All Services</a></li>
-                                                        <li><a href="/#">Pricing e Plans</a></li>
-                                                        <li><a href="/#">Our Clients</a></li>
-                                                        <li><a href="/#">Testimonials</a></li>
-                                                        <li><a href="/#">Free E-Books</a></li>
-                                                        <li><a href="/#">SEO Analysis</a></li>
-                                                        <li><a href="/#">Case Studies</a></li>
-                                                    </ul>
-                                                </div>
-                                                <div className="col-md-4">
-                                                    <ul>
-                                                        <li><a href="/#">Blog e News</a></li>
-                                                        <li><a href="/#">Blog Alternative</a></li>
-                                                        <li><a href="/#">Single Blog</a></li>
-                                                        <li><a href="/#">Default Page</a></li>
-                                                        <li><a href="/#">Fullwidth Page</a></li>
-                                                    </ul>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </li>
-                                </ul>
-                            </li>
                             <li><a href="/page-about.html">Sobre</a></li>
                             <li><a href="/page-contact.html">Contato</a></li>
-                            <li className="lastlink hidden-xs hidden-sm"><Link className="btn btn-primary" to="/login"><i className="glyphicon glyphicon-log-in"></i> Login </Link></li>
+                            <li><Link to='/userSchedule'>{props.schedules}</Link></li>
+                            <li><Link to='/'>{props.account}</Link></li>
+                            <li className="lastlink hidden-xs hidden-sm"><Link className="btn btn-primary" to="/login" onClick={logOut}><i className={`glyphicon glyphicon-log-${icon}`}></i> {logName} </Link></li>
+                        </ul>
+                    </div> {/*<!--/.nav-collapse -->*/}
+                </div> {/*<!--/.container-fluid -->*/}
+            </nav> {/*<!-- end nav -->*/}
+        </div> {/*<!-- end container -->*/}
+        <div style={{backgroundColor:'#FFF5EE', height:'0.5px'}}></div>
+    </header> 
+    )
+}
+
+
+const MenuLogado = (props) =>{
+
+   /* var initial = useHistory();
+
+    function logOut(){
+        localStorage.clear();
+    
+        initial.push('/');
+    }*/
+    return(
+        <header className="header site-header" >
+        <div className="container">
+            <nav className="navbar navbar-default yamm">
+                <div className="container-fluid">
+                    <div className="navbar-header">
+                        <Link className="navbar-brand" to='/'><img src={logo} alt="Logo" style={{width:'200px'}}/></Link>
+                    </div>
+                    <div id="navbar" className="navbar-collapse collapse">
+                        <ul className="nav navbar-nav navbar-right">
+                            <li><a href="index.html">Home</a></li>
+                            <li className="active"><Link to='/#'>Meus Agendamentos</Link></li>
+                            <li><a href="/page-about.html">Conta</a></li>
+                            <li className="lastlink hidden-xs hidden-sm"><Link className="btn btn-primary" to="/" ><i className="glyphicon glyphicon-log-out"></i> Sair </Link></li>
                         </ul>
                     </div> {/*<!--/.nav-collapse -->*/}
                 </div> {/*<!--/.container-fluid -->*/}
@@ -466,5 +474,6 @@ export {
     Footer,
     PopupService, 
     Services,
-    UserSchedules
+    UserSchedules,
+    MenuLogado
 };

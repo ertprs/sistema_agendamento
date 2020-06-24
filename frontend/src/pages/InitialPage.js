@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 
 import {Menu} from '../Person/person';
 
@@ -12,14 +12,42 @@ import '../css/animate.css';
 import '../css/carousel.css';
 import './style.css';
 import { Link } from 'react-router-dom';
+import api from '../services/api';
 
 //import '../js/vendor/html5shiv.min.js';
 //import '../js/vendor/respond.min.js';
 
 export default function Initial(){
+
+    const [schedules, setSchedules] = useState('');
+    const [account, setAccount] = useState('');
+    const [login, setLogin] =useState(false)
+
+    const token = localStorage.getItem('Token');
+
+    useEffect(()=>{
+        const fetchPage =()=>{
+            api.get('userId',{
+                headers:{
+                    auther: token
+                }
+            }).then(res=>{
+                //console.log(res);
+                if(!res.data.error){
+                    localStorage.setItem('id_user', res.data.id);
+                    setSchedules('Seus Agendamentos');
+                    setAccount('Minha Conta');  
+                    setLogin(true)
+                }
+            })
+        }
+
+        fetchPage();
+    }, [])
+
     return(
     <div>
-        <Menu/>
+        <Menu schedules={schedules} account={account} login={login}/>
         <section className="section transheader homepage parallax" data-stellar-background-ratio="0.5" style={{backgroundImage: `url(${fundoTela})`}}>
         <div className="container">
             <div className="row">	
