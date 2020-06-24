@@ -14,6 +14,7 @@ export default function Login(){
     const [password, setPassword] = useState('');
     const [mensager, setMesager] = useState('');
 
+
     const history = useHistory();
 
     async function handleLogin(e){
@@ -51,7 +52,6 @@ export default function Login(){
                             <span className="login100-form-title p-b-33">
                                 Faça seu Login
                             </span>
-
                             <div className="wrap-input100 validate-input" data-validate = "Valid email is required: ex@abc.xyz">
                                 <input className="input100" type="email" placeholder="Email" value={user_email} onChange={e=>setEmail(e.target.value)}/>
                                 <span className="focus-input100-1"></span>

@@ -41,6 +41,7 @@ export default function ListCompanies(){
             }).then(res=>{
                 //console.log(res);
                 if(!res.data.error){
+                    //salva o id do usuário no local storage
                     localStorage.setItem('id_user', res.data.id);
                     setSchedules('Seus Agendamentos');
                     setAccount('Minha Conta');  

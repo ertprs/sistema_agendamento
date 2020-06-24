@@ -61,9 +61,12 @@ const Menu = (props) =>{
                             <li className="active"><a href="index.html">Home</a></li>
                             <li><a href="/page-about.html">Sobre</a></li>
                             <li><a href="/page-contact.html">Contato</a></li>
+                            {/* CLIENTE */}
                             <li><Link to='/userSchedule'>{props.schedules}</Link></li>
                             <li><Link to='/'>{props.account}</Link></li>
-                            <li className="lastlink hidden-xs hidden-sm"><Link className="btn btn-primary" to="/login" onClick={logOut}><i className={`glyphicon glyphicon-log-${icon}`}></i> {logName} </Link></li>
+                            {/* EMPRESA*/}
+                            <li><Link to=''>{props.scheduleCompany}</Link></li>{/* VOU CRIAR A PAGINA DA EMPRESA*/}
+                            <li className="lastlink hidden-xs hidden-sm"><Link className="btn btn-primary" to="/selectLogin" onClick={logOut}><i className={`glyphicon glyphicon-log-${icon}`}></i> {logName} </Link></li>
                         </ul>
                     </div> {/*<!--/.nav-collapse -->*/}
                 </div> {/*<!--/.container-fluid -->*/}
