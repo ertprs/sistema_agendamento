@@ -29,7 +29,7 @@ export default function Login(){
 
         try {
             const response = await api.post('user/login', data);
-            console.log(response)
+            //console.log(response) 
             if(response.data.error){
                 //alert('Email ou senha incorreto')
                 setMesager('Email ou senha incorreto');
@@ -59,7 +59,7 @@ export default function Login(){
                             </div>
 
                             <div className="wrap-input100 rs1 validate-input" data-validate="Password is required">
-                                <input className="input100" type="password" placeholder="Senha" value={password} onChange={e=>setPassword(e.target.value)} />
+                                <input className="input100" type="password" placeholder="Senha"  onChange={e=>setPassword(e.target.value)} />
                                 <span className="focus-input100-1"></span>
                                 <span className="focus-input100-2"></span>
                             </div>
