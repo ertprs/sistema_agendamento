@@ -25,6 +25,8 @@ export default function CompanySchedule(){
                    
                 }else{
                     setMensagerText('')
+                    //localStorage.setItem('id_company', res.data.id)
+                    //usar quando a rota for autenticada
                 }
             })
         }

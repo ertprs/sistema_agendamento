@@ -51,9 +51,9 @@ export default function UserSchedule(){
         }
 
         fetchSchedule();
-    },[])
-
-
+    },[id_user]) 
+    /*coloco para página atualizar sempre que o id do usuário sofrer alteração,
+     assim se alguém mudar no local storage ele vai atualizar para o id do login de novo */
   
     
 
