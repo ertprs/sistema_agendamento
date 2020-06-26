@@ -26,7 +26,11 @@ export default function Login(){
             }
             //err ? console.log(err) : setPassword(hash); console.log(hash);
         })
-    } */
+    } 
+    
+    Artigo sobre o que preciso fazer 
+    https://blog.rocketseat.com.br/reactjs-autenticacao/
+    */
     
 
     async function handleLogin(e){
