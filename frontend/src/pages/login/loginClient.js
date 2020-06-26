@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import {Menu} from '../../Person/person';
 import {useHistory} from 'react-router-dom';
+import bcrypt from 'bcryptjs';
 
 import './style.css';
 import '../style.css';
@@ -17,8 +18,30 @@ export default function Login(){
 
     const history = useHistory();
 
+    /*async function cripto(password){
+        await bcrypt.hash(password, 10, function (err, hash){
+            if(hash){
+                setPassword(hash)
+                console.log('aqui '+hash)
+            }
+            //err ? console.log(err) : setPassword(hash); console.log(hash);
+        })
+    } */
+    
+
     async function handleLogin(e){
         e.preventDefault();
+
+        //cripto(password)
+        
+        await bcrypt.hash(password, 10, function (err, hash){
+            if(hash){
+                setPassword(hash)
+                console.log('aqui '+hash)
+            }
+            err ? console.log(err) : setPassword(hash); console.log(hash);
+        })
+        console.log(password)
 
         const data = {
             user_email,
@@ -28,6 +51,7 @@ export default function Login(){
         //alert(`email: ${data.user_email} e senha: ${data.password}`)
 
         try {
+            
             const response = await api.post('user/login', data);
             //console.log(response) 
             if(response.data.error){
@@ -64,7 +88,6 @@ export default function Login(){
                                 <span className="focus-input100-2"></span>
                             </div>
                             <p style={{marginTop:'5px', color:'red'}}>{mensager}</p>
-
                             <div className="container-login100-form-btn m-t-20">
                                 <button className="login100-form-btn" type='submit'>
                                     Login
