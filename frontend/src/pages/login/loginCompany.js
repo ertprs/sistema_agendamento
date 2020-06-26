@@ -30,12 +30,13 @@ export default function Login(){
         try {
             const response = await api.post('company/login', data);
             console.log(response)
+
             if(response.data.error){
                 //alert('Email ou senha incorreto')
                 setMesager('Email ou senha incorreto');
             }else{
                 localStorage.setItem('Token', response.data.token)
-                history.push('/')
+                history.push('/redirect')
             }
         } catch (error) {
             alert('email ou senha incorreto');

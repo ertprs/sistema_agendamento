@@ -23,11 +23,20 @@ module.exports = {
             .andWhere('status', 'true')
             .orderBy('attendance.attendace_date', 'asc');
 
-        if(data.length == 0){
-            return response.json({mensager: 'A empresa não possui agendamento em aberto :)'})
-        }
-
+        const id_company = response.locals.auth_data;
+        console.log('teste')
+        console.log(id_company);
         return response.json(data);
+    },
+
+    async CompanyId(request, response, next){
+        try {
+            const company_id = response.locals.auth_data;
+            response.json(company_id)
+        } catch (error) {
+            console.log(error);
+            next(error);
+        }
     },
 
     async indexAll(request, response, next){
@@ -132,7 +141,7 @@ const hashPassword = (password) =>{
 }
 
 const createTokenCompany = (companyId) => {
-    return jwt.sign({id: companyId}, 'agendamento', {expiresIn: '20s'});
+    return jwt.sign({id: companyId}, 'agendamento', {expiresIn: '300s'});
 }
 
 const findCompany = (companyReq) =>{

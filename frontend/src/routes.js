@@ -8,6 +8,8 @@ import UserSchedule from './pages/userSchedule/userSchedule';
 import LoginClient from './pages/login/loginClient';
 import LoginCompany from './pages/login/loginCompany';
 import SelectLogin from './pages/login/selectLogin';
+import CompanySchedule from './pages/companySchedule/companyShcedule';
+import Redirect from './pages/companySchedule/redirect';
 
 
 export default function Routes(){
@@ -21,6 +23,8 @@ export default function Routes(){
                 <Route path='/login' component={LoginClient}/>
                 <Route path='/loginCompany' component={LoginCompany}/>
                 <Route path='/selectLogin' component={SelectLogin}/>
+                <Route path='/companySchedule' component={CompanySchedule}/>
+                <Route path='/redirect' component={Redirect}/>
             </Switch>
         </BrowserRouter>
     )
