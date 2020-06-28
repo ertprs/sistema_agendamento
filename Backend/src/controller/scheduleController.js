@@ -126,5 +126,36 @@ module.exports = {
             console.log(error);
             next(error);
         }
+    },
+
+    async statusAttendance(request, response, next){
+        try {
+            const {id} = request.params;
+
+            const incident = await database('schedule')
+                .where('schedule_id', id)
+                .select('*')
+                .first();
+            
+         
+            if(incident === undefined){
+                return response.status(404).json({error: 'id no found'});
+            }    
+
+            if(incident.schedule_id != id || incident.schedule_id === undefined){
+                return response.status(404).json({error:'id no found'})
+            }
+
+         
+            await database('schedule').where('schedule_id', id).update({
+                status: false
+            })
+
+            return response.status(200).json({mensager:'Data update successfully'});
+
+        } catch (error) {
+            console.log(error);
+            next(error);
+        }
     }
 }
