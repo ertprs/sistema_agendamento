@@ -24,6 +24,7 @@ function loadingInfo(){
    return <h3 style={{color:'#808080'}}><img src={loadingGif} style={{width:'40px', marginRight: '10px'}} alt='texto'/>Carregando informações, por favor aguarde</h3>
 }
 
+
 const Menu = (props) =>{
     var initial = useHistory();
 
@@ -78,15 +79,15 @@ const Menu = (props) =>{
 }
 
 
-const MenuLogado = (props) =>{
+const MenuCompany = (props) =>{
 
-   /* var initial = useHistory();
+   var initial = useHistory();
 
     function logOut(){
         localStorage.clear();
     
         initial.push('/');
-    }*/
+    }
     return(
         <header className="header site-header" >
         <div className="container">
@@ -97,10 +98,10 @@ const MenuLogado = (props) =>{
                     </div>
                     <div id="navbar" className="navbar-collapse collapse">
                         <ul className="nav navbar-nav navbar-right">
-                            <li><a href="index.html">Home</a></li>
-                            <li className="active"><Link to='/#'>Meus Agendamentos</Link></li>
+                            <li className="active"><a href="companySchedule">Agendamentos do dia</a></li>
+                            <li><Link to='/#'>Relatório</Link></li>
                             <li><a href="/page-about.html">Conta</a></li>
-                            <li className="lastlink hidden-xs hidden-sm"><Link className="btn btn-primary" to="/" ><i className="glyphicon glyphicon-log-out"></i> Sair </Link></li>
+                            <li className="lastlink hidden-xs hidden-sm"><Link className="btn btn-primary" to="/" onClick={logOut} ><i className="glyphicon glyphicon-log-out"></i> Sair </Link></li>
                         </ul>
                     </div> {/*<!--/.nav-collapse -->*/}
                 </div> {/*<!--/.container-fluid -->*/}
@@ -416,7 +417,7 @@ function formatarData(data){
     var split = valor.split('-');//utiliza um caractere para separa a string no caso é o "-" da data
     var data_formatada = split[2] + "/" + split[1] + "/" + split[0];/*aqui reformulamos no padrão brasileiro
     a posição 0 é 2020, a posição  1 é 06 e a 2 é 05, ai só colocamos na ordem e concatenamos com a barra(/)*/
-    console.log('data '+data_formatada)
+    
     return data_formatada;
 }
 
@@ -469,6 +470,57 @@ const UserSchedules = (props)=>{
     )
 }
 
+const SchedulesCompany = (props)=>{
+    if(props.loading){
+        return loadingInfo();
+    }
+
+    return(
+        <section className="section">
+        <div className="container">
+            <div className="row clientv2">
+                <ul>
+                {props.incidents.map(incident=>(
+                <li key={incident.schedule_id}>
+                <div className="col-md-6 col-sm-12 col-xs-12">
+                    <div className="client-box">
+                    <div style={{
+                        float:'left', 
+                        display:'flex',
+                        padding:'10px', 
+                        width:'100px', 
+                        height:'297px',
+                        backgroundColor:'#D3D3D3',
+                        margin:'-30px',
+                        textAlign:'center',
+                        justifyContent:'center',
+                        
+                        }}>
+                        <strong style={{marginTop:'97px', color:'#363636'}}>Horário<br/>{incident.opening_hours} h</strong>
+                    </div>
+                    <div style={{marginLeft:'100px'}} >
+                        <strong>Nome do Cliente:</strong>
+                        <p>{incident.user_name}</p>
+                        <strong>Serviço:</strong>
+                        <p>{incident.service_name}</p>
+                        <strong>Valor:</strong>
+                        <p>R$ {incident.value}</p>
+                        <strong>Data do atendimento:</strong>
+                        <p>{formatarData(incident.attendace_date)}</p>
+                        <button className='btn btn-transparent' style={{padding:'5px', marginTop:'5px'}}>Atendimento realizado</button>
+                        <button className='btn btn-transparent' style={{padding:'5px', marginTop:'5px', marginLeft:'5px', color:'red', border:'1.5px solid red'}}>Cancelar Atendimento</button>
+                    </div>
+                    </div>
+                </div>
+                </li>
+                ))}
+                </ul>
+                <h2>{props.mensagerText}</h2>
+            </div>
+        </div>
+    </section>
+    )
+}
 
 export {
     Companies, 
@@ -478,5 +530,6 @@ export {
     PopupService, 
     Services,
     UserSchedules,
-    MenuLogado
+    MenuCompany,
+    SchedulesCompany
 };

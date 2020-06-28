@@ -44,7 +44,7 @@ export default function UserSchedule(){
                     localStorage.setItem('id_user', res.data.id);
                     setSchedules('Seus Agendamentos');
                     setAccount('Minha Conta');  
-                    setLogin(true)
+                    setLogin(true);
                 }
             })
 

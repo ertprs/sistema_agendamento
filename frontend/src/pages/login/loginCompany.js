@@ -36,7 +36,7 @@ export default function Login(){
                 setMesager('Email ou senha incorreto');
             }else{
                 localStorage.setItem('Token', response.data.token)
-                history.push('/redirect')
+                history.push('/companySchedule')
             }
         } catch (error) {
             alert('email ou senha incorreto');
