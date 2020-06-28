@@ -16,6 +16,25 @@ import '../pages/style.css';
 
 
 
+async function handleDeleteScheduleClient(id){
+    try {
+        let token = localStorage.getItem('Token');
+        let response = window.confirm('Você realmente deseja cancelar esse agendamento?');
+        if(response === true){
+            await api.delete(`scheduleUserFromCompany/${id}`, {
+                headers:{
+                    auther: token,
+                }
+            })
+
+            alert('Agendamento cancelado com sucesso');
+            window.location.reload();
+        }
+    } catch (error) {
+        alert('Error ao cancelar agendamento, tente novamente.');
+    }
+}
+
 function saveId(id){
     localStorage.setItem('Id', id);
 }
@@ -506,9 +525,9 @@ const SchedulesCompany = (props)=>{
                         <strong>Valor:</strong>
                         <p>R$ {incident.value}</p>
                         <strong>Data do atendimento:</strong>
-                        <p>{formatarData(incident.attendace_date)}</p>
+                    <p>{formatarData(incident.attendace_date)}</p>
                         <button className='btn btn-transparent' style={{padding:'5px', marginTop:'5px'}}>Atendimento realizado</button>
-                        <button className='btn btn-transparent' style={{padding:'5px', marginTop:'5px', marginLeft:'5px', color:'red', border:'1.5px solid red'}}>Cancelar Atendimento</button>
+                        <button className='btn btn-transparent' onClick={()=>handleDeleteScheduleClient(incident.schedule_id)} style={{padding:'5px', marginTop:'5px', marginLeft:'5px', color:'red', border:'1.5px solid red'}}>Cancelar Atendimento</button>
                     </div>
                     </div>
                 </div>

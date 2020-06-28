@@ -99,5 +99,32 @@ module.exports = {
             console.log('Error: '+error);
             next(error);
         }
+    },
+
+    async deleteScheduleUser(request, response, next){
+        try {
+            const {id} = request.params;
+            console.log(id)
+            const incidents = await database('schedule')
+                .where('schedule_id', id)
+                .select('*')
+                .first();
+            
+            console.log(incidents)
+            if(incidents === undefined){
+                return response.status(404).json({error: 'id no found'})
+            }
+            
+            if(incidents.schedule_id != id || incidents.schedule_id === undefined){
+                return response.status(404).json({error: 'id no found'})
+            }
+
+            await database('schedule').where('schedule_id', id).delete();
+
+            return response.status(200).json({mensager: 'Data successfully deleted'});
+        } catch (error) {
+            console.log(error);
+            next(error);
+        }
     }
 }

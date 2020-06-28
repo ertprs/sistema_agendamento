@@ -43,5 +43,6 @@ routes.get('/dateAtendance/:date', AttendanceController.indexDate);
 routes.post('/creatSchedule', auth ,ScheduleController.create);
 routes.get('/listar/:id', ScheduleController.index);
 routes.get('/hours', ScheduleController.freeHours);
+routes.delete('/scheduleUserFromCompany/:id', auth, ScheduleController.deleteScheduleUser)
 
 module.exports = routes;
