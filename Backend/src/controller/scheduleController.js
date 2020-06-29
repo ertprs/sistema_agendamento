@@ -1,4 +1,5 @@
 const database = require('../database/index');
+const { post } = require('../routes');
 
 module.exports = {
     async index(request, response, next){
@@ -152,6 +153,68 @@ module.exports = {
             })
 
             return response.status(200).json({mensager:'Data update successfully'});
+
+        } catch (error) {
+            console.log(error);
+            next(error);
+        }
+    },
+
+    async report(request, response, next){
+        try {
+            const {id} = request.params;
+            const dateReport = request.query.date1;
+            const dateReport2 = request.query.date2;
+
+            var incident = [];
+            //AQUI PEGA TODOS OS AGENDAMENTOS DA EMPRESA
+            incident = await database('schedule')
+            .select('*')
+            .where('company_id_schedule', id);
+
+            var amount = incident.length;
+            var date;
+            var posts = [];
+            var scheduleID = [];
+            var totalReport = 0;
+
+            for(let i = 0;i<amount;i++){
+                //console.log(incident[i].attendace_id_schedule);
+                //AQUI PEGA AS DATAS E OS ID DOS SERVIÇOS AGENDADOS
+                date = await database('attendance')
+                    .select('*')
+                    .where('attendace_id', incident[i].attendace_id_schedule)
+                    .andWhereBetween('attendace_date', [dateReport, dateReport2]);
+                if(date[0] != undefined){
+                    //console.log('entrou aqui')
+                    scheduleID.push(incident[i].service_id_schedule)
+                    posts.push(date[0]);
+                }
+            }
+            //ScheduleID pega os id dos serviços que estão entre a data selecionada
+            //console.log(scheduleID)
+            //console.log(posts);
+
+            //PEGAR O VALOR DO SERVIÇO
+            var amountService = scheduleID.length;
+            for(let i = 0; i < amountService; i++){
+                date = await database('services')
+                    .select('*')
+                    .where('service_id', scheduleID[i])
+                
+                if(date[0] != undefined){
+                    //console.log(date[0]);
+                    totalReport = totalReport + parseInt(date[0].value) ;
+                }
+            }
+            //VALOR DE TODOS OS SERVIÇOS ENTRE AS DATA AGENDADAS
+            //console.log('R$'+totalReport)
+     
+        if(incident === undefined){
+            return response.status(404).json({error: 'id no found'});
+        }  
+
+        return response.status(200).json({schedule: incident, attendance: posts, total: totalReport});
 
         } catch (error) {
             console.log(error);
