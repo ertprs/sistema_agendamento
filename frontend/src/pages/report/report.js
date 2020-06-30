@@ -24,6 +24,10 @@ export default function Report(){
                         </div>
                         <div className='col-md-12'>
                             <button className='btn btn-primary' style={{marginTop:'20px', marginBottom:'10px', padding:'10px'}}>Exibir Relatório</button>
+                            {/* Aqui vai exibir o botão quando os resultado forem carregados
+                            
+                            <button className='btn btn-primary' style={{marginTop:'20px', marginBottom:'10px', padding:'10px'}}>Boleto da Taxa</button>
+                            */}
                         </div>
                     </div>
                 </div>
@@ -44,7 +48,7 @@ export default function Report(){
             <div className='container'>
                 <div className='row'>
                     <div className='col-md-4'>
-                    <h4 style={{marginTop:'50px', color:'#595959'}}>Todos os agendamentos no perído</h4>
+                    <h4>Todos os agendamentos do período</h4>
                     </div>
                     <div className='col-md-12'>
                     <table border='1' style={{backgroundColor:'white', marginTop:'10px' , width:'100%', marginBottom:'20px'}}>
