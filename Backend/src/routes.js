@@ -46,6 +46,6 @@ routes.get('/listar/:id', ScheduleController.index);
 routes.get('/hours', ScheduleController.freeHours);
 routes.delete('/scheduleUserFromCompany/:id', auth, ScheduleController.deleteScheduleUser);
 routes.put('/updateStatus/:id', auth ,ScheduleController.statusAttendance);
-routes.get('/report/:id', scheduleController.report);
+routes.get('/report/:id', auth,  scheduleController.report);
 
 module.exports = routes;

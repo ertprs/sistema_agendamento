@@ -195,9 +195,9 @@ module.exports = {
             //console.log(scheduleID)
             //console.log(posts);
 
-            //PEGAR O VALOR DO SERVIÇO
             var amountService = scheduleID.length;
             for(let i = 0; i < amountService; i++){
+                //AQUI PEGA O VALOR DO SERVIÇOS AGENDADOS NO MÊS
                 date = await database('services')
                     .select('*')
                     .where('service_id', scheduleID[i])

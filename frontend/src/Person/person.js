@@ -138,7 +138,7 @@ const MenuCompany = (props) =>{
                     <div id="navbar" className="navbar-collapse collapse">
                         <ul className="nav navbar-nav navbar-right">
                             <li className="active"><a href="companySchedule">Agendamentos do dia</a></li>
-                            <li><Link to='/#'>Relatório</Link></li>
+                            <li><Link to='/report'>Relatório</Link></li>
                             <li><a href="/page-about.html">Conta</a></li>
                             <li className="lastlink hidden-xs hidden-sm"><Link className="btn btn-primary" to="/" onClick={logOut} ><i className="glyphicon glyphicon-log-out"></i> Sair </Link></li>
                         </ul>

@@ -10,6 +10,7 @@ import LoginCompany from './pages/login/loginCompany';
 import SelectLogin from './pages/login/selectLogin';
 import CompanySchedule from './pages/companySchedule/companyShcedule';
 import Redirect from './pages/companySchedule/redirect';
+import Report from './pages/report/report';
 
 
 export default function Routes(){
@@ -25,6 +26,7 @@ export default function Routes(){
                 <Route path='/selectLogin' component={SelectLogin}/>
                 <Route path='/companySchedule' component={CompanySchedule}/>
                 <Route path='/redirect' component={Redirect}/>
+                <Route path='/report' component={Report}/>
             </Switch>
         </BrowserRouter>
     )
