@@ -177,23 +177,27 @@ module.exports = {
             var posts = [];
             var scheduleID = [];
             var totalReport = 0;
+            var cont = 0;
 
             for(let i = 0;i<amount;i++){
-                //console.log(incident[i].attendace_id_schedule);
                 //AQUI PEGA AS DATAS E OS ID DOS SERVIÇOS AGENDADOS
                 date = await database('attendance')
                     .select('*')
                     .where('attendace_id', incident[i].attendace_id_schedule)
                     .andWhereBetween('attendace_date', [dateReport, dateReport2]);
                 if(date[0] != undefined){
-                    //console.log('entrou aqui')
                     scheduleID.push(incident[i].service_id_schedule)
                     posts.push(date[0]);
+                    cont = cont + 1;
                 }
             }
+
+            amount = cont;
             //ScheduleID pega os id dos serviços que estão entre a data selecionada
             //console.log(scheduleID)
             //console.log(posts);
+
+            var services = [];
 
             var amountService = scheduleID.length;
             for(let i = 0; i < amountService; i++){
@@ -204,17 +208,27 @@ module.exports = {
                 
                 if(date[0] != undefined){
                     //console.log(date[0]);
-                    totalReport = totalReport + parseInt(date[0].value) ;
+                    totalReport = totalReport + parseInt(date[0].value);
+                    services.push(date[0])
                 }
             }
             //VALOR DE TODOS OS SERVIÇOS ENTRE AS DATA AGENDADAS
             //console.log('R$'+totalReport)
+
+            var percentage = (totalReport * 8)/100;
      
         if(incident === undefined){
             return response.status(404).json({error: 'id no found'});
         }  
 
-        return response.status(200).json({schedule: incident, attendance: posts, total: totalReport});
+        return response.status(200).json({
+            schedule: incident, 
+            attendance: posts, 
+            services: services, 
+            total: totalReport, 
+            totalSchedule: amount,
+            percentage: percentage
+        });
 
         } catch (error) {
             console.log(error);

@@ -142,7 +142,7 @@ const hashPassword = (password) =>{
 }
 
 const createTokenCompany = (companyId) => {
-    return jwt.sign({id: companyId}, 'agendamento', {expiresIn: '300s'});
+    return jwt.sign({id: companyId}, 'agendamento', {expiresIn: '1200s'});
 }
 
 const findCompany = (companyReq) =>{
