@@ -77,6 +77,7 @@ export default function Report(){
                         </div>
                         <div className='col-md-12'>
                             <button type='button' className='btn btn-primary' onClick={()=>generateReport()} style={{marginTop:'20px', marginBottom:'10px', padding:'10px'}}>Exibir Relatório</button>
+
                         </div>
                     </div>
                 </div>
