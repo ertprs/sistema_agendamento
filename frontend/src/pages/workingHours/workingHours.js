@@ -21,7 +21,7 @@ export default function WorkingHours(){
 
                         <h3>Horários</h3>
 
-                        <div className='col-md-4'>
+                        <div className='col-sm-4 col-md-4'>
                             <h4 style={{fontSize: '1.5em', color:'black', marginTop: '10px'}}>Manhã</h4>
                             <div className='col-md-6'>
                                 <input type='checkbox' style={{ marginRight:'5px'}} id='08:00' value='08:00'  />
@@ -124,7 +124,7 @@ export default function WorkingHours(){
                                 <label htmlFor='12:00' >12:00</label>
                             </div>
                         </div>
-                        <div className='col-md-4'>
+                        <div className='col-sm-4 col-md-4'>
                             <h4 style={{fontSize: '1.5em', color:'black', marginTop: '10px'}}>Tarde</h4>
                             <div className='col-md-6'>
                                 <input type='checkbox' style={{ marginRight:'5px'}} id='12:00' value='12:00'  />
@@ -275,7 +275,7 @@ export default function WorkingHours(){
                                 <label htmlFor='18:00' >18:00</label>
                             </div>
                         </div>
-                        <div className='col-md-4'>
+                        <div className='col-sm-4 col-md-4'>
                             <h4 style={{fontSize: '1.5em', color:'black', marginTop: '10px'}}>Noite</h4>
                             <div className='col-md-6'>
                                 <input type='checkbox' style={{ marginRight:'5px'}} id='18:10' value='18:10' />
@@ -399,7 +399,7 @@ export default function WorkingHours(){
                             </div>
                         </div>
                         
-                        <div className='col-md-12'>
+                        <div className='col-sm-12 col-md-12'>
                             <button type='button' className='btn btn-primary' style={{marginTop:'20px', marginBottom:'10px', padding:'10px'}}>Adicionar</button>
                         </div>
                     </div>
