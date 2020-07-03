@@ -166,66 +166,49 @@ module.exports = {
             const dateReport = request.query.date1;
             const dateReport2 = request.query.date2;
 
-            var incident = [];
+            
             //AQUI PEGA TODOS OS AGENDAMENTOS DA EMPRESA
-            incident = await database('schedule')
-            .select('*')
-            .where('company_id_schedule', id);
+            const incident = await database('schedule')
+            .select(
+                'schedule_id',
+                'attendace_id_schedule',
+                'service_id_schedule',
+                'user_id_schedule',
+                'service_name',
+                'value',
+                'user_name',
+                'attendace_date',
+            )
+            .innerJoin('services', 'service_id_schedule', 'service_id')
+            .innerJoin('attendance', 'attendace_id_schedule', 'attendace_id')
+            .innerJoin('users', 'user_id_schedule', 'user_id')
+            .where('company_id_schedule', id)
+            .andWhereBetween('attendace_date', [dateReport, dateReport2]);
+
 
             var amount = incident.length;
-            var date;
-            var posts = [];
-            var scheduleID = [];
-            var totalReport = 0;
+            var totalRevenue = 0;
             var cont = 0;
+            
 
             for(let i = 0;i<amount;i++){
-                //AQUI PEGA AS DATAS E OS ID DOS SERVIÇOS AGENDADOS
-                date = await database('attendance')
-                    .select('*')
-                    .where('attendace_id', incident[i].attendace_id_schedule)
-                    .andWhereBetween('attendace_date', [dateReport, dateReport2]);
-                if(date[0] != undefined){
-                    scheduleID.push(incident[i].service_id_schedule)
-                    posts.push(date[0]);
+                if(incident[i] != undefined){
                     cont = cont + 1;
+                    totalRevenue = totalRevenue + parseInt(incident[i].value);
                 }
             }
 
             amount = cont;
-            //ScheduleID pega os id dos serviços que estão entre a data selecionada
-            //console.log(scheduleID)
-            //console.log(posts);
 
-            var services = [];
-
-            var amountService = scheduleID.length;
-            for(let i = 0; i < amountService; i++){
-                //AQUI PEGA O VALOR DO SERVIÇOS AGENDADOS NO MÊS
-                date = await database('services')
-                    .select('*')
-                    .where('service_id', scheduleID[i])
-                
-                if(date[0] != undefined){
-                    //console.log(date[0]);
-                    totalReport = totalReport + parseInt(date[0].value);
-                    services.push(date[0])
-                }
-            }
-            //VALOR DE TODOS OS SERVIÇOS ENTRE AS DATA AGENDADAS
-            //console.log('R$'+totalReport)
-
-            var percentage = (totalReport * 8)/100;
+            var percentage = (totalRevenue * 7)/100;
      
         if(incident === undefined){
             return response.status(404).json({error: 'id no found'});
         }  
 
         return response.status(200).json({
-            schedule: incident, 
-            attendance: posts, 
-            services: services, 
-            total: totalReport, 
+            schedule: incident,
+            totalRevenue: totalRevenue, 
             totalSchedule: amount,
             percentage: percentage
         });

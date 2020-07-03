@@ -15,6 +15,8 @@ import './style.css';
 import '../pages/style.css';
 
 
+//****FUNÇÕES****
+
 var token = localStorage.getItem('Token');
 
 async function handleServicePerformed(id){
@@ -63,6 +65,23 @@ function loadingInfo(){
    return <h3 style={{color:'#808080'}}><img src={loadingGif} style={{width:'40px', marginRight: '10px'}} alt='texto'/>Carregando informações, por favor aguarde</h3>
 }
 
+function realCurrency(value){
+    var real = value.toLocaleString('pt-br', {style: 'currency', currency: 'BRL'});
+    
+    return real
+}
+
+function formatarData(data){
+    //O valor de data retornado do bd é 2020-06-05T03:00:00.000Z
+    var valor =  data.substring(0, 10); //substring é responsável por pegar o caracter da posição 0 até a 10 que é 2020-06-05
+    var split = valor.split('-');//utiliza um caractere para separa a string no caso é o "-" da data
+    var data_formatada = split[2] + "/" + split[1] + "/" + split[0];/*aqui reformulamos no padrão brasileiro
+    a posição 0 é 2020, a posição  1 é 06 e a 2 é 05, ai só colocamos na ordem e concatenamos com a barra(/)*/
+    
+    return data_formatada;
+}
+
+//****COMPONENTES****
 
 const Menu = (props) =>{
     var initial = useHistory();
@@ -137,8 +156,10 @@ const MenuCompany = (props) =>{
                     </div>
                     <div id="navbar" className="navbar-collapse collapse">
                         <ul className="nav navbar-nav navbar-right">
-                            <li className="active"><a href="companySchedule">Agendamentos do dia</a></li>
+                            <li className="active"><Link href="companySchedule">Agendamentos do dia</Link></li>
                             <li><Link to='/report'>Relatório</Link></li>
+                            <li><Link to='/#'>Fatura Mensal</Link></li>
+                            <li><Link to='/#'>Horários de trabalho</Link></li>
                             <li><a href="/page-about.html">Conta</a></li>
                             <li className="lastlink hidden-xs hidden-sm"><Link className="btn btn-primary" to="/" onClick={logOut} ><i className="glyphicon glyphicon-log-out"></i> Sair </Link></li>
                         </ul>
@@ -450,15 +471,6 @@ const PopupService = (props)=>{
     )
 }
 
-function formatarData(data){
-    //O valor de data retornado do bd é 2020-06-05T03:00:00.000Z
-    var valor =  data.substring(0, 10); //substring é responsável por pegar o caracter da posição 0 até a 10 que é 2020-06-05
-    var split = valor.split('-');//utiliza um caractere para separa a string no caso é o "-" da data
-    var data_formatada = split[2] + "/" + split[1] + "/" + split[0];/*aqui reformulamos no padrão brasileiro
-    a posição 0 é 2020, a posição  1 é 06 e a 2 é 05, ai só colocamos na ordem e concatenamos com a barra(/)*/
-    
-    return data_formatada;
-}
 
 const UserSchedules = (props)=>{
     if(props.loading){
@@ -561,6 +573,65 @@ const SchedulesCompany = (props)=>{
     )
 }
 
+const ReportTable = (props) =>{
+    if(props.loading){
+        return loadingInfo();
+    }else if(props.status){
+        return <div></div>
+    }
+
+    return(
+        <div>
+            <div className='container tableClass'>
+                <div className='row'>
+                    <div className='col-md-4'>
+                        <h3>Total de agendamentos: {props.totalSchedule}</h3>
+                    </div>
+                    <div className='col-md-4'>
+                        <h3>Receita total: {realCurrency(props.totalRevenue)  }</h3>
+                    </div>
+                    <div className='col-md-4'>
+                        <h3>Taxa de serviço: {realCurrency(props.percentage)}</h3>
+                    </div>
+                </div>
+            </div>
+            <div className='container'>
+                <div className='row'>
+                    <div className='col-md-4'>
+                    <h4>Todos os agendamentos do período</h4>
+                    </div>
+                    <div className='col-md-12'>
+                    <table border='1' style={{backgroundColor:'white', marginTop:'10px' , width:'100%', marginBottom:'20px'}}>
+                        <thead>
+                            <tr>
+                                <th>Serviço</th>
+                                <th>valor do serviço</th>
+                                <th>Nome do cliente</th>
+                                <th>Data do agendamento</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                                {props.incidents.map(incident=>(
+                                <tr key={incident.schedule_id}>
+                                    <td>{incident.service_name}</td>
+                                    <td>{realCurrency(parseInt(incident.value)) }</td>
+                                    <td>{incident.user_name}</td>
+                                    <td>{formatarData(incident.attendace_date)}</td>
+                                </tr>
+                                ))}
+                        </tbody>
+                        
+                    </table>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    )
+}
+
+
+
 export {
     Companies, 
     PaginationNumber,
@@ -570,5 +641,6 @@ export {
     Services,
     UserSchedules,
     MenuCompany,
-    SchedulesCompany
+    SchedulesCompany,
+    ReportTable
 };

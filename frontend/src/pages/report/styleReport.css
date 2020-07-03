@@ -5,7 +5,8 @@
     background-color: white;
     max-width: 50%;
     margin-left: 25%;
-    margin-right: -50px
+    margin-right: -50px;
+    margin-bottom: 50px;
 }
 
 .inputDate{
@@ -41,5 +42,9 @@ th, td{
         max-width: 70%;
         margin-left: 15%;
         margin-right: -50px
+    }
+
+    .tableClass{
+        margin-left: 0;
     }
 }
