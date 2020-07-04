@@ -13,7 +13,6 @@ export default function WorkingHours(){
 
     
     const [attendace_date, setAttendace_date] = useState('');
-    const [opening_hours, setOpening_hours] = useState([]);
 
     useEffect(()=>{
         const fetchIncidents=()=>{
@@ -73,10 +72,6 @@ export default function WorkingHours(){
         }
     }
     
-    async function saveDate(){
-
-    }
-
     return (
         <div>
             <MenuCompany/>

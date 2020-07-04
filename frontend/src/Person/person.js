@@ -6,7 +6,7 @@ import api from '../services/api';
 import imagemBlog from '../upload/blog_01.jpg';
 import loadingGif from '../images/loading.gif';
 import imgService from '../upload/book_01.png';
-import logo from '../images/seu-logo.png';
+import logo from '../images/logo.png';
 
 import '../css/font-awesome.min.css';
 import '../css/bootstrap.min.css';
@@ -152,7 +152,7 @@ const MenuCompany = (props) =>{
             <nav className="navbar navbar-default yamm">
                 <div className="container-fluid">
                     <div className="navbar-header">
-                        <Link className="navbar-brand" to='/'><img src={logo} alt="Logo" style={{width:'200px'}}/></Link>
+                        <Link className="navbar-brand" to='/companySchedule'><img src={logo} alt="Logo" style={{width:'200px'}}/></Link>
                     </div>
                     <div id="navbar" className="navbar-collapse collapse">
                         <ul className="nav navbar-nav navbar-right">
@@ -194,11 +194,11 @@ const Companies = (props) =>{
                             <p>Telefone: {company.company_tel}</p>
                             <p style={{marginTop:'-10px'}}>Email: {company.company_email}</p>
                             <p style={{marginTop:'-10px'}}>Endereço: </p>
-                            <button  className='btn btn-primary' onClick={()=> saveId(company.company_id)}>
-                                <Link to={'/servicesCompany/'+ company.company_id} style={{color:'white'}}>
-                                    Selecionar
-                                </Link>
-                            </button>
+                            <Link to={'/servicesCompany/'+ company.company_id} style={{color:'white'}}>
+                                <button  className='btn btn-primary' onClick={()=> saveId(company.company_id)}>
+                                        Selecionar
+                                </button>
+                            </Link>
                         </div>
                     </div>
                 
@@ -245,10 +245,9 @@ const Footer = ()=>{
                 <div className="row">
                     <div className="col-md-4 col-sm-4">
                         <div className="widget clearfix">
-                            <h4 className="widget-title">Nome da empresa ou logo</h4>
-                            <div className="newsletter-widget">
-                                <p>Frase da empresa</p>
-                            </div>
+                            
+                            <img src={logo} alt="Logo" style={{width:'200px', marginTop:'65px'}}/>
+                            
                         </div>
                     </div>
                     <div className="col-md-2 col-sm-2">

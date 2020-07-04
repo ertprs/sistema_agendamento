@@ -1,10 +1,10 @@
 import React, { useEffect, useState } from 'react';
 
-import {Menu} from '../Person/person';
+import {Menu, Footer} from '../Person/person';
 
-import fundoTela from '../upload/bg_04.jpg';
-import imagemBannerEsquerda from '../upload/blog_alt_06.jpg';
-import imagemBannerDireita from '../upload/blog_alt_01.jpg';
+import fundoTela from '../images/photo4.jpg';
+import imagemBannerEsquerda from '../images/business1.jpg';
+import imagemBannerDireita from '../images/client1.jpg';
 
 import '../css/font-awesome.min.css';
 import '../css/bootstrap.min.css';
@@ -49,12 +49,12 @@ export default function Initial(){
     return(
     <div>
         <Menu schedules={schedules} account={account} login={login}/>
-        <section className="section transheader homepage parallax" data-stellar-background-ratio="0.5" style={{backgroundImage: `url(${fundoTela})`}}>
+        <section className="section transheader homepage" data-stellar-background-ratio="0.5" style={{backgroundImage: `url(${fundoTela})`, backgroundSize:'100%'}}>
         <div className="container">
             <div className="row">	
                 <div className="col-md-10 col-md-offset-1 col-sm-12 text-center">
-                    <h2>Agende Logo</h2>
-                    <p className="lead">Agende seu horário de forma rápida e fácil sem sair de casa</p>
+                    <h2>Agende Now</h2>
+                    <p className="lead">Marque Seu Horário Sem Sair de Casa</p>
                     <form className="calculateform">
                         <div className="item-box">
                             <div className="item-top form-inline">
@@ -81,10 +81,10 @@ export default function Initial(){
         <section>
         <div className="container">
                 <div className="section-title text-center">
-                    <small>Bem vindo ao agendamento fácil</small>
-                    <h3>Top Lorem ipsum pharetra</h3>
+                    <small>Bem vindo ao Agende Now</small>
+                    <h3>Conheça os Benéficios em Utilizar Nossa Plataforma</h3>
                     <hr/>
-                    <p className="lead"> Lorem ipsum pharetra facilisis lobortis erat tempor fermentum quam habitant, <br/>Lorem ipsum pharetra facilisis lobortis erat tempor </p>
+                    <p className="lead">Nossa plataforma trás benefícios para sua empresa e clientes. <br/>Tenha o controle de sua empresa na palma de sua mão e dê tchau a fila de espera de seus clientes. </p>
                 </div>
         </div>
         </section>
@@ -95,56 +95,24 @@ export default function Initial(){
                 <img src={imagemBannerEsquerda} alt="" />
             </div>
             <div className="content">
-                <h2>Be the leader in the sector</h2>
-                <p>Cras arcu sapien, maximus a accumsan at, iaculis nec nunc. Nullam ac ultricies velit, ut tincidunt tellus. Nunc nec sem at ante imperdiet tempor. Ut eu vulputate augue. Maecenas ultrices, arcu vel condimentum pharetra, diam eros mattis lectus, nec gravida sem erat nec orci. In dapibus ex eget arcu feugiat, non rhoncus enimpien id ligula sollicitudin fringilla ut id lacus. </p>
-                    <a href="/#" className="btn btn-transparent">Learn More</a>
+                <h2>Empresa</h2>
+                <p style={{textAlign:'justify'}}>Aumente seu faturamento sem filas de espera para seus clientes. Tenha total controle e segurança no gerenciamento do seus estabelecimento. Aumente a possibilidade estratégica do marketing de sua empresa tendo vizibilidade mundial do estabelecimento. </p>
+                    
             </div>
         </section>
         
-        <section className="section lb nopad spotlight style1">
+        <section className="section lb nopad spotlight style1" style={{marginBottom:'20px'}}>
             <div className="content">
-                <h2>Protect place with detailed analysis</h2>
-                <p>Donec congue odio in mi finibus dignissim. Etiam faucibus pharetra euismod. Pellentesque malesuada et ligula et scelerisque. Pellentesque aliquet magna ut dolor consequat, luctus tincidunt metus consequat. Nam eu mattis ante, nec facilisis purus. Praesent ac venenatis erat. Interdum et malesuada fames ac ante ipsum primis in faucibus. Integer tincidunt finibus.</p>
-                    <a href="/#" className="btn btn-transparent">Learn More</a>
+                <h2>Cliente</h2>
+                <p style={{textAlign:'justify'}}>Dê adeus as filas de esperas nos estabelecimentos, otimize seu tempo e  acompanhe seu atendimento em qualquer lugar. </p>
+                    
             </div>
             <div className="image col-md-4 hidden-sm hidden-xs">
                 <img src={imagemBannerDireita} alt="" />
             </div>
         </section>
 
-        <footer className="footer primary-footer">
-            <div className="container">
-                <div className="row">
-                    <div className="col-md-4 col-sm-4">
-                        <div className="widget clearfix">
-                            <h4 className="widget-title">Nome da empresa ou logo</h4>
-                            <div className="newsletter-widget">
-                                <p>Frase da empresa</p>
-                            </div>
-                        </div>
-                    </div>
-                    <div className="col-md-2 col-sm-2">
-                        <div className="widget clearfix">
-                            <h4 className="widget-title">Empresa</h4>
-                            <ul>
-                                <li><a href="/#">Sobre nós</a></li>
-                                <li><a href="/#">Contatos</a></li>
-                            </ul>
-                        </div>
-                    </div>
-
-                    <div className="col-md-2 col-sm-2">
-                        <div className="widget clearfix">
-                            <h4 className="widget-title">Rede Sociais</h4>
-                            <ul>
-                                <li><a href="/#">Facebook</a></li>
-                                <li><a href="/#">Instagram</a></li>
-                            </ul>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </footer>
+        <Footer />
     </div> 
     )
 }
