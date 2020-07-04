@@ -156,10 +156,10 @@ const MenuCompany = (props) =>{
                     </div>
                     <div id="navbar" className="navbar-collapse collapse">
                         <ul className="nav navbar-nav navbar-right">
-                            <li className="active"><Link href="companySchedule">Agendamentos do dia</Link></li>
+                            <li className="active"><Link to="/companySchedule">Agendamentos do dia</Link></li>
                             <li><Link to='/report'>Relatório</Link></li>
                             <li><Link to='/#'>Fatura Mensal</Link></li>
-                            <li><Link to='/#'>Horários de trabalho</Link></li>
+                            <li><Link to='/workingHours'>Horários de trabalho</Link></li>
                             <li><a href="/page-about.html">Conta</a></li>
                             <li className="lastlink hidden-xs hidden-sm"><Link className="btn btn-primary" to="/" onClick={logOut} ><i className="glyphicon glyphicon-log-out"></i> Sair </Link></li>
                         </ul>

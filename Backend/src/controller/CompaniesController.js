@@ -24,9 +24,8 @@ module.exports = {
             .andWhere('status', 'true')
             .orderBy('attendance.attendace_date', 'asc');
 
-        const id_company = response.locals.auth_data;
-        console.log('teste')
-        console.log(id_company);
+       
+        
         return response.json(data);
     },
 
