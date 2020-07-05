@@ -3,7 +3,7 @@ import {useHistory} from 'react-router-dom';
 import { MenuCompany } from '../../Person/person';
 import api from '../../services/api';
 
-import './styleWorkingHours.css';
+import '../report/styleReport.css';
 
 export default function WorkingHours(){
 
@@ -32,7 +32,6 @@ export default function WorkingHours(){
         }
 
         fetchIncidents();
-        handlepost()
     }, []);
 
 

@@ -23,7 +23,6 @@ async function handleServicePerformed(id){
     try {
         let response = window.confirm('O atendimento foi realizado?');
         if(response === true){
-            console.log('entrou aqui')
             await api.put(`updateStatus/${id}`, {}, {
                 headers:{
                     auther: token,
@@ -117,9 +116,9 @@ const Menu = (props) =>{
                     </div>
                     <div id="navbar" className="navbar-collapse collapse">
                         <ul className="nav navbar-nav navbar-right">
-                            <li className="active"><a href="index.html">Home</a></li>
-                            <li><a href="/page-about.html">Sobre</a></li>
-                            <li><a href="/page-contact.html">Contato</a></li>
+                            <li className="active"><Link to="/">Home</Link></li>
+                            <li><Link to="/">Sobre</Link></li>
+                            <li><Link to="/">Contato</Link></li>
                             {/* CLIENTE */}
                             <li><Link to='/userSchedule'>{props.schedules}</Link></li>
                             <li><Link to='/'>{props.account}</Link></li>
@@ -160,6 +159,7 @@ const MenuCompany = (props) =>{
                             <li><Link to='/report'>Relatório</Link></li>
                             <li><Link to='/#'>Fatura Mensal</Link></li>
                             <li><Link to='/workingHours'>Horários de trabalho</Link></li>
+                            <li><Link to='servicesCreate'>Serviços</Link></li>
                             <li><a href="/page-about.html">Conta</a></li>
                             <li className="lastlink hidden-xs hidden-sm"><Link className="btn btn-primary" to="/" onClick={logOut} ><i className="glyphicon glyphicon-log-out"></i> Sair </Link></li>
                         </ul>
@@ -629,6 +629,43 @@ const ReportTable = (props) =>{
     )
 }
 
+const ServiceTable = (props)=>{
+    if(props.loading){
+        return loadingInfo();
+    }
+    return(
+        <div className='container'>
+                <div className='row'>
+                    <div className='col-md-4'>
+                    <h4>Todos Serviços da Empresa</h4>
+                    </div>
+                    <div className='col-md-12'>
+                    <table border='1' style={{backgroundColor:'white', marginTop:'10px' , width:'50%', marginBottom:'20px'}}>
+                        <thead>
+                            <tr>
+                                <th style={{color:'black', textAlign:'center'}}>Nome do Serviço</th>
+                                <th style={{color:'black', textAlign:'center'}}>valor do serviço</th>
+                                <th colSpan='2' style={{textAlign:'center', color:'black'}}>Opções</th>
+                                
+                            </tr>
+                        </thead>
+                        <tbody>    
+                            {props.serviceList.map(service=>(
+                            <tr key={service.service_id}>
+                                <th>{service.service_name}</th>
+                                <th>{realCurrency(parseInt(service.value))} </th>    
+                                <th><button className='btn btn-transparent' style={{padding:'10px', margin:'auto'}}>Editar</button></th>
+                                <th><button className='btn btn-transparent' style={{padding:'10px', margin:'auto', color:'red', borderColor:'red'}}>Ecluir</button></th>
+                            </tr>      
+                            ))}      
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    )
+}
+
 
 
 export {
@@ -641,5 +678,6 @@ export {
     UserSchedules,
     MenuCompany,
     SchedulesCompany,
-    ReportTable
+    ReportTable,
+    ServiceTable
 };
