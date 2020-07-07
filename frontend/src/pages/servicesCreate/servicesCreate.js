@@ -40,7 +40,6 @@ export default function ServicesCreate(){
 				}
 			}).then(res=>{
                 if(!res.data.error){
-                    console.log(res)
                     setServiceList(res.data.services);
                     setLoading(false);
                 }
@@ -83,7 +82,7 @@ export default function ServicesCreate(){
     return (
         <div>
             <MenuCompany/>
-            <form className='formDate'>
+            <form className='formDate' style={{maxWidth:'60%', marginLeft: '20%'}}>
                 <div className='container'>
                     <div className='row'>
                         <div className='col-md-12'>
@@ -95,7 +94,7 @@ export default function ServicesCreate(){
                             <input type='text' className='inputDate' placeholder='Insira o nome' value={service_name} onChange={e=>setService_name(e.target.value)} />
                         </div>
                         <div className='input-group col-md-6'>
-                            <label style={{marginTop:'10px'}}>valor do serviço</label>
+                            <label style={{marginTop:'10px'}}>Valor do Serviço</label>
                             <input type='number' className='inputDate' placeholder='R$ 0,00' value={value} onChange={e=>setValue(e.target.value)}/>
                         </div>
                         <div className='col-md-12'>
@@ -105,7 +104,6 @@ export default function ServicesCreate(){
                 </div>
             </form>
             <ServiceTable loading={loading} serviceList={serviceList} />
-            <h1>Vou criar um popup para o botão EDITAR</h1>
             <Footer />
         </div>
     )

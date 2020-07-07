@@ -9,6 +9,7 @@ const AttendanceController = require('./controller/AttendanceController');
 const ScheduleController = require('./controller/scheduleController');
 const { compare } = require('bcrypt');
 const scheduleController = require('./controller/scheduleController');
+const ServiceController = require('./controller/ServiceController');
 
 
 const routes = express.Router();
@@ -34,9 +35,14 @@ routes.get('/companies/listAll/:id', auth ,CompaniesController.indexAll);
 routes.get('/companies' ,CompaniesController.ListCompanies);
 routes.get('/servicesCompany/:id', auth ,CompaniesController.ServicesList);
 routes.get('/companyId', auth, CompaniesController.CompanyId);
+routes.get('/serviceSelect/:id', auth, CompaniesController.ServicesSelect);
 
+//Services
 routes.post('/createServices', auth ,ServicesController.create);
+routes.put('/serviceUpdate/:id', auth, ServiceController.update);
+routes.delete('/deleteService/:id', auth, ServiceController.delete);
 
+//Attendance
 routes.post('/createAttendance', auth ,AttendanceController.create);
 routes.get('/attendance/:id', AttendanceController.index);
 routes.get('/dateAtendance/:date', AttendanceController.indexDate);

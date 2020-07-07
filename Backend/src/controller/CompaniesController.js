@@ -69,11 +69,24 @@ module.exports = {
         try {
             const id = request.params.id;
 
-            const services = await database('services').select('*').where('company_id_service', id);
-            //pegando o id do usuário logado
-            console.log('listagem de serviços/ ID-USER: '+response.locals.auth_data.id);
+            const services = await database('services').select('*').where('company_id_service', id).orderBy('service_id', 'asc');
+           
             const id_user = response.locals.auth_data;
             return response.json({services:services, user: id_user});
+        } catch (error) {
+            console.log(error);
+            next(error);
+        }
+    },
+
+    async ServicesSelect(request, response, next){
+        try {
+            const id = request.params.id;
+            const idService = request.query.idService;
+
+            const services = await database('services').select('*').where('company_id_service', id).andWhere('service_id', idService);
+
+            return response.json(services);
         } catch (error) {
             console.log(error);
             next(error);

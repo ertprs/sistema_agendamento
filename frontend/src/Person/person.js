@@ -320,7 +320,6 @@ const PopupService = (props)=>{
     const [free, setFree] = useState([]);
     const [mensager, setMensager] = useState('');
 
-    
 
     useEffect(()=>{
         if(date != ''){
@@ -613,7 +612,7 @@ const ReportTable = (props) =>{
                                 {props.incidents.map(incident=>(
                                 <tr key={incident.schedule_id}>
                                     <td>{incident.service_name}</td>
-                                    <td>{realCurrency(parseInt(incident.value)) }</td>
+                                    <td>{realCurrency(parseFloat(incident.value)) }</td>
                                     <td>{incident.user_name}</td>
                                     <td>{formatarData(incident.attendace_date)}</td>
                                 </tr>
@@ -630,9 +629,31 @@ const ReportTable = (props) =>{
 }
 
 const ServiceTable = (props)=>{
+
     if(props.loading){
         return loadingInfo();
     }
+
+    async function handleDeleteScheduleService(idCompany, idService){
+        const token = localStorage.getItem('Token');
+
+        try {
+            let response = window.confirm('Você realmente deseja cancelar esse agendamento?');
+            if(response === true){
+                await api.delete(`deleteService/${idCompany}?idService=${idService}`, {
+                    headers:{
+                        auther: token,
+                    }
+                })
+    
+                alert('Agendamento cancelado com sucesso');
+                window.location.reload();
+            }
+        } catch (error) {
+            alert('Error ao cancelar agendamento, tente novamente.');
+        }
+    }
+
     return(
         <div className='container'>
                 <div className='row'>
@@ -653,9 +674,9 @@ const ServiceTable = (props)=>{
                             {props.serviceList.map(service=>(
                             <tr key={service.service_id}>
                                 <th>{service.service_name}</th>
-                                <th>{realCurrency(parseInt(service.value))} </th>    
-                                <th><button className='btn btn-transparent' style={{padding:'10px', margin:'auto'}}>Editar</button></th>
-                                <th><button className='btn btn-transparent' style={{padding:'10px', margin:'auto', color:'red', borderColor:'red'}}>Ecluir</button></th>
+                                <th>{realCurrency(parseFloat(service.value))} </th>    
+                                <th><PopupServiceEdit idService={service.service_id} idCompany={service.company_id_service}>Editar</PopupServiceEdit></th>
+                                <th><button className='btn btn-transparent' onClick={()=>handleDeleteScheduleService(service.company_id_service, service.service_id)} style={{padding:'10px', margin:'auto', color:'red', borderColor:'red'}}>Ecluir</button></th>
                             </tr>      
                             ))}      
                         </tbody>
@@ -663,6 +684,69 @@ const ServiceTable = (props)=>{
                 </div>
             </div>
         </div>
+    )
+}
+
+const PopupServiceEdit = (props)=>{
+
+    const token = localStorage.getItem('Token');
+
+    const [service_name, setService_name] = useState('');
+    const [value, setValue] = useState('');
+    
+    useEffect(()=>{
+        api.get(`serviceSelect/${props.idCompany}?idService=${props.idService}`, {
+            headers: {
+                auther: token
+            }
+        }).then(res=>{
+            setService_name(res.data[0].service_name);
+            setValue(res.data[0].value);
+        })
+    }, [])
+
+    async function handlePost(){
+
+        const data ={
+            service_name: service_name,
+            value: value,
+        }
+
+        await api.put(`serviceUpdate/${props.idCompany}?idService=${props.idService}`, data, {
+            headers:{
+                auther: token
+            }
+        } )
+    }
+
+    
+    return(
+    <Popup trigger={<button className="btn btn-transparent" style={{padding:'10px', margin:'auto'}}> Editar </button>} modal>
+    {close => (
+      <div className="model">
+        <Link className="close "  onClick={close}>
+          &times;
+        </Link>
+        <div className="header"> Informações do Serviço </div>
+        <div className="content">
+          {" "}
+          <form onSubmit={handlePost}>
+          <label>Nome do Serviço:</label>
+          <input type='text' value={service_name} onChange={e=>setService_name(e.target.value)} style={{marginLeft:'5px', border:'1px solid gray', padding:'0px 0px 0px 5px'}}/>
+          <label style={{marginLeft:'5px', marginRight: '5px'}}>Valor do Serviço:</label>
+          <input type='number' value={value} onChangeCapture={e=>setValue(e.target.value)}  style={{marginLeft:'5px', border:'1px solid gray', padding:'0px 0px 0px 5px'}}/>
+          <button  type='submit' style={{
+                display:'flex',
+                margin:'0 auto',
+                border: '1px solid gray',
+                padding: '5px',
+                marginTop:'10px'
+           }} position='top center'> Editar </button>
+          </form>
+        </div>
+      </div>
+    )}
+    </Popup>
     )
 }
 
@@ -679,5 +763,6 @@ export {
     MenuCompany,
     SchedulesCompany,
     ReportTable,
-    ServiceTable
+    ServiceTable,
+    PopupServiceEdit
 };
