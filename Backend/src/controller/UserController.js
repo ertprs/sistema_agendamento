@@ -24,15 +24,39 @@ module.exports = {
             .andWhere('status', 'true')
             .orderBy('attendance.attendace_date', 'asc');
 
-        //Verifica se o array está vazio se estiver é porque não tem agendamentos 
-        if(data.length == 0){
-            return response.json({mensager: 'Você não possui agendamentos em aberto'})
-        }
 
         console.log(response.locals.auth_data);
         const id_user_login = response.locals.auth_data;
         
         return response.json({data: data, id_user_login: id_user_login});
+    },
+
+    async servicesHistoric(request, response, next){
+        const params = request.params;
+        const data = await database('schedule')
+            .select(
+                'users.user_name',
+                'services.service_name',
+                'services.value',
+                'schedule.status',
+                'attendance.attendace_date',
+                'attendance.opening_hours',
+                'companies.company_name',
+                'schedule_id',
+                'service_id'
+            )
+            .innerJoin('companies', 'company_id_schedule', 'company_id')
+            .innerJoin('services', 'service_id_schedule', 'service_id')
+            .innerJoin('attendance', 'attendace_id_schedule', 'attendace_id')
+            .innerJoin('users', 'user_id_schedule', 'user_id')
+            .where('user_id_schedule', params.id)
+            .andWhere('status', 'false')
+            .orderBy('attendance.attendace_date', 'asc');
+
+
+        console.log(response.locals.auth_data);
+       
+        return response.json(data);
     },
 
     async indexAll(request, response, next){
@@ -144,7 +168,7 @@ const hashPassword = (password) => {
 }
 
 const createtokenUser = (userID) => {
-    return jwt.sign({id:userID}, 'agendamento', {expiresIn: '300s'});
+    return jwt.sign({id:userID}, 'agendamento', {expiresIn: '600s'});
 }
 
 const findUser = (userReq) => {

@@ -473,7 +473,8 @@ const PopupService = (props)=>{
 const UserSchedules = (props)=>{
     if(props.loading){
         return loadingInfo();
-        
+    }else if(props.incidents.length == 0){
+        return <h2 style={{textAlign:"center"}}>Sem agendamento em aberto</h2>
     }
     return(
         <section className="section">
@@ -750,6 +751,46 @@ const PopupServiceEdit = (props)=>{
     )
 }
 
+const HistoricServiceTable = (props)=>{
+    if(props.loading){
+        return loadingInfo();
+    }
+
+    return (
+        <div className='container' >
+                <div className='row'>
+                    <div className='col-md-12'>
+                    <table border='1' style={{backgroundColor:'white', marginTop:'10px' , width:'100%', marginBottom:'20px'}}>
+                        <thead>
+                            <tr>
+                                <th>Serviço</th>
+                                <th>valor do serviço</th>
+                                <th>Horário do agendamento</th>
+                                <th>Empresa</th>
+                                <th>Data do agendamento</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            
+                            {props.historicIncident.map((incident, index)=>(  
+                                <tr key={index}>
+                                    <td>{incident.service_name}</td>
+                                    <td>{realCurrency(parseFloat(incident.value))}</td>
+                                    <td>{incident.opening_hours}</td>
+                                    <td>{incident.company_name}</td>
+                                    <td>{formatarData(incident.attendace_date)}</td>
+                                </tr>    
+                            ))} 
+                        </tbody>
+                        
+                    </table>
+
+                    </div>
+                </div>
+            </div>
+    )
+}
+
 
 
 export {
@@ -764,5 +805,6 @@ export {
     SchedulesCompany,
     ReportTable,
     ServiceTable,
-    PopupServiceEdit
+    PopupServiceEdit,
+    HistoricServiceTable
 };

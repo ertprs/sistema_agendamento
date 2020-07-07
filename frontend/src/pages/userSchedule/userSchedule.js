@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import {useHistory} from 'react-router-dom'
-import {Menu, Footer, UserSchedules} from '../../Person/person';
+import {Menu, Footer, UserSchedules, HistoricServiceTable} from '../../Person/person';
 import api from '../../services/api';
 
 
@@ -17,6 +17,8 @@ export default function UserSchedule(){
     const [account, setAccount] = useState('');
     const [login, setLogin] =useState(false)
 
+    const [historicIncident, setHistoricIncident] = useState([]);
+
     useEffect(()=>{
         setLoading(true)
         const fetchSchedule = ()=>{
@@ -32,6 +34,15 @@ export default function UserSchedule(){
                     setIncidents(res.data.data);
                     setLoading(false);
                 }
+            })
+
+            api.get(`user/servicesHistoric/${id_user}`, {
+                headers:{
+                    auther: token,
+                }
+            }).then(res=>{
+                setHistoricIncident(res.data)
+                
             })
 
             api.get('userId',{
@@ -54,24 +65,32 @@ export default function UserSchedule(){
     },[id_user]) 
     /*coloco para página atualizar sempre que o id do usuário sofrer alteração,
      assim se alguém mudar no local storage ele vai atualizar para o id do login de novo */
-  
-    
 
     return(
-        <div>
+        <div style={{backgroundColor:'white'}}>
             <Menu schedules={schedules} account={account} login={login}/>
             <section className="section normalhead">
 			<div className="container">
 				<div className="row">	
 					<div className="col-md-10 col-md-offset-1 col-sm-12 text-center">
 						<h2>Seus agendamentos</h2>
-						<p className="lead">Aqui você tem controle de todos os seus agendamentos</p>
+						<p className="lead">Visualize seus agendamentos em aberto</p>
 					</div>
 				</div>
 			</div>
 		    </section>
             <UserSchedules incidents={incidents} loading={loading} />
-            <h1>Vou colocar um botão de cancelar em cada agendamento, nele vai excluir o agendamento</h1>
+            <section className='section normalhead'>
+                <div className='container'>
+                    <div className='row'>
+                        <div className='col-md-10 col-md-offset-1 col-sm-12 text-center'>
+                            <h2>Histórico de agedamento</h2>
+                            <p className='lead'>Visualize o seu histórico de agendamento</p>
+                        </div>
+                    </div>
+                </div>
+            </section>
+            <HistoricServiceTable historicIncident={historicIncident} loading={loading} />
             <Footer />
         </div>
     )
