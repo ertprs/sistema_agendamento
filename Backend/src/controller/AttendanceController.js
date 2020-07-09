@@ -93,16 +93,10 @@ module.exports = {
                 .where('attendace_id_schedule', id)
                 .select('*')
                 .first();
-       
-            if(incidentSchedule === undefined){
-                return response.status(404).json({error: 'id no found'});
-            }
 
-            if(incidentSchedule.attendace_id_schedule != id || incidentSchedule.attendace_id_schedule === undefined){
-                return response.status(404).json({error: 'id no found'})
+            if(incidentSchedule != undefined){
+                await database('schedule').where('attendace_id_schedule', id).delete();
             }
-
-            await database('schedule').where('attendace_id_schedule', id).delete();
 
             await database('attendance').where('attendace_id', id).delete();
 

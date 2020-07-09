@@ -809,6 +809,8 @@ const Allhours = (props) =>{
 
     console.log(props.morning)
 
+    /* FAZER A FUNÇÃO DE EXCLUIR O HORÁRIO, MAS NÃO PODE SER EXCLUIDO UM HORARIOS QUE TENHA O DIA MENOR E QUE A HORA JÁ TENHA PASSADO */
+
     return(
         <div>
             <h3>Horários</h3>
