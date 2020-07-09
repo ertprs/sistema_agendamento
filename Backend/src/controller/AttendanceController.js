@@ -1,5 +1,6 @@
 const database = require('../database/index');
 const { index } = require('./CompaniesController');
+const { andWhere } = require('../database/index');
 
 module.exports = {
     async create(request, response, next){
@@ -36,6 +37,76 @@ module.exports = {
             const hours = await database('attendance').select("*").where('company_id_attendance', id);
 
             return response.json(hours);
+        } catch (error) {
+            console.log(error);
+            next(error);
+        }
+    },
+
+    async allHours(request, response, next){
+        try {
+            const id = request.params.id;
+            const date = request.query.date;
+            const morning = [];
+            const afternoon = [];
+            const night = [];
+
+            const hours = await database('attendance')
+                .select("*")
+                .where('company_id_attendance', id)
+                .andWhere('attendace_date', date);
+            
+            for(var i = 0; i < hours.length; i++){
+                if(parseInt(hours[i].opening_hours) < 12){
+                    morning.push(hours[i])
+                }else if(parseInt(hours[i].opening_hours) >= 12 && parseInt(hours[i].opening_hours) < 18){
+                    afternoon.push(hours[i]);
+                }else{
+                    night.push(hours[i]);
+                }
+            }
+
+            return response.json({morning: morning, afternoon:afternoon, night:night});
+        } catch (error) {
+            console.log(error);
+            next(error);
+        }
+    },
+
+    async deleteAttendance(request, response, next){
+        try {
+            const {id} = request.params;
+            const incident = await database('attendance')
+                .where('attendace_id', id)
+                .select('*')
+                .first();
+            console.log(incident)
+            if(incident === undefined){
+                return response.status(404).json({error: 'id no found'});
+            }
+
+            if(incident.attendace_id != id || incident.attendace_id === undefined){
+                return response.status(404).json({error: 'id no found'})
+            }
+
+            const incidentSchedule = await database('schedule')
+                .where('attendace_id_schedule', id)
+                .select('*')
+                .first();
+       
+            if(incidentSchedule === undefined){
+                return response.status(404).json({error: 'id no found'});
+            }
+
+            if(incidentSchedule.attendace_id_schedule != id || incidentSchedule.attendace_id_schedule === undefined){
+                return response.status(404).json({error: 'id no found'})
+            }
+
+            await database('schedule').where('attendace_id_schedule', id).delete();
+
+            await database('attendance').where('attendace_id', id).delete();
+
+            return response.status(200).json({mensager: 'Data Succefully deleted'});
         } catch (error) {
             console.log(error);
             next(error);

@@ -4,12 +4,10 @@ const auth = require('./middleware/auth');
 
 const UserController = require('./controller/UserController');
 const CompaniesController = require('./controller/CompaniesController');
-const ServicesController = require('./controller/ServiceController');
 const AttendanceController = require('./controller/AttendanceController');
 const ScheduleController = require('./controller/scheduleController');
-const { compare } = require('bcrypt');
-const scheduleController = require('./controller/scheduleController');
 const ServiceController = require('./controller/ServiceController');
+
 
 
 const routes = express.Router();
@@ -39,7 +37,7 @@ routes.get('/companyId', auth, CompaniesController.CompanyId);
 routes.get('/serviceSelect/:id', auth, CompaniesController.ServicesSelect);
 
 //Services
-routes.post('/createServices', auth ,ServicesController.create);
+routes.post('/createServices', auth ,ServiceController.create);
 routes.put('/serviceUpdate/:id', auth, ServiceController.update);
 routes.delete('/deleteService/:id', auth, ServiceController.delete);
 
@@ -47,12 +45,14 @@ routes.delete('/deleteService/:id', auth, ServiceController.delete);
 routes.post('/createAttendance', auth ,AttendanceController.create);
 routes.get('/attendance/:id', AttendanceController.index);
 routes.get('/dateAtendance/:date', AttendanceController.indexDate);
+routes.get('/allHours/:id', AttendanceController.allHours);
+routes.delete('/deleteAttendance/:id', auth, AttendanceController.deleteAttendance);
 //schedule
 routes.post('/creatSchedule', auth ,ScheduleController.create);
 routes.get('/listar/:id', ScheduleController.index);
 routes.get('/hours', ScheduleController.freeHours);
 routes.delete('/scheduleUserFromCompany/:id', auth, ScheduleController.deleteScheduleUser);
 routes.put('/updateStatus/:id', auth ,ScheduleController.statusAttendance);
-routes.get('/report/:id', auth,  scheduleController.report);
+routes.get('/report/:id', auth,  ScheduleController.report);
 
 module.exports = routes;

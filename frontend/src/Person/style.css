@@ -1,41 +1,69 @@
 .model {
     font-size: 12px;
   }
-  .model > .header {
-    width: 100%;
-    border-bottom: 1px solid gray;
-    font-size: 25px;
-    text-align: center;
-    padding: 5px;
-  }
-  .model > .content {
-    width: 100%;
-    padding: 10px 5px;
-    font-size: 15px;
-  }
+.model > .header {
+  width: 100%;
+  border-bottom: 1px solid gray;
+  font-size: 25px;
+  text-align: center;
+  padding: 5px;
+}
+.model > .content {
+  width: 100%;
+  padding: 10px 5px;
+  font-size: 15px;
+}
 
-  .model > .content > input{
-    border: 1px solid gray;
-  }
+.model > .content > input{
+  border: 1px solid gray;
+}
 
-  .model > .actions  {
-    width: 100%;
-    padding: 10px 5px;
-    margin: auto;
-    text-align: center;
+.model > .actions  {
+  width: 100%;
+  padding: 10px 5px;
+  margin: auto;
+  text-align: center;
 
-  }
+}
 
-  .model > .close  {
-    cursor: pointer;
-    position: absolute;
-    display: block;
-    padding: 2px 5px;
-    line-height: 20px;
-    right: -10px;
-    top: -10px;
-    font-size: 24px;
-    background: #ffffff;
-    border-radius: 18px;
-    border: 1px solid #cfcece;
-  }
+.model > .close  {
+  cursor: pointer;
+  position: absolute;
+  display: block;
+  padding: 2px 5px;
+  line-height: 20px;
+  right: -10px;
+  top: -10px;
+  font-size: 24px;
+  background: #f0f1f2;
+  border-radius: 18px;
+  border: 1px solid #cfcece;
+}
+
+.dropdownMenu{
+  position: relative;
+  display: inline-block;
+  color: black;
+  font-size: 15px;
+  margin-top: 14px;
+}
+
+.dropdown-content-menu{
+  display: none;
+  position: absolute;
+  background-color: white;
+  min-width: 160px;
+  box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+  padding: 12px 16px;
+  z-index: 1;
+  font-size: 13px;
+}
+
+.dropdownMenu:hover .dropdown-content-menu{
+  display: block;
+}
+
+.dropdown-content-menu > a>  p:hover{
+  color: black;
+  background-color: #DCDCDC;
+}

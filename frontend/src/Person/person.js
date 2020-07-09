@@ -158,7 +158,16 @@ const MenuCompany = (props) =>{
                             <li className="active"><Link to="/companySchedule">Agendamentos do dia</Link></li>
                             <li><Link to='/report'>Relatório</Link></li>
                             <li><Link to='/#'>Fatura Mensal</Link></li>
-                            <li><Link to='/workingHours'>Horários de trabalho</Link></li>
+                            <li className='dropdownMenu'>
+                                <span>
+                                    Horários de trabalho
+                                    <span className="fa fa-angle-down" style={{marginLeft:'5px'}}/>
+                                </span>
+                                <div className='dropdown-content-menu'>
+                                    <Link to='/workingHours'><p>Adicionar horários</p></Link>
+                                    <Link to='/viewSchedule'><p>Vizualizar horários</p></Link>
+                                </div>
+                            </li>
                             <li><Link to='servicesCreate'>Serviços</Link></li>
                             <li><a href="/page-about.html">Conta</a></li>
                             <li className="lastlink hidden-xs hidden-sm"><Link className="btn btn-primary" to="/" onClick={logOut} ><i className="glyphicon glyphicon-log-out"></i> Sair </Link></li>
@@ -791,6 +800,56 @@ const HistoricServiceTable = (props)=>{
     )
 }
 
+const Allhours = (props) =>{
+    if(props.loading){
+        return loadingInfo();
+    }else if(!props.status){
+        return <div></div>
+    }
+
+    console.log(props.morning)
+
+    return(
+        <div>
+            <h3>Horários</h3>
+
+            <div className='col-sm-4 col-md-4'>
+                <h4 style={{fontSize: '1.5em', color:'black', marginTop: '10px'}}>Manhã</h4>
+                {props.morning.map((post, index)=>(
+                <div className='col-md-6'>
+                    <label key={post.attendace_id}>{post.opening_hours}</label>
+                    <button type='button'>
+                        <span className='fa fa-times' style={{color:'red', marginLeft:'4px'}}/>
+                    </button>
+                </div> 
+                ))}
+            </div>   
+            <div className='col-sm-4 col-md-4'>
+                <h4 style={{fontSize: '1.5em', color:'black', marginTop: '10px'}}>Tarde</h4>
+                {props.afternoon.map((post, index)=>(
+                <div className='col-md-6'>
+                    <label key={post.attendace_id}>{post.opening_hours}</label>
+                    <button type='button'>
+                        <span className='fa fa-times' style={{color:'red', marginLeft:'4px'}}/>
+                    </button>
+                </div> 
+                ))}
+            </div>   
+            <div className='col-sm-4 col-md-4'>
+                <h4 style={{fontSize: '1.5em', color:'black', marginTop: '10px'}}>Noite</h4>
+                {props.night.map((post, index)=>(
+                <div className='col-md-6'>
+                    <label key={post.attendace_id}>{post.opening_hours}</label>
+                    <button type='button'>
+                        <span className='fa fa-times' style={{color:'red', marginLeft:'4px'}}/>
+                    </button>
+                </div> 
+                ))}
+            </div>   
+        </div>
+    )
+}
+
 
 
 export {
@@ -806,5 +865,6 @@ export {
     ReportTable,
     ServiceTable,
     PopupServiceEdit,
-    HistoricServiceTable
+    HistoricServiceTable,
+    Allhours
 };
