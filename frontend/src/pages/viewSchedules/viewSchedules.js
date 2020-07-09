@@ -69,7 +69,7 @@ export default function ViewSchedules(){
                             <button type='button' onClick={()=>handleHours()} className='btn btn-primary' style={{marginBottom:'20px', padding:'10px'}}>Adicionar</button>
                         </div>
 
-                        <Allhours loading={loading} morning={morning} afternoon={afternoon} night={night}  status={status}/>
+                        <Allhours loading={loading} morning={morning} afternoon={afternoon} night={night}  status={status} date={date}/>
                     </div>
                 </div>
             </form>

@@ -807,9 +807,37 @@ const Allhours = (props) =>{
         return <div></div>
     }
 
-    console.log(props.morning)
+    function deleteHours(id, hour){
+        var now = new Date;
+        
+        console.log(props.date)
 
-    /* FAZER A FUNÇÃO DE EXCLUIR O HORÁRIO, MAS NÃO PODE SER EXCLUIDO UM HORARIOS QUE TENHA O DIA MENOR E QUE A HORA JÁ TENHA PASSADO */
+        var datanow = now.getFullYear()+'-'+ (now.getMonth()+1) + '-' + now.getDate()
+        if((now.getMonth()+1) < 10){
+            var datanow = now.getFullYear()+'-0'+ (now.getMonth()+1) + '-' + now.getDate()
+        }
+        if(now.getDate() < 10){
+            var datanow = now.getFullYear()+'-'+ (now.getMonth()+1) + '-0' + now.getDate()
+        }
+
+        if(now.getDate() < 10 && (now.getMonth()+1) < 10){
+            var datanow = now.getFullYear()+'-0'+ (now.getMonth()+1) + '-0' + now.getDate()
+        }
+
+        var data1 = new Date(props.date)
+        var data2 = new Date(datanow);
+
+        var hourNow = now.getHours()+':'+now.getMinutes();
+
+        if(data1 < data2 || hour < hourNow){
+            console.log('menor')
+            alert('Não é possível apagar um horário que já passou ou dias anteriores')
+        }else{
+            //COLOCAR AQUI A CHAMADA HTTP PARA A ROTA DE EXCLUSÃO DO HORÁRIO
+            console.log('igual ou maior')
+        }
+
+    }
 
     return(
         <div>
@@ -820,7 +848,7 @@ const Allhours = (props) =>{
                 {props.morning.map((post, index)=>(
                 <div className='col-md-6'>
                     <label key={post.attendace_id}>{post.opening_hours}</label>
-                    <button type='button'>
+                    <button type='button' onClick={()=> deleteHours(post.attendace_id, post.opening_hours)}>
                         <span className='fa fa-times' style={{color:'red', marginLeft:'4px'}}/>
                     </button>
                 </div> 
@@ -831,7 +859,7 @@ const Allhours = (props) =>{
                 {props.afternoon.map((post, index)=>(
                 <div className='col-md-6'>
                     <label key={post.attendace_id}>{post.opening_hours}</label>
-                    <button type='button'>
+                    <button type='button' onClick={()=> deleteHours(post.attendace_id, post.opening_hours)}>
                         <span className='fa fa-times' style={{color:'red', marginLeft:'4px'}}/>
                     </button>
                 </div> 
@@ -842,7 +870,7 @@ const Allhours = (props) =>{
                 {props.night.map((post, index)=>(
                 <div className='col-md-6'>
                     <label key={post.attendace_id}>{post.opening_hours}</label>
-                    <button type='button'>
+                    <button type='button' onClick={()=> deleteHours(post.attendace_id, post.opening_hours)}>
                         <span className='fa fa-times' style={{color:'red', marginLeft:'4px'}}/>
                     </button>
                 </div> 

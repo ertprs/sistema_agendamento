@@ -67,7 +67,7 @@ export default function WorkingHours(){
                alert('horários registrados, por favor confira na página de horários ')
            }
         } catch (error) {
-            alert(`Erro no agendamento, tente novamento mais tarde.`);
+            alert(`Erro no agendamento, verifique se a DATA foi definida ou tente novamento mais tarde.`);
         }
     }
     
@@ -83,7 +83,7 @@ export default function WorkingHours(){
                         </div>
                         <div className='col-md-12' >
                             <label style={{color:'black'}}>Data</label>
-                            <input type='date' className='inputDate' style={{marginBottom:'20px'}} value={attendace_date} onChange={e=>setAttendace_date(e.target.value)} />
+                            <input type='date' className='inputDate' style={{marginBottom:'20px'}} value={attendace_date} onChange={e=>setAttendace_date(e.target.value)} required />
                         </div>
 
                         <h3>Horários</h3>
