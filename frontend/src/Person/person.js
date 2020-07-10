@@ -807,7 +807,8 @@ const Allhours = (props) =>{
         return <div></div>
     }
 
-    function deleteHours(id, hour){
+    async function configHours(id, hour){
+       
         var now = new Date;
         
         console.log(props.date)
@@ -833,10 +834,27 @@ const Allhours = (props) =>{
             console.log('menor')
             alert('Não é possível apagar um horário que já passou ou dias anteriores')
         }else{
-            //COLOCAR AQUI A CHAMADA HTTP PARA A ROTA DE EXCLUSÃO DO HORÁRIO
-            console.log('igual ou maior')
+            deleteHours(id)
+            //configHours(id, hour) VER COMO ATUALIZO A PÁGINA PARA RETIRAR O 
         }
 
+    }
+
+    async function deleteHours(id){
+        try {
+            const token = localStorage.getItem('Token');
+
+            await api.delete(`deleteAttendance/${id}`, {
+                headers: {
+                    auther: token
+                }
+            })
+
+            alert('Horário apagado com sucesso!');
+            window.location.reload();
+        } catch (error) {
+            alert('Erro ao apagar o horário, tente novamente mais tarde');
+        }
     }
 
     return(
@@ -848,7 +866,7 @@ const Allhours = (props) =>{
                 {props.morning.map((post, index)=>(
                 <div className='col-md-6'>
                     <label key={post.attendace_id}>{post.opening_hours}</label>
-                    <button type='button' onClick={()=> deleteHours(post.attendace_id, post.opening_hours)}>
+                    <button type='button' onClick={()=> configHours(post.attendace_id, post.opening_hours)}>
                         <span className='fa fa-times' style={{color:'red', marginLeft:'4px'}}/>
                     </button>
                 </div> 
@@ -859,7 +877,7 @@ const Allhours = (props) =>{
                 {props.afternoon.map((post, index)=>(
                 <div className='col-md-6'>
                     <label key={post.attendace_id}>{post.opening_hours}</label>
-                    <button type='button' onClick={()=> deleteHours(post.attendace_id, post.opening_hours)}>
+                    <button type='button' onClick={()=> configHours(post.attendace_id, post.opening_hours)}>
                         <span className='fa fa-times' style={{color:'red', marginLeft:'4px'}}/>
                     </button>
                 </div> 
@@ -870,7 +888,7 @@ const Allhours = (props) =>{
                 {props.night.map((post, index)=>(
                 <div className='col-md-6'>
                     <label key={post.attendace_id}>{post.opening_hours}</label>
-                    <button type='button' onClick={()=> deleteHours(post.attendace_id, post.opening_hours)}>
+                    <button type='button' onClick={()=> configHours(post.attendace_id, post.opening_hours)}>
                         <span className='fa fa-times' style={{color:'red', marginLeft:'4px'}}/>
                     </button>
                 </div> 
