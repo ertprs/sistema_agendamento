@@ -80,6 +80,15 @@ function formatarData(data){
     return data_formatada;
 }
 
+function DropdownMenuMobile() {
+    var x = document.getElementById("navbar");
+    if (x.style.display === "block") {
+      x.style.display = "none";
+    } else {
+      x.style.display = "block";
+    }
+  }
+
 //****COMPONENTES****
 
 const Menu = (props) =>{
@@ -112,6 +121,12 @@ const Menu = (props) =>{
             <nav className="navbar navbar-default yamm">
                 <div className="container-fluid">
                     <div className="navbar-header">
+                        <button type="button" onClick={()=>DropdownMenuMobile()} class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
+                            <span class="sr-only">Toggle navigation</span>
+                            <span class="icon-bar"></span>
+                            <span class="icon-bar"></span>
+                            <span class="icon-bar"></span>
+                        </button>
                         <Link className="navbar-brand" to='/'><img src={logo} alt="Logo" style={{width:'200px'}}/></Link>
                     </div>
                     <div id="navbar" className="navbar-collapse collapse">
@@ -122,9 +137,7 @@ const Menu = (props) =>{
                             {/* CLIENTE */}
                             <li><Link to='/userSchedule'>{props.schedules}</Link></li>
                             <li><Link to='/'>{props.account}</Link></li>
-                            {/* EMPRESA*/}
-                            <li><Link to=''>{props.scheduleCompany}</Link></li>{/* VOU CRIAR A PAGINA DA EMPRESA*/}
-                            <li className="lastlink hidden-xs hidden-sm"><Link className="btn btn-primary" to="/selectLogin" onClick={logOut}><i className={`glyphicon glyphicon-log-${icon}`}></i> {logName} </Link></li>
+                            <li className="lastlink"><Link className="btn btn-primary" to="/selectLogin" onClick={logOut}><i className={`glyphicon glyphicon-log-${icon}`}></i> {logName} </Link></li>
                         </ul>
                     </div> {/*<!--/.nav-collapse -->*/}
                 </div> {/*<!--/.container-fluid -->*/}
@@ -151,6 +164,12 @@ const MenuCompany = (props) =>{
             <nav className="navbar navbar-default yamm">
                 <div className="container-fluid">
                     <div className="navbar-header">
+                        <button type="button" onClick={()=>DropdownMenuMobile()} class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
+                            <span class="sr-only">Toggle navigation</span>
+                            <span class="icon-bar"></span>
+                            <span class="icon-bar"></span>
+                            <span class="icon-bar"></span>
+                        </button>
                         <Link className="navbar-brand" to='/companySchedule'><img src={logo} alt="Logo" style={{width:'200px'}}/></Link>
                     </div>
                     <div id="navbar" className="navbar-collapse collapse">
@@ -170,7 +189,7 @@ const MenuCompany = (props) =>{
                             </li>
                             <li><Link to='servicesCreate'>Serviços</Link></li>
                             <li><a href="/page-about.html">Conta</a></li>
-                            <li className="lastlink hidden-xs hidden-sm"><Link className="btn btn-primary" to="/" onClick={logOut} ><i className="glyphicon glyphicon-log-out"></i> Sair </Link></li>
+                            <li className="lastlink"><Link className="btn btn-primary" to="/" onClick={logOut} ><i className="glyphicon glyphicon-log-out"></i> Sair </Link></li>
                         </ul>
                     </div> {/*<!--/.nav-collapse -->*/}
                 </div> {/*<!--/.container-fluid -->*/}

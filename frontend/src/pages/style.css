@@ -330,6 +330,10 @@ HEADER
     border-radius: 500px;
 }
 
+.navbar-right .lastlink li {
+    padding: 0px;
+}
+
 .navbar-right .lastlink {
     margin-left: 30px;
     margin-top: 6px;
@@ -3127,7 +3131,6 @@ mark,
 .section-title hr,
 .footer.primary-footer,
 .btn-primary,
-.navbar-right .lastlink,
 .section.cl,
 .grd1 {
     border: 0;
@@ -3173,6 +3176,10 @@ mark,
 .header-transparent .lastlink {
     background: none !important;
     border: 1px solid #fff !important;
+}
+
+.homepage{
+    background-image: url('../images/photo4.jpg'); background-size:100%
 }
 
 
@@ -3299,6 +3306,7 @@ RESPONSIVE
 }
 
 @media (min-width: 992px) {
+    
     .header .navbar-collapse {
         padding-right: 0;
         padding-left: 0;
@@ -3403,6 +3411,17 @@ RESPONSIVE
         right: 130%;
         left: auto;
     }
+    .homepage {
+        background-position: 50% -94px;
+    }
+
+}
+
+@media (max-width: 750px){
+    .homepage {
+        background-size: auto;
+        background-position: 50% -94px;
+    }
 }
 
 @media (max-width: 550px) {
@@ -3417,5 +3436,14 @@ RESPONSIVE
     }
     .section-title h3 {
         font-size: 24px;
+    }
+
+    .homepage {
+        background-size: auto;
+        background-position: 50% -94px;
+    }
+
+    .spotlight.style1 {
+        display: inline-flex;     
     }
 }
