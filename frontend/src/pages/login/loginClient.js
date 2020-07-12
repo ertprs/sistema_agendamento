@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import {Menu} from '../../Person/person';
 import {useHistory} from 'react-router-dom';
-import bcrypt from 'bcryptjs';
 
 import './style.css';
 import '../style.css';
@@ -35,17 +34,6 @@ export default function Login(){
 
     async function handleLogin(e){
         e.preventDefault();
-
-        //cripto(password)
-        
-        await bcrypt.hash(password, 10, function (err, hash){
-            if(hash){
-                setPassword(hash)
-                console.log('aqui '+hash)
-            }
-            err ? console.log(err) : setPassword(hash); console.log(hash);
-        })
-        console.log(password)
 
         const data = {
             user_email,

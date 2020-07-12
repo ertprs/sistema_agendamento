@@ -352,46 +352,25 @@ const PopupService = (props)=>{
     useEffect(()=>{
         if(date != ''){
             api.get(`dateAtendance/${date}?id=${props.id}`).then(res=>{
-                console.log(`api: ${res.data.map(dat => (dat.attendace_id))}`)
                 setInfo(res.data);
                 if(res.data.length == 0){
                     setMensager('Sem horários disponíveis para a data selecionada')
                 }else{
                     setMensager('')
                 }
-            })
-            
-            //setFree([hoursId])
-            console.log("aqui: "+ [info])
-            console.log("hora id: "+ hoursId)
-            
-
+            });
         }
     },[date])
+
     //Esse é responsável por pegar o Id da hora e ir no banco de dados verificar se tem algum agendamento com esse id de atendimento
     useEffect(()=>{
-        console.log("hora id2: "+ hoursId) //ID DO ATENDIMENTO (attendance_id)
       
         api.get(`hours?id=${hoursId}`).then(res=>{
-            console.log('Primeira promise: '+res.data)
             setFree(res.data);
-
         })
         
     }, [hoursId])
-    //Esse é responsável por pegar o resultado do anterior e verificar se está livre ou não o horario(se o array retornar vázio está livre)
-    useEffect(()=>{
-        console.log('valor: '+free)
-        console.log('Tamanho: '+free.length)
-        info.map(infos => {
-            if(free.length != 0){
-                console.log('horário ocupado: '+ infos.opening_hours + ' id: '+infos.attendace_id)
-            }else{
-                console.log('horário livre '+ infos.opening_hours + 'id: '+ infos.attendace_id)
-            }
-        })
-
-    }, [free])
+    
 
     const user = localStorage.getItem('id_user');
     const token = localStorage.getItem('Token');
@@ -409,8 +388,6 @@ const PopupService = (props)=>{
             attendace_id_schedule: hoursId,
             
         }
-
-        //console.log(infos);
 
         /* AS INFORMAÇÕES NECESSÁRIAS PARA REALIZAR O AGENDAMENTO (estão na const infos)
             O id do serviço e o id da empresa estão no componentes Services (service.service_id) e da empresa(props.id) TODOS PASSADOS COMO PROPS PARA O COMPONENTE PopupService.

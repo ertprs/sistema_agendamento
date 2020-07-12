@@ -1,6 +1,5 @@
 const database = require('../database/index');
-const { index } = require('./CompaniesController');
-const { andWhere } = require('../database/index');
+
 
 module.exports = {
     async create(request, response, next){
@@ -160,17 +159,21 @@ module.exports = {
 
             var i = 0;
             var a = 0 //se der errado coloco igual a valoresTodos
+            var now = new Date();
             //enquanto i for menor que o número de itens(horarios) registrados no atendimento daquele dia 
             while(i < quantidade){
             //aqui vai ser percorrido procurando cada id de atendimento em dates que seja igual aos id livre(a-valoresTodos é pra ficar igual a 0)
                 if(dates[i].attendace_id == todos[a]){
-                    valor.push(dates[i])
+                    var hourNow = now.getHours()+':'+now.getMinutes();
+                    if(dates[i].opening_hours > hourNow){
+                        valor.push(dates[i])
+                    }
                     a++;
                 }
                 //console.log('vezes: '+i)
                 i++;
             }
-
+            console.log(valor);
             return response.json(valor);
 
         } catch (error) {

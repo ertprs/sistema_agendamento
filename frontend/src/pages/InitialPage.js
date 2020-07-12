@@ -2,7 +2,6 @@ import React, { useEffect, useState } from 'react';
 
 import {Menu, Footer} from '../Person/person';
 
-import fundoTela from '../images/photo4.jpg';
 import imagemBannerEsquerda from '../images/business1.jpg';
 import imagemBannerDireita from '../images/client1.jpg';
 
@@ -92,7 +91,7 @@ export default function Initial(){
         <section className="section lb nopad spotlight style1">
         
             <div className="image col-md-4 hidden-sm hidden-xs">
-                <img src={imagemBannerEsquerda} alt="" />
+                <img src={imagemBannerEsquerda} alt="empresa" />
             </div>
             <div className="content">
                 <h2>Empresa</h2>
@@ -108,7 +107,7 @@ export default function Initial(){
                     
             </div>
             <div className="image col-md-4 hidden-sm hidden-xs">
-                <img src={imagemBannerDireita} alt="" />
+                <img src={imagemBannerDireita} alt="cliente" />
             </div>
         </section>
 
