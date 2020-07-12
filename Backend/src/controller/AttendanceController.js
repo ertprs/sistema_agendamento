@@ -164,7 +164,15 @@ module.exports = {
             while(i < quantidade){
             //aqui vai ser percorrido procurando cada id de atendimento em dates que seja igual aos id livre(a-valoresTodos é pra ficar igual a 0)
                 if(dates[i].attendace_id == todos[a]){
-                    var hourNow = now.getHours()+':'+now.getMinutes();
+                    var hourNow;
+
+                    if(now.getHours() == 0){
+                        hourNow = '0'+now.getHours()+':'+now.getMinutes();
+                    }else{
+                        hourNow = now.getHours()+':'+now.getMinutes();
+                    }
+                    console.log(hourNow)
+                    console.log(dates[i].opening_hours)
                     if(dates[i].opening_hours > hourNow){
                         valor.push(dates[i])
                     }
@@ -173,7 +181,7 @@ module.exports = {
                 //console.log('vezes: '+i)
                 i++;
             }
-            console.log(valor);
+
             return response.json(valor);
 
         } catch (error) {

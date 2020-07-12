@@ -827,8 +827,14 @@ const Allhours = (props) =>{
         var data1 = new Date(props.date)
         var data2 = new Date(datanow);
         
+        var hourNow;
 
-        var hourNow = now.getHours()+':'+now.getMinutes();
+        if(now.getHours() == 0){
+            hourNow = '0'+now.getHours()+':'+now.getMinutes();
+        }else{
+            hourNow = now.getHours()+':'+now.getMinutes();
+        }
+
 
         if(data1.getTime() >= data2.getTime()){
             if(hourNow > hour && data1.getTime() == data2.getTime()){
