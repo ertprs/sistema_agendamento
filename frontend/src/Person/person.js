@@ -609,9 +609,9 @@ const ReportTable = (props) =>{
                         <thead>
                             <tr>
                                 <th>Serviço</th>
-                                <th>valor do serviço</th>
-                                <th>Nome do cliente</th>
-                                <th>Data do agendamento</th>
+                                <th>valor</th>
+                                <th>cliente</th>
+                                <th>Data</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -770,9 +770,9 @@ const HistoricServiceTable = (props)=>{
                             <tr>
                                 <th>Serviço</th>
                                 <th>valor do serviço</th>
-                                <th>Horário do agendamento</th>
+                                <th>Horário</th>
                                 <th>Empresa</th>
-                                <th>Data do agendamento</th>
+                                <th>Data</th>
                             </tr>
                         </thead>
                         <tbody>
