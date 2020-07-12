@@ -53,7 +53,8 @@ module.exports = {
             const hours = await database('attendance')
                 .select("*")
                 .where('company_id_attendance', id)
-                .andWhere('attendace_date', date);
+                .andWhere('attendace_date', date)
+                .orderBy('opening_hours', 'asc');
             
             for(var i = 0; i < hours.length; i++){
                 if(parseInt(hours[i].opening_hours) < 12){
@@ -115,7 +116,8 @@ module.exports = {
             const dates = await database('attendance')
                 .select('*')
                 .where('attendace_date', date)
-                .andWhere('company_id_attendance', id);
+                .andWhere('company_id_attendance', id)
+                .orderBy('opening_hours', 'asc');
              
             //schedule é responsável por pegar todos os agendamentos daquela empresa na data selecionada    
             const schedule =  await database('schedule')
@@ -152,31 +154,58 @@ module.exports = {
                     indice = todos.indexOf(schedule[i].attendace_id);
                 }
             }
-            //verifico o tamanho do meu array que contém os id de atendimento NÃO agendados
-            var valoresTodos = todos.length;
+
             //valor vai armazenar meus horários
             var valor = [];
 
             var i = 0;
-            var a = 0 //se der errado coloco igual a valoresTodos
+            var a = 0 
             var now = new Date();
+            var dateSelect = new Date(date);
+
+            var datanow = now.getFullYear()+'-'+ (now.getMonth()+1) + '-' + now.getDate()
+            if((now.getMonth()+1) < 10){
+                var datanow = now.getFullYear()+'-0'+ (now.getMonth()+1) + '-' + now.getDate()
+            }
+            if(now.getDate() < 10){
+                var datanow = now.getFullYear()+'-'+ (now.getMonth()+1) + '-0' + now.getDate()
+            }
+
+            if(now.getDate() < 10 && (now.getMonth()+1) < 10){
+                var datanow = now.getFullYear()+'-0'+ (now.getMonth()+1) + '-0' + now.getDate()
+            }
+            //convertendo datanow em formato de data
+            datanow = new Date(datanow);
+
             //enquanto i for menor que o número de itens(horarios) registrados no atendimento daquele dia 
             while(i < quantidade){
             //aqui vai ser percorrido procurando cada id de atendimento em dates que seja igual aos id livre(a-valoresTodos é pra ficar igual a 0)
                 if(dates[i].attendace_id == todos[a]){
                     var hourNow;
 
-                    if(now.getHours() == 0){
+                    if(now.getHours() < 10 && now.getMinutes() < 10){
+                        hourNow = '0'+now.getHours()+':0'+now.getMinutes();
+                    }else if(now.getMinutes() < 10){
+                        hourNow = now.getHours()+':0'+now.getMinutes();
+                    }else if(now.getHours() < 10 && now.getMinutes() < 10){
                         hourNow = '0'+now.getHours()+':'+now.getMinutes();
-                    }else{
-                        hourNow = now.getHours()+':'+now.getMinutes();
+                    }                    
+                    else{
+                        hourNow = now.getHours()+':'+now.getMinutes()
                     }
-                    console.log(hourNow)
-                    console.log(dates[i].opening_hours)
-                    if(dates[i].opening_hours > hourNow){
+
+                    var split = dates[i].opening_hours.split(':');
+                    var horarioformatada = split[0]+split[1];
+
+                    split = hourNow.split(':');
+                    var hourNowFormatado = split[0]+split[1];
+              
+                    if(dateSelect > datanow){
+                        valor.push(dates[i])
+                    }else if(parseInt(horarioformatada) > parseInt(hourNowFormatado)){
                         valor.push(dates[i])
                     }
-                    a++;
+                    a++; 
                 }
                 //console.log('vezes: '+i)
                 i++;

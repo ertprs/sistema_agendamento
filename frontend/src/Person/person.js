@@ -829,10 +829,15 @@ const Allhours = (props) =>{
         
         var hourNow;
 
-        if(now.getHours() == 0){
+        if(now.getHours() < 10 && now.getMinutes() < 10){
+            hourNow = '0'+now.getHours()+':0'+now.getMinutes();
+        }else if(now.getMinutes() < 10){
+            hourNow = now.getHours()+':0'+now.getMinutes();
+        }else if(now.getHours() < 10 && now.getMinutes() < 10){
             hourNow = '0'+now.getHours()+':'+now.getMinutes();
-        }else{
-            hourNow = now.getHours()+':'+now.getMinutes();
+        }                    
+        else{
+            hourNow = now.getHours()+':'+now.getMinutes()
         }
 
 
