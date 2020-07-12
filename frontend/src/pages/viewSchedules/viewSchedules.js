@@ -13,7 +13,7 @@ export default function ViewSchedules(){
     const [date, setDate] = useState('');
     const [loading, setLoading] = useState(false);
     const [status, setStatus] = useState(false);
-    
+  
 
     useEffect(()=>{
         const fetchIncidents=()=>{
@@ -69,7 +69,7 @@ export default function ViewSchedules(){
                             <button type='button' onClick={()=>handleHours()} className='btn btn-primary' style={{marginBottom:'20px', padding:'10px'}}>Adicionar</button>
                         </div>
 
-                        <Allhours loading={loading} morning={morning} afternoon={afternoon} night={night}  status={status} date={date}/>
+                        <Allhours loading={loading} morning={morning} afternoon={afternoon} night={night}  status={status} date={date} function ={()=>handleHours()}/>
                     </div>
                 </div>
             </form>

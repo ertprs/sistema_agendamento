@@ -797,6 +797,9 @@ const HistoricServiceTable = (props)=>{
 }
 
 const Allhours = (props) =>{
+    //variável responsável por atualizar os itens quando excluido
+    var cont = 0;
+
     if(props.loading){
         return loadingInfo();
     }else if(!props.status){
@@ -823,15 +826,26 @@ const Allhours = (props) =>{
 
         var data1 = new Date(props.date)
         var data2 = new Date(datanow);
+        
 
         var hourNow = now.getHours()+':'+now.getMinutes();
 
-        if(data1 < data2 || hour < hourNow){
-            console.log('menor')
-            alert('Não é possível apagar um horário que já passou ou dias anteriores')
-        }else{
-            deleteHours(id)
-            //configHours(id, hour) VER COMO ATUALIZO A PÁGINA PARA RETIRAR O 
+        if(data1.getTime() >= data2.getTime()){
+            if(hourNow > hour && data1.getTime() == data2.getTime()){
+                alert('Não é possível apagar horários que já passaram')
+            }else if(hourNow < hour && data1.getTime() == data2.getTime()){
+                cont = 1;
+                deleteHours(id);
+            }else if(data1.getTime() > data2.getTime()){
+                cont = 1;
+                deleteHours(id);
+            }else{
+                alert('erro, tente novamente mais tarde')
+            }
+            
+        }else {
+            
+            alert('Não é possível apagar um horário que já passaram de dias anteriores')
         }
 
     }
@@ -847,7 +861,12 @@ const Allhours = (props) =>{
             })
 
             alert('Horário apagado com sucesso!');
-            window.location.reload();
+            //chama a função que busca os horários, dessa forma atualiza os itens
+            if(cont == 1){
+                props.function();
+                cont = 0;
+            }
+            //window.location.reload();
         } catch (error) {
             alert('Erro ao apagar o horário, tente novamente mais tarde');
         }
