@@ -7,6 +7,8 @@ exports.up = function(knex) {
       table.string('company_email').unique().notNullable();
       table.string('company_tel');
       table.string('company_cnpj').unique();
+      table.string('cidade').notNullable();
+      table.string('logo');
       table.timestamp('create_date_company');
   })
 };

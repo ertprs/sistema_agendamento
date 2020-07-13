@@ -189,12 +189,14 @@ const checkPassword = (reqPassword, foundCompany) =>{
 
 async function createCompany (company){
     try {
-        const createdata = await database('companies').returning(['company_email', 'company_name', 'company_tel', 'company_cnpj', 'company_id']).insert({
+        const createdata = await database('companies').returning(['company_email', 'company_name', 'company_tel', 'company_cnpj', 'company_id', 'cidade', 'logo']).insert({
             company_name: company.company_name,
             company_password: company.company_password,
             company_email: company.company_email,
             company_tel: company.company_tel,
             company_cnpj: company.company_cnpj,
+            cidade: company.cidade,
+            logo: company.logo,
             create_date_company: new Date()
         })
 
