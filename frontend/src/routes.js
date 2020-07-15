@@ -13,6 +13,7 @@ import Report from './pages/report/report';
 import WorkingHours from './pages/workingHours/workingHours';
 import ServicesCreate from './pages/servicesCreate/servicesCreate';
 import ViewSchedules from './pages/viewSchedules/viewSchedules';
+import ProfileCompany from './pages/profileCompany/profileCompany';
 
 
 export default function Routes(){
@@ -31,6 +32,7 @@ export default function Routes(){
                 <Route path='/workingHours' component={WorkingHours}/>
                 <Route path='/servicesCreate'  component={ServicesCreate}/>
                 <Route path='/viewSchedule' component={ViewSchedules}/>
+                <Route path='/profileCompany' component={ProfileCompany}/>
             </Switch>
         </BrowserRouter>
     )

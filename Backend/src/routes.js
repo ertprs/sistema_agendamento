@@ -8,7 +8,7 @@ const AttendanceController = require('./controller/AttendanceController');
 const ScheduleController = require('./controller/scheduleController');
 const ServiceController = require('./controller/ServiceController');
 
-
+const multer = require('./upload/multer');
 
 const routes = express.Router();
 
@@ -35,6 +35,8 @@ routes.get('/companies' ,CompaniesController.ListCompanies);
 routes.get('/servicesCompany/:id', auth ,CompaniesController.ServicesList);
 routes.get('/companyId', auth, CompaniesController.CompanyId);
 routes.get('/serviceSelect/:id', auth, CompaniesController.ServicesSelect);
+
+routes.put('/uploadImage/:id', multer.any('image'), CompaniesController.upload);
 
 //Services
 routes.post('/createServices', auth ,ServiceController.create);

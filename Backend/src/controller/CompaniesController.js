@@ -1,6 +1,9 @@
 const database = require('../database/index');
 const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
+const filehelper = require('../upload/file-helper');
+const { where } = require('../database/index');
+
 
 module.exports = {
     async index(request, response, next){
@@ -141,6 +144,25 @@ module.exports = {
                 console.error('Error: '+err);
                 response.json({error:'Email ou senha incorreto'})
             })
+    },
+
+    upload(req, res, next){
+        const {id} = req.params
+
+        if(req.files){
+            filehelper.compressImage(req.files, 100).then(newPath => {
+                database('companies').where('company_id', id).update({logo: newPath}).then(res =>{
+                    console.log(res)
+                });
+                
+                return res.send('Upload e compressão realizados com sucesso!');
+            }).catch(err => console.log(err));
+
+        }
+        if(req.files === undefined){
+            console.log('2')
+            return res.send('Houve erro no upload');
+        }
     }
 
 }
