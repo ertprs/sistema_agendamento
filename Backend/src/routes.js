@@ -35,6 +35,8 @@ routes.get('/companies' ,CompaniesController.ListCompanies);
 routes.get('/servicesCompany/:id', auth ,CompaniesController.ServicesList);
 routes.get('/companyId', auth, CompaniesController.CompanyId);
 routes.get('/serviceSelect/:id', auth, CompaniesController.ServicesSelect);
+routes.get('/companySelect/:id' ,CompaniesController.CompanySelect);
+routes.put('/companyUpdate/:id' ,CompaniesController.uploadData);
 
 routes.put('/uploadImage/:id', multer.any('image'), CompaniesController.upload);
 

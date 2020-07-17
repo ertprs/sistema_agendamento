@@ -121,11 +121,11 @@ const Menu = (props) =>{
             <nav className="navbar navbar-default yamm">
                 <div className="container-fluid">
                     <div className="navbar-header">
-                        <button type="button" onClick={()=>DropdownMenuMobile()} class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
-                            <span class="sr-only">Toggle navigation</span>
-                            <span class="icon-bar"></span>
-                            <span class="icon-bar"></span>
-                            <span class="icon-bar"></span>
+                        <button type="button" onClick={()=>DropdownMenuMobile()} className="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
+                            <span className="sr-only">Toggle navigation</span>
+                            <span className="icon-bar"></span>
+                            <span className="icon-bar"></span>
+                            <span className="icon-bar"></span>
                         </button>
                         <Link className="navbar-brand" to='/'><img src={logo} alt="Logo" style={{width:'200px'}}/></Link>
                     </div>
@@ -164,11 +164,11 @@ const MenuCompany = (props) =>{
             <nav className="navbar navbar-default yamm">
                 <div className="container-fluid">
                     <div className="navbar-header">
-                        <button type="button" onClick={()=>DropdownMenuMobile()} class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
-                            <span class="sr-only">Toggle navigation</span>
-                            <span class="icon-bar"></span>
-                            <span class="icon-bar"></span>
-                            <span class="icon-bar"></span>
+                        <button type="button" onClick={()=>DropdownMenuMobile()} className="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
+                            <span className="sr-only">Toggle navigation</span>
+                            <span className="icon-bar"></span>
+                            <span className="icon-bar"></span>
+                            <span className="icon-bar"></span>
                         </button>
                         <Link className="navbar-brand" to='/companySchedule'><img src={logo} alt="Logo" style={{width:'200px'}}/></Link>
                     </div>
@@ -188,7 +188,7 @@ const MenuCompany = (props) =>{
                                 </div>
                             </li>
                             <li><Link to='servicesCreate'>Serviços</Link></li>
-                            <li><a href="/page-about.html">Conta</a></li>
+                            <li><Link to='profileCompany'>Conta</Link></li>
                             <li className="lastlink"><Link className="btn btn-primary" to="/" onClick={logOut} ><i className="glyphicon glyphicon-log-out"></i> Sair </Link></li>
                         </ul>
                     </div> {/*<!--/.nav-collapse -->*/}

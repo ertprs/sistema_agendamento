@@ -24,7 +24,7 @@ module.exports = {
             .innerJoin('attendance', 'attendace_id_schedule', 'attendace_id')
             .innerJoin('users', 'user_id_schedule', 'user_id')
             .where('company_id_schedule', params.id)
-            .andWhere('status', 'true')
+            .andWhere('status', true)
             .orderBy('attendance.attendace_date', 'asc');
 
        
@@ -98,8 +98,37 @@ module.exports = {
 
     async ListCompanies(request, response, next){
         try {
-            const companies = await database('companies').select('*');
+            const companies = await database('companies').select('cidade',
+            'company_cnpj',
+            'company_email',
+            'company_name',
+            'company_tel',
+            'logo',
+            'company_id');
             return response.json(companies);
+        } catch (error) {
+            console.log(error);
+            next(error);
+        }
+    },
+
+    async CompanySelect(request, response, next){
+        try {
+            const {id} = request.params;
+            const company = await database('companies')
+                .select(
+                    'cidade',
+                    'company_cnpj',
+                    'company_email',
+                    'company_name',
+                    'company_tel',
+                    'logo',
+                    'company_id'
+                )
+                .where('company_id', id)
+                .first();
+
+            return response.json(company);
         } catch (error) {
             console.log(error);
             next(error);
@@ -151,7 +180,9 @@ module.exports = {
 
         if(req.files){
             filehelper.compressImage(req.files, 100).then(newPath => {
-                database('companies').where('company_id', id).update({logo: newPath}).then(res =>{
+                database('companies').where('company_id', id).update({
+                    logo: newPath,
+                }).then(res =>{
                     console.log(res)
                 });
                 
@@ -162,6 +193,24 @@ module.exports = {
         if(req.files === undefined){
             console.log('2')
             return res.send('Houve erro no upload');
+        }
+    },
+
+    async uploadData(request, response, next){
+        try {
+            const {id} = request.params;
+
+            const data = await database('companies').where('company_id', id).update({
+                company_name: request.body.company_name,
+                company_email: request.body.company_email,
+                company_tel: request.body.company_tel,
+                cidade: request.body.cidade
+            })
+
+            return response.json(data);
+        } catch (error) {
+            console.log(error);
+            next(error);
         }
     }
 

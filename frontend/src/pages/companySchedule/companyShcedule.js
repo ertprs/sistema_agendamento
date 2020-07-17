@@ -18,26 +18,29 @@ export default function CompanySchedule(){
         const fetchIncidents = ()=>{
             
             setLoading(true);
-
-            api.get(`companies/list/${company_id}`, {
-                headers:{
-                    auther: token,
-                }
-            }).then(res=>{
-                setIncidents(res.data)
-                if(res.data.error){
-                    alert('Por favor, realize o login para acessar a página');
-                    logon.push('/loginCompany');
-                }
-                if(res.data.length == 0){
-                    console.log('aqui')
-                    setMensagerText('Sem agendamentos marcados')
-            
-                }else{
-                    setMensagerText('');
-                    
-                }
-            })
+            console.log(company_id)
+            if(company_id != null){
+                api.get(`companies/list/${company_id}`, {
+                    headers:{
+                        auther: token,
+                    }
+                }).then(res=>{
+                    setIncidents(res.data)
+                    if(res.data.error){
+                        alert('Por favor, realize o login para acessar a página');
+                        logon.push('/loginCompany');
+                    }
+                    if(res.data.length == 0){
+                        setMensagerText('Sem agendamentos marcados')
+                
+                    }else{
+                        setMensagerText('');
+                        
+                    }
+                }).catch(err=>{
+                    console.log(err)
+                })
+            }
 
             api.get('companyId', {
                 headers:{
@@ -49,6 +52,8 @@ export default function CompanySchedule(){
                     setLoading(false);
                     setLogin(true);
                 }
+            }).catch(error=>{
+                console.log(error)
             })
         }
         

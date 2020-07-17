@@ -15,22 +15,7 @@ export default function Login(){
     const [mensager, setMesager] = useState('');
 
 
-    const history = useHistory();
-
-    /*async function cripto(password){
-        await bcrypt.hash(password, 10, function (err, hash){
-            if(hash){
-                setPassword(hash)
-                console.log('aqui '+hash)
-            }
-            //err ? console.log(err) : setPassword(hash); console.log(hash);
-        })
-    } 
-    
-    Artigo sobre o que preciso fazer 
-    https://blog.rocketseat.com.br/reactjs-autenticacao/
-    */
-    
+    const history = useHistory();    
 
     async function handleLogin(e){
         e.preventDefault();

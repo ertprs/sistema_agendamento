@@ -1,0 +1,90 @@
+.formProfile{
+    display: flex;
+    background-color: white;
+    max-width: 30%;
+    height: auto;
+    align-items: center;
+    margin: 0 auto;
+    margin-top: 15px;
+    margin-bottom: 15px;
+    justify-content: space-between;
+}
+
+.inputProfile{
+    border: 1px solid #A9A9A9;
+    display: inline-block;
+    width: 100%;
+}
+
+.inputProfile{
+    padding: 0px 0px 0px 5px;
+}
+
+label{
+  display: block;
+}
+
+
+.inputProfile:nth-child(1), label:nth-child(1){
+    margin-top: 15px;
+}
+
+#file{
+    border: none;
+    margin-left: 0px;
+}
+
+#save{
+    
+    margin-top: 15px;
+    margin-left: 10px;
+}
+
+.formProfile > .container > .row > .circle {
+    background-color: #aaa;
+    border-radius: 50%;
+    width: 150px;
+    height: 150px;
+    overflow: hidden;
+    position: relative;
+  }
+  
+#image {
+    display: flex;
+    border: 1px solid #A9A9A9;
+    bottom: 0;
+    max-width: 100%;
+    width: 80%;
+    margin: 0 auto;
+    margin-top: 15px;
+}
+
+h2{
+    margin-top: 15px;
+    text-align: center;
+    color: #595959
+}
+@media (max-width: 730px){
+    .formProfile{
+        display: flex;
+        background-color: white;
+        max-width: 100%;
+        height: auto;
+        align-items: center;
+        margin-top: 15px;
+        margin-bottom: 15px;
+    }
+}
+
+@media (max-width: 1024px){
+    .formProfile{
+        display: flex;
+        background-color: white;
+        max-width: 650px;
+        height: auto;
+        align-items: center;
+        margin-top: 15px;
+        margin-bottom: 15px;
+    }
+}
+
