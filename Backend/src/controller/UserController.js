@@ -2,6 +2,7 @@ const database = require('../database/index');
 const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
 
+
 module.exports = {
     async index(request, response, next){
         const params = request.params;
@@ -80,6 +81,46 @@ module.exports = {
         
 
         return response.json(data);
+    },
+
+    async profile(request, response, next){
+        try {
+            const {id} = request.params;
+
+            const user = await database('users').select(
+                'user_name',
+                'user_email',
+                'user_tel'
+            )
+            .where('user_id', id)
+            .first();
+
+            console.log(user)
+
+            return response.json(user);
+
+        } catch (error) {
+            console.log(error);
+            next(error)
+        }
+    },
+
+    async updateProfile(request, response, next){
+        try {
+            const {id} = request.params;
+
+            const user = await database('users').where('user_id', id).update({
+                user_name: request.body.user_name,
+                user_email: request.body.user_email,
+                user_tel: request.body.user_tel
+            })
+
+            return response.json(user);
+
+        } catch (error) {
+            console.log(error);
+            next(error);
+        }
     },
 
     async userId(request, response, next){

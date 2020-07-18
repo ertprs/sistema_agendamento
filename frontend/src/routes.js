@@ -14,7 +14,7 @@ import WorkingHours from './pages/workingHours/workingHours';
 import ServicesCreate from './pages/servicesCreate/servicesCreate';
 import ViewSchedules from './pages/viewSchedules/viewSchedules';
 import ProfileCompany from './pages/profileCompany/profileCompany';
-
+import ProfileUser from './pages/profileUser/profileUser';
 
 export default function Routes(){
     return(
@@ -33,6 +33,7 @@ export default function Routes(){
                 <Route path='/servicesCreate'  component={ServicesCreate}/>
                 <Route path='/viewSchedule' component={ViewSchedules}/>
                 <Route path='/profileCompany' component={ProfileCompany}/>
+                <Route path='/profileUser' component={ProfileUser}/>
             </Switch>
         </BrowserRouter>
     )

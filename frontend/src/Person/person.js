@@ -136,7 +136,7 @@ const Menu = (props) =>{
                             <li><Link to="/">Contato</Link></li>
                             {/* CLIENTE */}
                             <li><Link to='/userSchedule'>{props.schedules}</Link></li>
-                            <li><Link to='/'>{props.account}</Link></li>
+                            <li><Link to='/profileUser'>{props.account}</Link></li>
                             <li className="lastlink"><Link className="btn btn-primary" to="/selectLogin" onClick={logOut}><i className={`glyphicon glyphicon-log-${icon}`}></i> {logName} </Link></li>
                         </ul>
                     </div> {/*<!--/.nav-collapse -->*/}
