@@ -15,6 +15,7 @@ import ServicesCreate from './pages/servicesCreate/servicesCreate';
 import ViewSchedules from './pages/viewSchedules/viewSchedules';
 import ProfileCompany from './pages/profileCompany/profileCompany';
 import ProfileUser from './pages/profileUser/profileUser';
+import SignUpCompany from './pages/signUpCompany/signUpCompany';
 
 export default function Routes(){
     return(
@@ -34,6 +35,7 @@ export default function Routes(){
                 <Route path='/viewSchedule' component={ViewSchedules}/>
                 <Route path='/profileCompany' component={ProfileCompany}/>
                 <Route path='/profileUser' component={ProfileUser}/>
+                <Route path='/signUpCompany' component={SignUpCompany}/>
             </Switch>
         </BrowserRouter>
     )
