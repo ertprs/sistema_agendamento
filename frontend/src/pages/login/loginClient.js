@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import {Menu} from '../../Person/person';
-import {useHistory} from 'react-router-dom';
+import {useHistory, Link} from 'react-router-dom';
 
 import './style.css';
 import '../style.css';
@@ -86,9 +86,9 @@ export default function Login(){
                                     Não possui uma conta?
                                 </span>
 
-                                <a href="/#" className="txt2 hov1" style={{marginLeft:'5px'}}>
+                                <Link to="/signUpUser" className="txt2 hov1" style={{marginLeft:'5px'}}>
                                     Cadastre-se
-                                </a>
+                                </Link>
                             </div>
                         </form>
                     </div>

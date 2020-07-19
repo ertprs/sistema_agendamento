@@ -1,5 +1,5 @@
 import React, {useState, useEffect} from  'react';
-import {MenuCompany, Footer} from '../../Person/person';
+import {Menu, Footer} from '../../Person/person';
 import api from '../../services/api';
 import {useHistory} from 'react-router-dom';
 
@@ -65,7 +65,7 @@ export default function SignUpCompany(){
             return response;
         } catch (error) {
             console.log(error);
-            alert('Acorreu um erro durante a crição de sua conta, por favor, tente novamente mais tarde')
+           
         }
     }
 
@@ -88,7 +88,7 @@ export default function SignUpCompany(){
         if(!password){
             errors.password = 'o campo não pode ser vázio';
         }else if(password != password2){
-            errors.password = 'Os campos não podem serem diferentes';
+            errors.password = 'Os campos não podem ser diferentes';
         }else{
             errors.password = ''
         }
@@ -96,7 +96,7 @@ export default function SignUpCompany(){
         if(!password2){
             errors.password2 = 'o campo não pode ser vázio';
         }else if(password != password2){
-            errors.password2 = 'Os campos não podem serem diferentes';
+            errors.password2 = 'Os campos não podem ser diferentes';
         }else{
             errors.password2 = ''
         }
@@ -104,7 +104,7 @@ export default function SignUpCompany(){
         if(!email){
             errors.email = 'o campo não pode ser vázio';
         }else if(email != email2){
-            errors.email = 'Os campos não podem serem diferentes';
+            errors.email = 'Os campos não podem ser diferentes';
         }else{
             errors.email = ''
         }
@@ -112,7 +112,7 @@ export default function SignUpCompany(){
         if(!email2){
             errors.email2 = 'o campo não pode ser vázio';
         }else if(email != email2){
-            errors.email2 = 'Os campos não podem serem diferentes';
+            errors.email2 = 'Os campos não podem ser diferentes';
         }else{
             errors.email2 = ''
         }
@@ -138,12 +138,9 @@ export default function SignUpCompany(){
         setErros(validate())
     }
 
-
-
-
     return(
         <div>
-            <MenuCompany/>
+            <Menu/>
                 <form className='formProfile' encType='multipart/form-data' onSubmit={e => handleSubmit(e)}>
                     <div className='container'>
                         <div className='row'>
