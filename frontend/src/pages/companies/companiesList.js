@@ -73,7 +73,6 @@ export default function ListCompanies(){
     const indexOfLastPost = currentPage * postPerPage;
     const indexOfFirstPost = indexOfLastPost - postPerPage;
     const currentPosts = companies.slice(indexOfFirstPost, indexOfLastPost);
-    console.log('currentPosts:' +currentPosts)
 
 
     const paginate = (pageNumber) => setCurrentPage(pageNumber);
@@ -88,7 +87,7 @@ export default function ListCompanies(){
 				<div className="row">
                    <ul>
                     <div className="content col-md-8">
-                    <h3>Resultados({companies.length})</h3>
+                    <h3 style={{marginBottom:'15px'}}>Resultados({companies.length})</h3>
                        <Companies companies={currentPosts} loading={loading}/>
                        <PaginationNumber postsPerPage={postPerPage} totalPosts={companies.length} paginate={paginate}/>
                    </div>

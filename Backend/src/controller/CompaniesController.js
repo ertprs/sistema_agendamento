@@ -3,6 +3,7 @@ const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
 const filehelper = require('../upload/file-helper');
 const { where } = require('../database/index');
+const { response } = require('express');
 
 
 module.exports = {
@@ -175,10 +176,24 @@ module.exports = {
             })
     },
 
-    upload(req, res, next){
+    async upload(req, res, next){
         const {id} = req.params
 
         if(req.files){
+
+            const value = req.files[0].path;
+
+            const split = value.split("\\");
+            const result = `${split[4]}`;
+
+            const response = await database('companies').where('company_id', id).update({
+                logo: result, 
+            });
+
+            return res.json(response);
+
+
+            /* COMPRESSÃO DA IMAGEM
             filehelper.compressImage(req.files, 100).then(newPath => {
                 database('companies').where('company_id', id).update({
                     logo: newPath,
@@ -187,7 +202,7 @@ module.exports = {
                 });
                 
                 return res.send('Upload e compressão realizados com sucesso!');
-            }).catch(err => console.log(err));
+            }).catch(err => console.log(err));*/
 
         }
         if(req.files === undefined){
@@ -212,9 +227,10 @@ module.exports = {
             console.log(error);
             next(error);
         }
-    }
+    },
 
 }
+
 
 const hashPassword = (password) =>{
     return new Promise((resolve, reject)=>{

@@ -3,7 +3,6 @@ import {Link, useHistory} from 'react-router-dom';
 import Popup from 'reactjs-popup';
 import api from '../services/api';
 
-import imagemBlog from '../upload/blog_01.jpg';
 import loadingGif from '../images/loading.gif';
 import imgService from '../upload/book_01.png';
 import logo from '../images/logo.png';
@@ -205,8 +204,7 @@ const Companies = (props) =>{
     if(props.loading){
        return loadingInfo();
     }
-
-
+    //SÓ PRECISA DISSO E PRECISO COLOCAR OS ARQUIVOS PARA SEREM SALVOS NO FRONTEND E NÃO NO BACK
     return(
         <>
         {props.companies.map(company => (
@@ -214,7 +212,13 @@ const Companies = (props) =>{
                 
                     <div className="blog-box clearfix row">
                         <div className="media-box col-md-4">
-                            <a href="/blog-single.html" title=""><img src={imagemBlog} alt={company.company_name} className="img-responsive img-thumbnail"/></a>
+                            <Link to={'/servicesCompany/'+ company.company_id} title="">
+                                {/*foto = require(`${company.logo}`)*/}
+                                <img 
+                                    src={require(`../assets/${company.logo}`)}    
+                                    alt={company.company_name} className="img-responsive img-thumbnail company"
+                                />
+                            </Link>
                         </div>
                         <div className="blog-desc col-md-8">
                             <h3><a href="/blog-single.html" title="">{company.company_name}</a></h3>
@@ -251,8 +255,8 @@ const PaginationNumber = ({postsPerPage, totalPosts, paginate}) =>{
                 <li>
                     <Link onClick={()=> paginate(1)} to={'#'} >Primeira Página</Link>
                 </li>
-                {pageNumbers.map(number => (
-                    <li ley={number} className='page-item'>
+                {pageNumbers.map((number, index) => (
+                    <li key={number} className='page-item'>
                         <Link onClick={()=> paginate(number)} to={'#'} className='page-link'>
                             {number}
                         </Link>

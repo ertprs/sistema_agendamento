@@ -3193,11 +3193,21 @@ RESPONSIVE
     .vector-wrapper {
         right: -9%;
     }
+
+    .company{
+        width: 230px;
+        height: 200px;
+    }
 }
 
 @media (max-width: 1350px) {
     .vector-wrapper {
         right: -10%;
+    }
+
+    .company{
+        width: 230px;
+        height: 200px;
     }
 }
 
@@ -3205,6 +3215,12 @@ RESPONSIVE
     .vector-wrapper {
         right: -20%;
     }
+    
+    .company{
+        width: 230px;
+        height: 200px;
+    }
+
 }
 
 @media (max-width: 1200px) {
@@ -3215,6 +3231,12 @@ RESPONSIVE
         right: -30%;
         bottom: 20%;
     }
+
+    .company {
+        width: 200px;
+        height: 200px;
+    }
+
 }
 
 @media (max-width: 992px) {
@@ -3227,6 +3249,10 @@ RESPONSIVE
     .service-box,
     .footer .widget {
         margin-bottom: 30px !important;
+    }
+    .company{
+        width: auto;
+        height: auto;
     }
 }
 
