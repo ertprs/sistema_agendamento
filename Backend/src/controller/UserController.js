@@ -191,6 +191,7 @@ async function createUser (user){
             user_password: user.user_password,
             user_email: user.user_email,
             user_tel: user.user_tel,
+            status: false,
             create_data: new Date()
         })
 

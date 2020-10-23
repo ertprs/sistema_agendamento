@@ -30,10 +30,12 @@ export default function Login(){
         try {
             
             const response = await api.post('user/login', data);
-            //console.log(response) 
+            //console.log(response.data.user.status) 
             if(response.data.error){
                 //alert('Email ou senha incorreto')
                 setMesager('Email ou senha incorreto');
+            }else if(response.data.user.status === false){
+                alert('Sua conta ainda não foi ativada, por favor, verifique sua caixa de entrada no email');
             }else{
                 localStorage.setItem('Token', response.data.token)
                 history.push('/companiesList')

@@ -215,7 +215,7 @@ const Companies = (props) =>{
                             <Link to={'/servicesCompany/'+ company.company_id} title="">
                                 {/*foto = require(`${company.logo}`)*/}
                                 <img 
-                                    src={require(`../assets/${company.logo}`)}    
+                                    src={require(`../assets/1595420573640-client2.png`)}    
                                     alt={company.company_name} className="img-responsive img-thumbnail company"
                                 />
                             </Link>
