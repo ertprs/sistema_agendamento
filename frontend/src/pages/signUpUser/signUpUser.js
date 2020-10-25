@@ -30,20 +30,29 @@ export default function SignUpUser(){
         user_tel: telefone,
     }
 
+    var dataEmail = {
+        nome: name,
+        email: email
+    }
+
     const logon = useHistory();
 
     async function sendData(){
         try {
-            console.log(data)
             const response = await api.post('createUser', data, {
                 headers: {
                     'Accept': 'application/json',
                 }
             });
 
-            console.log(response.data);
-
-            alert('cadastro realizado com sucesso!');
+            alert('cadastro realizado com sucesso!, confira seu email para confirmação');
+            
+            await api.post('sendConfirmationEmail', dataEmail, {
+                headers: {
+                    'Accept': 'application/json',
+                }
+            } )
+            
             logon.push('/login');
 
             return response;

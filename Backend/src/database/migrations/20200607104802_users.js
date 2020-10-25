@@ -6,6 +6,7 @@ exports.up = function(knex) {
       table.string('user_password').notNullable();
       table.string('user_email').unique().notNullable();
       table.string('user_tel');
+      table.boolean('status');
       table.timestamp('create_data');
   })
 };

@@ -10,41 +10,19 @@ const ServiceController = require('./controller/ServiceController');
 
 const multer = require('./upload/multer');
 const { upload } = require('./controller/CompaniesController');
-const upload1 = require('multer')();
-const mailer = require('nodemailer');
+const uploadEmail = require('multer')();
+
 
 
 const routes = express.Router();
 
-routes.post('/teste', (req, res, next)=>{
+routes.post('/sendConfirmationEmail', uploadEmail.single('anexo'), (req, res, next) => { 
     const nome = req.body.nome;
     const email = req.body.email;
-    const mensagem = req.body.mensagem;
-    console.log(req.body)
-
-    const smtpTransport = mailer.createTransport({
-        host: 'smtp.mailtrap.io',
-        port: 2525,
-        auth: {
-            user: '07ca2074eac847',
-            pass: '7c5268436ad14e'
-        }
-    })
-
-    const mail = {
-        from: 'rendrikson16@gmail.com',
-        to: email,
-        subject: `${nome} te enviou uma mensagem`,
-        text: mensagem,
-        html: '<b>Mensagem em html</b>'
-    }
-
-    smtpTransport.sendMail(mail, (error, info)=>{
-        if(error){
-           return res.status(400).send('falhou')
-        }
-        return res.status(200).send('enviou')
-    });
+    const anexo = req.file;
+    require("./controller/nodemail")(email, nome, anexo)
+        .then(response => res.json(response))
+        .catch(error => res.json(error));
 })
 
 //user

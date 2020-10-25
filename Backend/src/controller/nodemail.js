@@ -1,6 +1,7 @@
 const mailer = require('nodemailer');
 
-module.exports = (email, nome, mensagem, anexo) => {
+module.exports = (email, nome, anexo) => {
+
     const smtpTransport = mailer.createTransport({
         host: 'smtp.mailtrap.io',
         port: 2525,
@@ -13,9 +14,11 @@ module.exports = (email, nome, mensagem, anexo) => {
     const mail = {
         from: 'rendrikson16@gmail.com',
         to: email,
-        subject: `${nome} te enviou uma mensagem`,
-        text: mensagem,
-        html: '<b>Mensagem em html</b>'
+        subject: `${nome} Email de confirmação Agende Now`,
+        text: `${nome} Seja bem vindo ao Agende now!! 
+                Para ativar sua conta acesse o link: https://www.google.com.br`,
+        html: `<b>${nome} Seja bem vindo ao Agende now!!</b></br>
+              <b>Para ativar sua conta acesse o link: <a href='https://www.google.com.br'>www.google.com.br</a></b>`
     }
 
     if(anexo){
@@ -27,11 +30,16 @@ module.exports = (email, nome, mensagem, anexo) => {
         })
     }
 
-    smtpTransport.sendMail(mail, (error, info)=>{
-        if(error){
-           console.log('error')
-        }
-        console.log('ok')
-    });
+    return new Promise((resolve, reject) => {
+        smtpTransport.sendMail(mail)
+            .then(response => {
+                smtpTransport.close();
+                return resolve(response);
+            })
+            .catch(error => {
+                smtpTransport.close();
+                return reject(error);
+            });
+    })
 
 }
