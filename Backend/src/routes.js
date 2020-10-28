@@ -19,9 +19,8 @@ const routes = express.Router();
 routes.post('/teste', uploadEmail.single('anexo'), (req, res, next) => { 
     const nome = req.body.nome;
     const email = req.body.email;
-    const mensagem = req.body.mensagem;
     const anexo = req.file;
-    require("./nodemail")(email, nome, mensagem, anexo)
+    require("./nodemail")(email, nome, anexo)
         .then(response => res.json(response))
         .catch(error => res.json(error));
 })

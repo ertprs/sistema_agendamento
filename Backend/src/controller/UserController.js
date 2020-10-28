@@ -136,6 +136,7 @@ module.exports = {
     create(request, response, next){
         
             const user =request.body;
+            
 
             hashPassword(user.password)
                 .then((hashedPassword)=>{
@@ -147,7 +148,7 @@ module.exports = {
                     response.status(201).json({user: user[0], token: createtokenUser(user.user_id)});
                 }).catch((err)=>{
                     next(err);
-                    response.status(404).json({err: 'Email já cadastrado'})
+                    response.status(404).json({err: 'Email já cadastrado', error: err})
                 })      
     }, 
 
