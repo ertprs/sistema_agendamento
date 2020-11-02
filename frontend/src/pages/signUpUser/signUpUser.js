@@ -30,10 +30,7 @@ export default function SignUpUser(){
         user_tel: telefone,
     }
 
-    var dataEmail = {
-        nome: name,
-        email: email
-    }
+    
 
     const logon = useHistory();
 
@@ -45,8 +42,16 @@ export default function SignUpUser(){
                 }
             });
 
+            console.log(response.data.user.user_id)
+
             alert('cadastro realizado com sucesso!, confira seu email para confirmação');
             
+            let dataEmail = {
+                nome: name,
+                email: email,
+                id: response.data.user.user_id
+            }
+
             await api.post('sendConfirmationEmail', dataEmail, {
                 headers: {
                     'Accept': 'application/json',

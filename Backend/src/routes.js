@@ -19,8 +19,9 @@ const routes = express.Router();
 routes.post('/sendConfirmationEmail', uploadEmail.single('anexo'), (req, res, next) => { 
     const nome = req.body.nome;
     const email = req.body.email;
+    const id = req.body.id;
     const anexo = req.file;
-    require("./controller/nodemail")(email, nome, anexo)
+    require("./controller/nodemail")(email, nome, id, anexo)
         .then(response => res.json(response))
         .catch(error => res.json(error));
 })
@@ -34,6 +35,7 @@ routes.get('/user/listAll/:id', auth ,UserController.indexAll);
 routes.get('/userId', auth, UserController.userId);
 routes.get('/profile/:id', auth, UserController.profile);
 routes.put('/updateProfile/:id', auth, UserController.updateProfile);
+routes.get('/cofirmeEmail/:id', UserController.confirmEmail);
 //test
 routes.get('/testando', auth, (req, res)=>{
     const params = req.query;

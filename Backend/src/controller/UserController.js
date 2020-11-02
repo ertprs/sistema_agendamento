@@ -123,6 +123,21 @@ module.exports = {
         }
     },
 
+    async confirmEmail(request, response, next){
+        try {
+            const {id} = request.params;
+
+            const user = await database('users').where('user_id', id).update({
+                status: true
+            })
+
+            return response.send(`<h1>Email cadastrado com sucesso!!! Por favor acesse <a href='http://localhost:3000'>www.agendenow.com.br</a></h1>`);
+        } catch (error) {
+            console.log(error);
+            next(error);
+        }
+    },
+
     async userId(request, response, next){
         try {
             const user_id = response.locals.auth_data;

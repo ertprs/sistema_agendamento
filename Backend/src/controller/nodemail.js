@@ -1,6 +1,6 @@
 const mailer = require('nodemailer');
 
-module.exports = (email, nome, anexo) => {
+module.exports = (email, nome, id, anexo) => {
 
     const smtpTransport = mailer.createTransport({
         host: 'smtp.mailtrap.io',
@@ -16,9 +16,9 @@ module.exports = (email, nome, anexo) => {
         to: email,
         subject: `${nome} Email de confirmação Agende Now`,
         text: `${nome} Seja bem vindo ao Agende now!! 
-                Para ativar sua conta acesse o link: https://www.google.com.br`,
+                Para ativar sua conta acesse o link: http://localhost:3001/cofirmeEmail/${id}`,
         html: `<b>${nome} Seja bem vindo ao Agende now!!</b></br>
-              <b>Para ativar sua conta acesse o link: <a href='https://www.google.com.br'>www.google.com.br</a></b>`
+              <b>Para ativar sua conta acesse o link: <a href='http://localhost:3001/cofirmeEmail/${id}'>Confirmar email</a></b>`
     }
 
     if(anexo){
