@@ -10,13 +10,13 @@ const ServiceController = require('./controller/ServiceController');
 
 const multer = require('./upload/multer');
 const { upload } = require('./controller/CompaniesController');
-const uploadEmail = require('multer')();
+const uploadEmail = require("multer")();
 
 
 
 const routes = express.Router();
 
-routes.post('/sendConfirmationEmail', uploadEmail.single('anexo'), (req, res, next) => { 
+routes.post('/teste', uploadEmail.single('anexo'), (req, res, next) => { 
     const nome = req.body.nome;
     const email = req.body.email;
     const id = req.body.id;

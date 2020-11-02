@@ -3,11 +3,11 @@ const mailer = require('nodemailer');
 module.exports = (email, nome, id, anexo) => {
 
     const smtpTransport = mailer.createTransport({
-        host: 'smtp.mailtrap.io',
-        port: 2525,
+        host: process.env.SMTP_HOST,
+        port: process.env.SMTP_PORT,
         auth: {
-            user: '07ca2074eac847',
-            pass: '7c5268436ad14e'
+            user: process.env.SMTP_USER,
+            pass: process.env.SMTP_PASS
         }
     })
 
